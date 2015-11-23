@@ -23,10 +23,12 @@
     "babel-loader": "6.2.0",
     "babel-preset-es2015": "6.1.18",
     "babel-preset-react": "6.1.18",
-    "http-master": "^1.0.20"
+    "webpack": "^1.12.8",
+    "http-proxy": "1.11.1"
   },
   "scripts": {
-    "start": "node server.js",
+    "prestart": "node server.js &",
+    "start": "webpack -d --watch",
     "test": "jest"
   },
   "repository": {
