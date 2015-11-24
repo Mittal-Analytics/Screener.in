@@ -1,4 +1,4 @@
-![Screener Logo](logo.png)
+[![Screener Logo](logo.png)][screener]
 
 **[Screener.in][screener]** is a finance portal for Indian investors.
 Screener focuses on providing tools for stock analysis based on fundamentals.
@@ -20,7 +20,7 @@ or to get any help regarding the code.
 
 ## Contribution
 
-Submit the pull-requests for fixes and changes.
+Submit pull-requests for fixes and changes.
 We will try to add issues in the Github Issues Tracker for features and fixes
 we wish to add. Feel free to provide an additional hand to make the investing
 process more profitable and enjoyable.
