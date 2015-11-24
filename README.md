@@ -1,4 +1,5 @@
 [![Screener Logo](logo.png)][screener]
+[![Build Status](https://travis-ci.org/Mittal-Analytics/Screener.in.svg?branch=master)](https://travis-ci.org/Mittal-Analytics/Screener.in)
 
 **[Screener.in][screener]** is a finance portal for Indian investors.
 Screener focuses on providing tools for stock analysis based on fundamentals.
