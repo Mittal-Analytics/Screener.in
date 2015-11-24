@@ -19,21 +19,32 @@
     "urijs": "1.17.0"
   },
   "devDependencies": {
-    "babel-core": "6.2.1",
     "babel-loader": "6.2.0",
     "babel-preset-es2015": "6.1.18",
     "babel-preset-react": "6.1.18",
-    "webpack": "^1.12.8",
-    "http-proxy": "1.11.1"
+    "http-proxy": "1.12.0",
+    "webpack": "^1.12.8"
   },
   "scripts": {
     "prestart": "node server.js &",
     "start": "webpack -d --watch",
     "test": "jest"
   },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react",
+      "<rootDir>/node_modules/react-dom",
+      "<rootDir>/node_modules/react-addons-test-utils",
+      "<rootDir>/node_modules/fbjs"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ]
+  },
   "repository": {
     "type": "git",
-    "url": "toadd"
+    "url": "https://github.com/Mittal-Analytics/screener.in"
   },
   "keywords": [
     "screener.in",
