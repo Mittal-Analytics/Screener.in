@@ -1,8 +1,5 @@
 "use strict";
 /* global require, document, window */
-
-require('whatwg-fetch');
-require('es6-promise').polyfill();
 var URITemplate = require('urijs/src/URITemplate');
 
 function parseJson(response) {

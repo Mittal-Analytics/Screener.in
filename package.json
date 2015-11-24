@@ -22,6 +22,7 @@
     "babel-loader": "6.2.0",
     "babel-preset-es2015": "6.1.18",
     "babel-preset-react": "6.1.18",
+    "exports-loader": "^0.6.2",
     "http-proxy": "1.12.0",
     "jest-webpack-alias": "^2.0.0",
     "webpack": "^1.12.8"

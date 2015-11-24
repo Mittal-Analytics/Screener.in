@@ -5,6 +5,11 @@ var webpack = require('webpack');
 
 var isProduction = process.env.NODE_ENV == 'production';
 
+var polyfills = new webpack.ProvidePlugin({
+  'Promise': 'exports?global.Promise!es6-promise',
+  'window.fetch': 'exports?self.fetch!whatwg-fetch'
+});
+
 var uglyWarnings = new webpack.optimize.UglifyJsPlugin({
     compress: {
         warnings: false
@@ -28,7 +33,7 @@ module.exports = function(){
     filename: 'bundle.js',
   };
 
-  var plugins = [uglyWarnings];
+  var plugins = [uglyWarnings, polyfills];
   if(isProduction)
     plugins.push(setProductionEnv);
 
