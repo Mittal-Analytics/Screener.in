@@ -3,8 +3,7 @@ var React = require('react');
 
 function Button(props) {
   var classes = 'btn btn-' + (props.style || 'default');
-  var icon = props.icon;
-  icon = icon && 'glyphicon glyphicon-' + icon;
+  var icon = props.icon && 'glyphicon glyphicon-' + props.icon;
   icon = icon && <i className={icon} />;
   return <button
     type="button"

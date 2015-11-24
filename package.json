@@ -23,6 +23,7 @@
     "babel-preset-es2015": "6.1.18",
     "babel-preset-react": "6.1.18",
     "http-proxy": "1.12.0",
+    "jest-webpack-alias": "^2.0.0",
     "webpack": "^1.12.8"
   },
   "scripts": {
@@ -32,7 +33,8 @@
     "test": "jest"
   },
   "jest": {
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",
+    "scriptPreprocessor": "<rootDir>/jest/preprocessor.js",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-dom",

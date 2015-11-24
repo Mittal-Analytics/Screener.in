@@ -1,5 +1,5 @@
 "use strict";
-/* global process */
+/* global process, __dirname */
 var path = require("path");
 var webpack = require('webpack');
 
@@ -45,6 +45,13 @@ module.exports = function(){
     plugins: plugins,
     module: {
 			loaders: loaders
+    },
+    resolve: {
+      root: path.resolve(__dirname),
+      alias: {
+        app: "app"
+      },
+      extensions: ['', '.js', '.jsx']
     }
   };
 }();
