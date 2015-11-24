@@ -73,13 +73,6 @@ describe('test REST apis', function () {
 
 
 describe('test dependent libraries', function(){
-  it('checks polyfill', function() {
-    window.fetch = undefined;
-    expect(window.fetch).toEqual(undefined);
-    require('whatwg-fetch');
-    expect(window.fetch).toBeDefined();
-  });
-
   it('checks expansions', function() {
     var Api = require.requireActual('../api.js');
     var base = Api.base;
