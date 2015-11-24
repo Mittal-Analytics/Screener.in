@@ -1,4 +1,4 @@
-!(logo.png)
+![Screener Logo](logo.png)
 
 **[Screener.in][screener]** is a finance portal for Indian investors.
 Screener focuses on providing tools for stock analysis based on fundamentals.
