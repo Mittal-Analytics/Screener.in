@@ -111,7 +111,7 @@ var PriceChart = React.createClass({
         showGrid: false,
         labelInterpolationFnc: function(label, i, vals) {
           if(i === 0 || i === last || i % breaks === 0){
-            return Utils.toMY(label);
+            return label;
           }
         }.bind(this)
       }
@@ -138,7 +138,6 @@ var PriceChart = React.createClass({
     var valueStyle = {transform: 'translate3d(' + x + ', 20px, 0)'};
     var pointStyle = {transform: 'translate3d(' + x + ', ' + y + ', 0)'};
     var label = this.state.barIdx && this.state.data.dates[this.state.barIdx];
-    label = label && Utils.toLocalDate(label);
     var value = Utils.toLocalNumber(this.state.value);
     return <div className="price-chart">
       {this.renderChartOptions()}

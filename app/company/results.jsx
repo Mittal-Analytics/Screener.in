@@ -126,7 +126,7 @@ var Results = React.createClass({
     var trailing = getTrailing(this.props.report, company.number_set, dates);
 
     var Heads = dates.map(function(rdt, idx) {
-      return <th key={idx}>{Utils.toMY(rdt)}</th>;
+      return <th key={idx}>{Utils.toMonthYear(rdt)}</th>;
     });
     var TTMHead = trailing && <th>TTM</th>;
 

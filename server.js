@@ -19,7 +19,7 @@ proxy.on('error', onError);
 
 http.createServer(function(req, res) {
   console.log('URL:', req.url);
-  if(req.url.startsWith('/static/app.')) {
+  if(req.url.startsWith('/static/bundle.')) {
     fs.readFile('./bundle.js', function(err, data) {
       res.writeHead(200);
       res.end(data);

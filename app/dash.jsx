@@ -97,7 +97,7 @@ var UpcomingResults = React.createClass({
     var rows = results.map(function(result, idx) {
       return <li className="list-group-item" key={idx}>
         <Link to={result.url}>{result.short_name}</Link>
-        : {Utils.toLocalDate(result.result_date)}
+        : {result.result_date}
       </li>;
     });
     return <div className="panel panel-primary" >

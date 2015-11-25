@@ -3,7 +3,6 @@
 var React = require('react');
 var classNames = require('classnames');
 var Button = require('app/components/button.jsx');
-var Utils = require('app/components/utils.js');
 
 
 function CompanyHeader(props) {
@@ -65,7 +64,7 @@ function Announcements(props) {
       - <a href={url} target="_blank">
         {ann.announcement}
       </a>
-      <small className="sub"> {Utils.toLocalDate(ann.ann_date)}</small>
+      <small className="sub"> {ann.ann_date}</small>
     </p>;
   });
 
@@ -89,7 +88,7 @@ function AnnualReports(props) {
     return <p className="h4 easy" key={idx}>
       - <a href={report.link} rel="noreferrer" target="_blank">
         Financial Year
-        {Utils.toYear(report.report_date)}
+        {report.report_date}
       </a>
       <small className="sub"> from {report.source}</small>
     </p>;

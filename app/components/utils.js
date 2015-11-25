@@ -27,19 +27,18 @@ function toSlug(text) {
   return text.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
 }
 
-function toMY(dt) {
-  var ndt = new Date(dt);
-  return ndt.toLocaleString('en-us', {month: "short", year: "numeric"});
-}
+function toMonthYear(dt) {
+  var monthNames = [
+    "Jan", "Feb", "Mar",
+    "Apr", "May", "June", "July",
+    "Aug", "Sep", "Oct",
+    "Nov", "Dec"
+  ];
 
-function toLocalDate(dt) {
-  var ndt = new Date(dt);
-  return ndt.toLocaleString('en-uk', {month: "short", day: "numeric", year: "numeric"});
-}
-
-function toYear(dt) {
-  var ndt = new Date(dt);
-  return ndt.toLocaleString('en-uk', {year: "numeric"});
+  var date = new Date(dt);
+  var monthIndex = monthNames[date.getMonth()];
+  var year = date.getFullYear();
+  return monthIndex + ' ' + year;
 }
 
 function toLocalNumber(value) {
@@ -91,9 +90,7 @@ module.exports.setTitle = setTitle;
 module.exports.scrollToTop = scrollToTop;
 module.exports.toSlug = toSlug;
 module.exports.toLocalNumber = toLocalNumber;
-module.exports.toLocalDate = toLocalDate;
-module.exports.toYear = toYear;
-module.exports.toMY = toMY;
+module.exports.toMonthYear = toMonthYear;
 module.exports.withUnit = withUnit;
 module.exports.getPageNumbers = getPageNumbers;
 module.exports.getFormData = getFormData;
