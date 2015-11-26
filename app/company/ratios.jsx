@@ -13,7 +13,7 @@ function getExchanges(company) {
     bse_link = new URITemplate(
       'http://www.bseindia.com/stock-share-price{/slugs*}/'
     );
-    bse_link = bse_link.expand([slug, slug, company.bse_code]);
+    bse_link = bse_link.expand({slugs: [slug, slug, company.bse_code]});
     bse_link = <a href={bse_link}>BSE</a>;
   }
   if(company.nse_code !== "") {
@@ -33,7 +33,7 @@ function getExchanges(company) {
 function CompanyRatios(props) {
   var name = props.company.name;
   var warehouse_set = props.company.warehouse_set;
-  var google = "http://google.com/search?btnI=1&amp;q=" + name;
+  var google = "http://www.google.co.in/search?ie=UTF-8&oe=UTF-8&sourceid=navclient&gfns=1&q=" + name;
   var ratios = [
     ['Market Cap.', 'market_capitalization', 'Rs.Cr.'],
     ['Current Price', 'current_price', 'Rs.'],
