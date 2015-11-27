@@ -29,4 +29,7 @@ http.createServer(function(req, res) {
   }
 }).listen(8000);
 
-console.log("Open: http://127.0.0.1:8000 in browser");
+console.log([
+    "Ready to accept requests.",
+    "Open: http://127.0.0.1:8000 in browser.",
+].join('\n'));

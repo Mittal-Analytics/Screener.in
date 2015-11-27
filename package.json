@@ -28,7 +28,7 @@
     "webpack": "^1.12.8"
   },
   "scripts": {
-    "prestart": "node server.js &",
+    "prestart": "webpack -d && (node server.js&)",
     "start": "webpack -d --watch",
     "build": "NODE_ENV=production webpack -p",
     "test": "jest"
