@@ -16,7 +16,8 @@
     "react-bootstrap": "0.28.1",
     "react-dom": "0.14.3",
     "react-router": "1.0.0",
-    "urijs": "1.17.0"
+    "urijs": "1.17.0",
+    "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
     "babel-loader": "6.2.0",
