@@ -92,7 +92,7 @@ var Navigation = React.createClass({
       ];
     } else {
       user_links = <li>
-        <a href="/register/">
+        <a href="/login/">
           <i className="glyphicon glyphicon-user"></i> Login
         </a>
       </li>;
