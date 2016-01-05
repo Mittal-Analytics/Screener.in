@@ -27,8 +27,8 @@ var Footer = React.createClass({
           </Link> | <Link to="/talks/">Talks
           </Link> | <a href="http://blog.screener.in">Change Log
           </a> | <a href="http://dalal-street.in">Dalal-Street Blog
-          </a> | <a href="https://bitbucket.org/screenerin/screener.in/issues/new">
-            Report Errors
+          </a> | <a href="https://github.com/Mittal-Analytics/Screener.in">
+            View on Github
           </a>
         </p>
         <span className="sub">
