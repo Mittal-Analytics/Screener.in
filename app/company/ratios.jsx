@@ -21,7 +21,7 @@ function getExchanges(company) {
       'http://nseindia.com/live_market/dynaContent/live_watch/' +
       'get_quote/GetQuote.jsp{?params*}'
     );
-    nse_link = nse_link.expand({symbol: company.nse_code});
+    nse_link = nse_link.expand({params: {symbol: company.nse_code}});
     nse_link = <a href={nse_link}>NSE</a>;
     if(bse_link !== '')
       nse_link = <span> and {nse_link}</span>;
