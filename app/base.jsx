@@ -79,12 +79,12 @@ var Navigation = React.createClass({
     var user = this.state.user;
     if (user.id) {
       user_links = [
-        <li>
+        <li key={0}>
           <a href="" onClick={this.handleLogOut}>
             <i className="glyphicon glyphicon-off"></i>
           </a>
         </li>,
-        <li>
+        <li key={1}>
           <Link to="/account/">
             <i className="glyphicon glyphicon-user"></i> {user.display_name}
           </Link>

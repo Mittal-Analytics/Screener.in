@@ -38,7 +38,7 @@ var CompanySearch = React.createClass({
     return <div className="input-group">
       <Typeahead
         className={this.props.large && "input-lg"}
-        placeholder={this.props.placeholder || 'Enter a company name here'}
+        placeholder={this.props.placeholder || 'Enter a company name'}
         options={this.state.options}
         onChange={this.onChange}
         onSelect={this.onSelect} />

@@ -5,7 +5,7 @@ var Api = require('../api.js');
 var Link = require('react-router/lib/Link');
 var classNames = require('classnames');
 var Utils = require('app/components/utils.js');
-var merge = require('lodash/object/merge');
+var merge = require('lodash/object/defaults');
 
 
 function getCaption(report) {
@@ -71,19 +71,20 @@ var percents = ['OPM', 'Dividend Payout'];
 
 var Results = React.createClass({
   getInitialState: function() {
-    return {
-      mom: [],
-      schedules: {}
-    };
+    return {schedules: {}};
+  },
+
+  componentWillReceiveProps: function(props) {
+    this.setState(this.getInitialState());
   },
 
   handleExpand: function(field) {
-    if(this.state.mom.indexOf(field) >= 0)
+    if(this.state.schedules[field])
       return;
     var cid = this.props.company.id;
     var params = {
       id: cid,
-      r: this.props.company.result_type,
+      r: this.props.company.warehouse_set.result_type,
       f: this.props.report,
       q: field
     };
@@ -91,16 +92,18 @@ var Results = React.createClass({
       .then(function(response) {
         if (response.length === 0)
           return;
-        var imom = this.state.mom.concat([field]);
-        merge({field: response}, this.state.schedules);
+        var schedules = merge({}, this.state.schedules);
+        schedules[field] = response;
+        this.setState({schedules: schedules});
       }.bind(this));
   },
 
-  renderRow: function(trailing, dates, row, idx) {
+  renderRow: function(trailing, dates, isChild, row, idx) {
     var field = row[0];
+    var schedules = this.state.schedules[field];
     var rowClass = classNames({
-      'mom': this.state.mom.indexOf(field) >= 0,
-      'child': this.state.mom.indexOf(field) >= 0,
+      'mom': schedules,
+      'child': isChild,
       'strong': highlights.indexOf(field) >= 0,
       'percent': percents.indexOf(field) >= 0});
     var Cells = dates.map(function(rdt, iidx) {
@@ -113,7 +116,7 @@ var Results = React.createClass({
       </td>
       {Cells}
       {TTMCell}
-    </tr>];
+    </tr>, schedules && schedules.map(this.renderRow.bind(this, trailing, dates, true))];
   },
 
   render: function () {
@@ -147,7 +150,7 @@ var Results = React.createClass({
             </tr>
           </thead>
           <tbody>
-            {numbers.map(this.renderRow.bind(this, trailing, dates))}
+            {numbers.map(this.renderRow.bind(this, trailing, dates, false))}
           </tbody>
         </table>
       </div>
