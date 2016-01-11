@@ -26,7 +26,7 @@ var Watchlist = React.createClass({
   },
 
   handleChange: function() {
-    this.fetchResults(this.props.location.search);
+    this.fetchResults('');
   },
 
   fetchResults: function(params) {
