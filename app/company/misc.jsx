@@ -2,6 +2,7 @@
 /* global require, document, window */
 var React = require('react');
 var classNames = require('classnames');
+var Icon = require('app/components/icon.jsx');
 var Button = require('app/components/button.jsx');
 
 
@@ -13,11 +14,16 @@ function CompanyHeader(props) {
     onClick={props.handleFavorite.bind(null, props.company.id)}
     name="Add to Watchlist"
   />;
+  var excelButton = window.loggedIn && <a
+    className="btn btn-info"
+    href={`/api/company/${props.company.warehouse_set.id}/excel/`}>
+    <Icon name="save" /> Export to Excel
+  </a>;
   var status = props.company.warehouse_set.status;
   var suffix =  status == 'Active' ? '' : ' - ' + status;
   return <div id="companyhead" className="page-header">
     <div className="pull-right">
-      {favButton}
+      {favButton} {excelButton}
     </div>
     <h1>
       {props.company.name}
