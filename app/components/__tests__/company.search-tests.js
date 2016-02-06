@@ -27,9 +27,10 @@ describe('Company Search Tests', function() {
     var company = {name: 'Patanjali', id: 7, url: '/ramdev/'};
     var req = {
       url: ['company', 'search'],
-      load: {q: 'Patanjali'},
+      load: {q: 'Patanjali'}
     }
     Api.__setResponse(req, [company]);
+    input.value = 'Patanjali';
     TestUtils.Simulate.change(input, {target: {value: 'Patanjali'}});
     jest.runAllTimers();
     TestUtils.Simulate.keyDown(input, {key: "Enter", keyCode: 13, which: 13});

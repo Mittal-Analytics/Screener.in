@@ -32,7 +32,7 @@
     "prestart": "webpack -d && (node server.js&)",
     "start": "webpack -d --watch",
     "build": "NODE_ENV=production webpack -p",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "jest": {
     "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",

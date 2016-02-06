@@ -25,6 +25,7 @@ describe('Typeahead', function(){
       />
     );
     var input = search.refs.input;
+    input.value = 'a';
     TestUtils.Simulate.change(input, {target: {value: 'a'}});
     jest.runAllTimers();
     expect(onChange).toBeCalled();

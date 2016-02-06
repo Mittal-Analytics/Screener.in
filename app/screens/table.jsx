@@ -4,7 +4,7 @@
 var React = require('react');
 var Link = require('react-router/lib/Link');
 var Utils = require('app/components/utils.js');
-var merge = require('lodash/object/defaults');
+var merge = require('lodash/defaults');
 var classNames = require('classnames');
 
 

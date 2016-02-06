@@ -8,7 +8,7 @@ var Utils = require('app/components/utils.js');
 var Api = require('../api.js');
 var UserTable = require('./table.jsx');
 var ScreenBase = require('./base.jsx');
-var isEqual = require('lodash/lang/isEqual');
+var isEqual = require('lodash/isEqual');
 
 
 var Query = React.createClass({

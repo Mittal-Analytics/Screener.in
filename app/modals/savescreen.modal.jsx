@@ -4,7 +4,7 @@ var React = require('react');
 var History = require('react-router/lib/History');
 var Button = require('app/components/button.jsx');
 var Modal = require('app/components/modal.jsx');
-var merge = require('lodash/object/defaults');
+var merge = require('lodash/defaults');
 var Api = require('../api.js');
 var Alerts = require('app/components/alerts.jsx');
 

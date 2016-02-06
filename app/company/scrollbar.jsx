@@ -1,6 +1,6 @@
 "use strict";
 /* global require, document, window */
-var throttle = require('lodash/function/throttle');
+var throttle = require('lodash/throttle');
 var React = require('react');
 
 

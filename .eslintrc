@@ -1,0 +1,23 @@
+{
+  # User recommended
+  extends: "eslint:recommended",
+
+  # use babel as parser
+  # https://github.com/babel/babel-eslint
+  parser: "babel-eslint",
+  rules: { "strict": 0 },
+
+  # Global variables: false means that these are read-only
+  globals: {
+    require: false,
+    document: true,
+    window: true,
+    jest: false,
+    it: false,
+    describe: false,
+    expect: false,
+    module: false,
+    beforeEach: false,
+    afterEach: false
+  }
+}

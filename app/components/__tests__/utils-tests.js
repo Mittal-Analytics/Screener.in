@@ -1,5 +1,6 @@
 'use strict';
 /* global jest, require */
+jest.dontMock('lodash');
 jest.dontMock('../utils.js');
 
 

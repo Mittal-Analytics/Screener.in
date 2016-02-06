@@ -1,7 +1,5 @@
 "use strict";
-/* global require, setTimeout, clearTimeout */
-
-var React = require('react');
+/* global setTimeout, clearTimeout */
 
 var TypeaheadMixin = {
 
@@ -44,11 +42,11 @@ var TypeaheadMixin = {
     }
   },
 
-  handleBlur: function(event) {
+  handleBlur: function() {
     this.blurTimer = setTimeout(function() {
       this.hideMenu();
     }.bind(this), 200);
-  },
+  }
 
 };
 

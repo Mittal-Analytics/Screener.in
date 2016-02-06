@@ -2,8 +2,8 @@
 /* global require, document, window */
 
 var React = require('react');
-var map = require('lodash/collection/map');
-var startCase = require('lodash/string/startCase');
+var map = require('lodash/map');
+var startCase = require('lodash/startCase');
 var Icon = require('app/components/icon.jsx');
 
 

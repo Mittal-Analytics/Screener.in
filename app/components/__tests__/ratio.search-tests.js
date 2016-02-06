@@ -44,6 +44,7 @@ describe('Ratio Search Tests', function() {
       load: {q: 'Patanjali'}
     };
     Api.__setResponse(req, [ratio]);
+    input.value = 'Patanjali';
     TestUtils.Simulate.change(input, {target: {value: 'Patanjali'}});
     jest.runAllTimers();
     TestUtils.Simulate.keyDown(input, {key: "Enter", keyCode: 13, which: 13});

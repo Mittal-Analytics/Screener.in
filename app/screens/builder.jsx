@@ -1,12 +1,8 @@
 "use strict";
-/* global require, document, window, console */
-
-var isEqual = require('lodash/lang/isEqual');
 var React = require('react');
 var Api = require('../api.js');
 var TypeaheadMixin = require('app/components/typeahead.mixin.jsx');
-var Utils = require('app/components/utils.js');
-var debounce = require('lodash/function/debounce');
+var debounce = require('lodash/debounce');
 var getLastWord = require('./cursor.js');
 var classNames = require('classnames');
 
@@ -45,7 +41,7 @@ var QueryBuilder = React.createClass({
       cursorPos: 0,
       index: -1,
       hideMenu: true,
-      selected: false,
+      selected: false
     };
   },
 
@@ -79,25 +75,25 @@ var QueryBuilder = React.createClass({
     }.bind(this));
   },
 
-  handleChange: debounce(function(event) {
+  handleChange: function() {
     var cursorPos = this.refs.input.selectionStart;
     var fullVal = this.refs.input.value;
     var tillCursor = fullVal.substring(0, cursorPos);
     var lastWord = getLastWord(tillCursor).trim();
     this.setState({
       lastWord: lastWord,
-      cursorPos: cursorPos,
+      cursorPos: cursorPos
     });
     if(lastWord.length >= 2) {
       this.fetchOptions(lastWord);
       this.setState({
         hideMenu: false,
-        index: 0,
+        index: 0
       });
     } else {
       this.hideMenu();
     }
-  }, 120),
+  },
 
   handleSelect: function(index) {
     var selected = this.state.options[index];
@@ -138,7 +134,7 @@ var QueryBuilder = React.createClass({
             spellCheck="false"
             required
             onKeyDown={this.handleKeyDown}
-            onChange={this.handleChange}
+            onChange={debounce(this.handleChange, 120)}
             onBlur={this.handleBlur}
             placeholder="eg. Book value > Current price"
             defaultValue={this.props.defaults.query}

@@ -5,7 +5,7 @@ var Utils = require('app/components/utils.js');
 var Icon = require('app/components/icon.jsx');
 var Button = require('app/components/button.jsx');
 var Api = require('../api.js');
-var startCase = require('lodash/string/startCase');
+var startCase = require('lodash/startCase');
 
 
 function TalksHeader(props) {
