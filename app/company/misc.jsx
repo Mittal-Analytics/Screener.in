@@ -93,8 +93,7 @@ function AnnualReports(props) {
   var reports = props.annualreport_set.map(function(report, idx) {
     return <p className="h4 easy" key={idx}>
       - <a href={report.link} rel="noreferrer" target="_blank">
-        Financial Year
-        {report.report_date}
+        Financial Year {report.report_date}
       </a>
       <small className="sub"> from {report.source}</small>
     </p>;
