@@ -67,7 +67,7 @@ var Navigation = React.createClass({
   },
 
   handleLogOut: function() {
-    Api.post(Api.logout).then(function() {
+    Api.logout().then(function() {
       window.loggedIn = false;
       window.user = {};
       this.setState({user: window.user});

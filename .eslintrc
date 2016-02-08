@@ -7,6 +7,11 @@
   parser: "babel-eslint",
   rules: { "strict": 0 },
 
+  # use eslint-plugin-react for linting
+  "plugins": [
+    "react"
+  ],
+
   # Global variables: false means that these are read-only
   globals: {
     require: false,
@@ -14,6 +19,7 @@
     window: true,
     jest: false,
     it: false,
+    pit: false,
     describe: false,
     expect: false,
     module: false,

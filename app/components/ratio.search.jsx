@@ -1,31 +1,29 @@
 "use strict";
 /* global require */
 var React = require('react');
-var classNames = require('classnames');
 var Typeahead = require('app/components/typeahead.jsx');
-var Api = require('../api.js');
+var api = require('../api.js');
 
 
 var RatioSearch = React.createClass({
   propTypes: {
     onSelect: React.PropTypes.func.isRequired,
-    placeholder: React.PropTypes.string,
+    placeholder: React.PropTypes.string
   },
 
   getInitialState: function() {
     return {
       options: [],
-      showLogin: false,
+      showLogin: false
     };
   },
 
   onChange: function(term) {
     if(!window.loggedIn)
       return this.setState({showLogin: true});
-    Api.get(Api.ratioSearch, {q: term})
-      .then(function(response){
-        this.setState({options: response});
-      }.bind(this));
+    this.req = api.get(api.ratioSearch, {q: term}).then(resp => {
+      this.setState({options: resp});
+    });
   },
 
   onSelect: function(idx) {

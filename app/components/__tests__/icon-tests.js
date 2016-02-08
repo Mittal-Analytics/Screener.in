@@ -3,15 +3,13 @@
 jest.dontMock('../icon.jsx');
 
 describe('icon Tests', function() {
-  var icon, TestUtils, dummy, Api;
+  var icon, TestUtils;
 
   beforeEach(function() {
     var React = require('react');
     var ReactDOM = require('react-dom');
-    Api = require('../../api.js');
     var Icon = require('../icon.jsx');
     TestUtils = require('react-addons-test-utils');
-    dummy = jest.genMockFunction();
     icon = TestUtils.renderIntoDocument(<div>
       <Icon name="pencil" />
     </div>);
@@ -19,12 +17,10 @@ describe('icon Tests', function() {
     icon = domNode.getElementsByTagName('i')[0];
   });
 
-  afterEach(function() {
-    expect(Api.__getPending()).toEqual([]);
-  });
-
   it('should render icon', function() {
-    expect(icon.outerHTML).toEqual('<i class="glyphicon glyphicon-pencil" data-reactid=".0.0"></i>');
+    expect(icon.outerHTML).toEqual(
+      '<i class="glyphicon glyphicon-pencil" data-reactid=".0.0"></i>'
+    );
   });
 
 });

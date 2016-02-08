@@ -5,59 +5,70 @@ var React = require('react');
 var ManageColumns = require('app/modals/columns.modal.jsx');
 var Confirm = require('app/components/confirm.jsx');
 var Notify = require('app/components/notify.jsx');
-var Api = require('../api.js');
+var api = require('../api.js');
 var Utils = require('app/components/utils.js');
 var UserTable = require('./table.jsx');
 var ScreenBase = require('./base.jsx');
 
 
-var Screen = React.createClass({
+class Screen extends React.Component {
 
-  getInitialState: function() {
-    return {errors: false, screen: false};
-  },
+  constructor() {
+    super();
+    this.state = {
+      errors: false,
+      screen: false
+    };
+    this.handleDelete = this.handleDelete.bind(this);
+    this.onColumnsChange = this.onColumnsChange.bind(this);
+  }
 
-  componentDidMount: function() {
-    this.fetchResults(this.props.params.screenId, this.props.location.search);
-  },
+  componentDidMount() {
+    return this.fetchResults(
+      this.props.params.screenId,
+      this.props.location.query
+    );
+  }
 
-  componentWillReceiveProps: function(props) {
+  componentWillReceiveProps(props) {
     var new_id = props.params.screenId;
     var old_id = this.props.params.screenId;
     var new_params = props.location.search;
     var old_params = this.props.location.search;
     if(new_params != old_params || new_id != old_id)
-      this.fetchResults(new_id, new_params);
-  },
+      this.fetchResults(new_id, props.location.query);
+  }
 
-  onColumnsChange: function() {
-    this.fetchResults(this.props.params.screenId,
-                      this.props.location.search);
-  },
+  onColumnsChange() {
+    this.fetchResults(
+      this.props.params.screenId,
+      this.props.location.query
+    );
+  }
 
-  fetchResults: function(screenId, params) {
-    var url = '/api/screens/' + screenId + '/'+ params;
-    Api.get(url).then(function(response) {
-      Utils.setTitle(response.name);
-      this.setState({screen: response, errors: false});
-    }.bind(this), function(response) {
-      this.setState({errors: response, screen: false});
-    }.bind(this));
-  },
+  fetchResults(screenId, params) {
+    var url = '/screens/' + screenId + '/';
+    return api.get(url, params).then(resp => {
+      Utils.setTitle(resp.name);
+      this.setState({screen: resp, errors: false});
+    }, resp => {
+      this.setState({errors: resp, screen: false});
+    });
+  }
 
-  handleDelete: function() {
+  handleDelete() {
     var screenId = this.props.params.screenId;
-    return Api.delete(['screens', screenId]).then(function(response) {
+    return api.delete(['screens', screenId]).then(() => {
       this.props.history.pushState(null, '/dash/');
-    }.bind(this));
-  },
+    });
+  }
 
-  handleAlert: function() {
+  handleAlert() {
     var data = {screen: this.state.screen.id};
-    return Api.post(['alerts'], data);
-  },
+    return api.post(['alerts'], data);
+  }
 
-  renderLoaded: function() {
+  renderLoaded() {
     var screen = this.state.screen;
     var alert = !screen.has_alert && <Notify
       style="info"
@@ -87,9 +98,9 @@ var Screen = React.createClass({
         query={this.props.location.query}
       />
   </div>;
-  },
+  }
 
-  render: function() {
+  render() {
     return <ScreenBase
       errors={this.state.errors}
       screen={this.state.screen}
@@ -98,6 +109,12 @@ var Screen = React.createClass({
       {this.state.screen && this.renderLoaded()}
     </ScreenBase>;
   }
-});
+}
+
+Screen.propTypes = {
+  params: React.PropTypes.object,
+  location: React.PropTypes.object,
+  history: React.PropTypes.object
+}
 
 module.exports = Screen;

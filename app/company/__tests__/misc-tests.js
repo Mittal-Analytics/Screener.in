@@ -1,8 +1,6 @@
 "use strict";
 /* global require, window, jest */
 
-jest.dontMock('../misc.jsx');
-
 var kitex = {
   id: 1950,
   name: 'Kitex Ltd',
@@ -30,24 +28,24 @@ var kitex = {
 
 
 describe('Walk tests', function () {
-  var Misc, TestUtils, Api, ReactDOM;
+  var Misc, TestUtils, api, ReactDOM;
 
   beforeEach(function() {
     ReactDOM = require('react-dom');
-    Api = require('../../api.js');
+    api = require.requireActual('../../api.js');
     TestUtils = require('react-addons-test-utils');
-    Misc = require('../misc.jsx');
+    Misc = require.requireActual('../misc.jsx');
   });
 
   afterEach(function() {
-    expect(Api.__getPending()).toEqual([]);
+    expect(api.getPending()).toEqual([]);
   });
 
   it('test visible add to watchlist button', function() {
     var React = require('react');
     var dummy = jest.genMockFunction().mockImplementation(
       function(cid) {
-        return Api.post(['company', cid, 'favorite']);
+        return api.post(['company', cid, 'favorite']);
       }
     );
     var header = TestUtils.renderIntoDocument(<div>

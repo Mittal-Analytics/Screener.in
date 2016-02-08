@@ -1,6 +1,7 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../watchlist.jsx');
+jest.autoMockOff();
+jest.mock('fetch-on-rest');
+
 
 var screen = {
   ratios: [[
@@ -8,19 +9,20 @@ var screen = {
     "CMP",
     "Rs."
   ]],
-  results: []
+  results: [
+    ['/foo/', 'Foo', 115]
+  ]
 };
 
 describe('watchlist Tests', function() {
-  var watchlist, TestUtils, dummy, Api;
+  var api = require('app/api.js');
+  var watchlist, TestUtils;
 
   beforeEach(function() {
     var React = require('react');
-    Api = require('../api.js');
     var Watchlist = require('../watchlist.jsx');
     window.loggedIn = true;
     TestUtils = require('react-addons-test-utils');
-    dummy = jest.genMockFunction();
     var params = {
       search: '',
       query: {},
@@ -32,7 +34,7 @@ describe('watchlist Tests', function() {
   });
 
   afterEach(function() {
-    expect(Api.__getPending()).toEqual([]);
+    expect(api.getPending()).toEqual([]);
   });
 
   it('should show loading', function() {
@@ -41,17 +43,15 @@ describe('watchlist Tests', function() {
     expect(dom.textContent).toEqual('Loading...');
   });
 
-  it('should load watchlist', function() {
-    var req = {
-      url: '/api/users/watchlist/',
-      load: ''
-    };
-    Api.__setResponse(req, screen);
-    jest.runAllTimers();
-    expect(watchlist.state.screen.results).toEqual([]);
-    var table = TestUtils.findRenderedDOMComponentWithTag(
-      watchlist, 'table');
-    expect(table).toBeDefined();
+  pit('should load watchlist', function() {
+    api.setResponse('/api/users/watchlist/',
+      JSON.stringify(screen));
+    return watchlist.componentDidMount().then(() => {
+      expect(watchlist.state.screen).toEqual(screen);
+      var table = TestUtils.findRenderedDOMComponentWithTag(
+        watchlist, 'table');
+      expect(table).toBeDefined();
+    });
   });
 
 });

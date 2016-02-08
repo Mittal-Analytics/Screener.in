@@ -3,7 +3,7 @@
 var React = require('react');
 var Button = require('app/components/button.jsx');
 var Link = require('react-router/lib/Link');
-var Api = require('../api.js');
+var api = require('../api.js');
 var Utils = require('app/components/utils.js');
 
 
@@ -71,19 +71,19 @@ var Screens = React.createClass({
 
   componentDidMount: function() {
     Utils.setTitle('Browse Screens');
-    Api.get(['screens', 'popular']).then(function(response) {
+    return api.get(['screens', 'popular']).then(resp => {
       this.setState({
-        screens: response,
-        searched: false,
+        screens: resp,
+        searched: false
       });
-    }.bind(this));
+    });
   },
 
   handleRecent: function() {
-    Api.get(['screens', 'recent']).then(function(response) {
+    api.get(['screens', 'recent']).then(function(response) {
       this.setState({
         screens: response,
-        searched: false,
+        searched: false
       });
       Utils.setTitle('Latest Screens');
     }.bind(this));
@@ -93,10 +93,10 @@ var Screens = React.createClass({
     if(!searchTerm)
       return this.componentDidMount();
     var data = {q: searchTerm};
-    Api.get(['screens'], data).then(function(response) {
+    api.get(['screens'], data).then(function(response) {
       this.setState({
         screens: response,
-        searched: searchTerm,
+        searched: searchTerm
       });
       Utils.setTitle('Searched Screens');
     }.bind(this));

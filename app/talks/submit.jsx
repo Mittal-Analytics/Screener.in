@@ -1,6 +1,6 @@
 "use strict";
 var React = require('react');
-var Api = require('../api.js');
+var api = require('../api.js');
 var Utils = require('app/components/utils.js');
 var Alerts = require('app/components/alerts.jsx');
 var Icon = require('app/components/icon.jsx');
@@ -49,17 +49,17 @@ var SubmitTalk = React.createClass({
     if(!window.loggedIn)
       window.location = '/register/';
     Utils.setTitle('Submit Talk');
-    Api.raw('/api/talks.html').then(function(response) {
+    return api.rawGet('/talks.html').then(resp => {
       this.setState({
-        form: {__html: response}
+        form: {__html: resp}
       }, this.handleUrlVals);
-    }.bind(this));
+    });
   },
 
   handleSubmit: function(event) {
     event.preventDefault();
     var data = Utils.getFormData(this.refs.form);
-    Api.post(['talks'], data).then(
+    api.post(['talks'], data).then(
       function(response) {
         this.props.history.pushState(null, '/talks/latest/');
       }.bind(this),
@@ -81,7 +81,7 @@ var SubmitTalk = React.createClass({
         <input
           type="hidden"
           name="csrfmiddlewaretoken"
-          value={Api.getCsrf()}
+          value={api.getCsrf()}
         />
         <div dangerouslySetInnerHTML={this.state.form} />
         <button

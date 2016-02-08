@@ -18,24 +18,24 @@ var Query = React.createClass({
   },
 
   componentDidMount: function() {
-    this.fetchResults(this.props.location.search);
+    this.fetchResults(this.props.location.query);
   },
 
   componentWillReceiveProps: function(props) {
     var new_params = props.location.search;
     var old_params = this.props.location.search;
     if(!isEqual(new_params, old_params))
-      this.fetchResults(new_params);
+      this.fetchResults(props.location.query);
   },
 
   onColumnsChange: function() {
-    this.fetchResults(this.props.location.search);
+    this.fetchResults(this.props.location.query);
   },
 
   fetchResults: function(params) {
     Utils.setTitle('Query Builder');
-    var url = '/api/screens/query/' + params;
-    Api.get(url).then(function(response) {
+    var url = '/screens/query/'
+    return Api.get(url, params).then(function(response) {
       this.setState({screen: response, errors: false});
     }.bind(this), function(response) {
       this.setState({errors: response, screen: false});

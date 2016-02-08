@@ -3,8 +3,7 @@ var React = require('react');
 var Link = require('react-router/lib/Link');
 var Utils = require('app/components/utils.js');
 var Icon = require('app/components/icon.jsx');
-var Button = require('app/components/button.jsx');
-var Api = require('../api.js');
+var api = require('app/api.js');
 var startCase = require('lodash/startCase');
 
 
@@ -14,7 +13,7 @@ function TalksHeader(props) {
     'top': '/talks/latest/',
     'latest': '/talks/',
     'Top': 'Latest',
-    'Latest': 'Top',
+    'Latest': 'Top'
   };
   var switchTab = <Link
     to={alternates[props.tab]}
@@ -44,19 +43,19 @@ var Talks = React.createClass({
   },
 
   componentDidMount: function() {
-    this.fetchResults(this.props);
     this.fetchStats();
+    return this.fetchResults(this.props);
   },
 
   componentWillReceiveProps: function(props) {
     Utils.scrollToTop();
-    this.fetchResults(props);
+    return this.fetchResults(props);
   },
 
   fetchStats: function() {
     if(!window.loggedIn)
       return;
-    Api.get(['talks', 'voted']).then(function(response) {
+    api.get(['talks', 'voted']).then(function(response) {
       this.setState({votes: response});
     }.bind(this));
   },
@@ -65,24 +64,23 @@ var Talks = React.createClass({
     var tab = props.params.tab || 'top';
     var page = props.location.query.page || 1;
     var data = {tab: tab, page: page};
-    Api.get(['talks'], data).then(function(response) {
-      this.setState({talks: response});
+    return api.get(['talks'], data).then(resp => {
+      this.setState({talks: resp});
       var name = startCase(tab);
       Utils.setTitle(`${name} Talks`);
-    }.bind(this));
+    });
   },
 
   handleVote: function(tid) {
     if(!window.loggedIn)
       return (window.location = '/register/');
     var url = ['talks', tid, 'vote_up'];
-    Api.post(url).then(function(response) {
+    api.post(url).then(function(response) {
       this.setState({votes: this.state.votes.concat([tid])});
     }.bind(this));
   },
 
   renderTalk: function(talk, idx) {
-    var userUrl = Api.parse(['users', talk.user]);
     var edit = (window.userId == talk.user) && <Link
       to={'/edit/'}>
       Edit

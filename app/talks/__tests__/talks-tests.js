@@ -1,6 +1,6 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../talks.jsx');
+jest.autoMockOff();
+jest.mock('fetch-on-rest');
 
 var results = [
   {
@@ -9,14 +9,13 @@ var results = [
 ];
 
 describe('talks Tests', function() {
-  var talks, TestUtils, dummy, Api;
+  var api = require('app/api.js');
+  var talks, TestUtils;
 
   beforeEach(function() {
     var React = require('react');
-    Api = require('../../api.js');
     var Talks = require('../talks.jsx');
     TestUtils = require('react-addons-test-utils');
-    dummy = jest.genMockFunction();
     var params = {};
     var location = {query: {}};
     window.loggedIn = true;
@@ -24,43 +23,33 @@ describe('talks Tests', function() {
     talks = TestUtils.renderIntoDocument(
       <Talks params={params} location={location} />
     );
-    var req = {
-      url: ['talks'],
-      load: {tab: 'top', page: 1}
-    };
-    Api.__setResponse(req, {results: results});
-    Api.__setResponse(['talks', 'voted'], []);
   });
 
   afterEach(function() {
-    expect(Api.__getPending()).toEqual([]);
+    expect(api.getPending()).toEqual([]);
   });
 
-  it('should load talks', function() {
-    jest.runAllTimers();
-    expect(talks.state.talks.results).toEqual(results);
+  pit('should load talks', function() {
+    api.setResponse('/api/talks/?tab=top&page=1',
+      JSON.stringify({results: results}));
+    api.setResponse('/api/talks/voted/', []);
+    return talks.componentDidMount().then(() => {
+      expect(talks.state.talks.results).toEqual(results);
+      var latest = TestUtils.scryRenderedDOMComponentsWithTag(talks, 'a')[0];
+      expect(latest.textContent).toEqual('Goto Latest Links');
+    })
   });
 
-  it('should fetch new talks', function() {
-    jest.runAllTimers();
+  pit('should fetch new talks', function() {
     var newProps = {
       params: {tab: 'latest'},
-      location: {query: {}},
+      location: {query: {}}
     };
-    talks.componentWillReceiveProps(newProps);
-    var newReq = {
-      url: ['talks'],
-      load: {tab: 'latest', page: 1}
-    };
-    Api.__setResponse(newReq, {results: []});
-    jest.runAllTimers();
-    expect(talks.state.talks.results).toEqual([]);
-  });
-
-  it('should show the top tab', function() {
-    jest.runAllTimers();
-    var latest = TestUtils.scryRenderedDOMComponentsWithTag(talks, 'a')[0];
-    expect(latest.textContent).toEqual('Goto Latest Links');
+    api.setResponse('/api/talks/?tab=latest&page=1',
+      JSON.stringify({results: []}));
+    return talks.componentWillReceiveProps(newProps).then(() => {
+      expect(talks.state.talks.results).toEqual([]);
+    });
   });
 
 });

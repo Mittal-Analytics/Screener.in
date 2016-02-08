@@ -2,7 +2,7 @@
 /* global require, window, document */
 
 var React = require('react');
-var Api = require('../api.js');
+var api = require('../api.js');
 var Link = require('react-router/lib/Link');
 var Utils = require('app/components/utils.js');
 var ManageColumns = require('app/modals/columns.modal.jsx');
@@ -15,7 +15,7 @@ var Peers = React.createClass({
   },
 
   componentDidMount: function() {
-    this.fetchPeers(this.props);
+    return this.fetchPeers(this.props);
   },
 
   componentWillReceiveProps: function(props) {
@@ -26,10 +26,9 @@ var Peers = React.createClass({
 
   fetchPeers: function(props) {
     var params = {industry: props.industry};
-    Api.get(Api.cid(props.wid, 'peers'), params)
-      .then(function(response) {
-        this.setState({peers: response});
-      }.bind(this));
+    return api.get(api.cid(props.wid, 'peers'), params).then(resp => {
+      this.setState({peers: resp});
+    });
   },
 
   onColumnsChange: function() {

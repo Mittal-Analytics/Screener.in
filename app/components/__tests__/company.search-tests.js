@@ -1,15 +1,15 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../company.search.jsx');
+jest.autoMockOff();
+jest.mock('fetch-on-rest');
 
 describe('Company Search Tests', function() {
-  var search, TestUtils, dummy, Api;
+  var api = require('app/api.js');
+  var search, TestUtils, dummy;
 
   beforeEach(function() {
     var React = require('react');
-    Api = require('../../api.js');
-    var CompanySearch = require('../company.search.jsx');
     TestUtils = require('react-addons-test-utils');
+    var CompanySearch = require('../company.search.jsx');
     dummy = jest.genMockFunction();
     search = TestUtils.renderIntoDocument(
       <CompanySearch onSelect={dummy} />
@@ -17,24 +17,25 @@ describe('Company Search Tests', function() {
   });
 
   afterEach(function() {
-    expect(Api.__getPending()).toEqual([]);
+    expect(api.getPending()).toEqual([]);
   });
 
-  it('should trigger select', function() {
+  pit('should trigger select', function() {
+    var company = {name: 'Patanjali', id: 7, url: '/ramdev/'};
+    api.setResponse('/api/company/search/?q=Patanjali', JSON.stringify([company]));
     var input = TestUtils.findRenderedDOMComponentWithTag(
       search, 'input'
     );
-    var company = {name: 'Patanjali', id: 7, url: '/ramdev/'};
-    var req = {
-      url: ['company', 'search'],
-      load: {q: 'Patanjali'}
-    }
-    Api.__setResponse(req, [company]);
     input.value = 'Patanjali';
     TestUtils.Simulate.change(input, {target: {value: 'Patanjali'}});
-    jest.runAllTimers();
-    TestUtils.Simulate.keyDown(input, {key: "Enter", keyCode: 13, which: 13});
-    expect(dummy).toBeCalledWith(company);
+    jest.runAllTimers(); // for debounce
+    return search.req.then(() => {
+      expect(window.fetch).toBeCalled();
+      expect(window.fetch.mock.calls[0][0]).toBe('/api/company/search/?q=Patanjali')
+      TestUtils.Simulate.keyDown(input, {key: "Enter", keyCode: 13, which: 13});
+      expect(dummy).toBeCalled();
+      expect(dummy).toBeCalledWith(company);
+    })
   });
 
 });

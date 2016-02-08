@@ -4,7 +4,7 @@
 var React = require('react');
 var WatchlistButton = require('app/modals/watchlist.button.jsx');
 var ManageColumns = require('app/modals/columns.modal.jsx');
-var Api = require('./api.js');
+var api = require('app/api.js');
 var Utils = require('app/components/utils.js');
 var UserTable = require('./screens/table.jsx');
 
@@ -18,23 +18,23 @@ var Watchlist = React.createClass({
   componentDidMount: function() {
     if(!window.loggedIn)
       return (window.location = '/register/');
-    this.fetchResults(this.props.location.search);
+    return this.fetchResults(this.props.location.query);
   },
 
   componentWillReceiveProps: function(props) {
-    this.fetchResults(props.location.search);
+    return this.fetchResults(props.location.query);
   },
 
   handleChange: function() {
-    this.fetchResults('');
+    return this.fetchResults();
   },
 
   fetchResults: function(params) {
-    var url = '/api/users/watchlist/' + params;
-    Api.get(url, params).then(function(response) {
-      this.setState({screen: response});
+    var url = '/users/watchlist/';
+    return api.get(url, params).then(resp => {
+      this.setState({screen: resp});
       Utils.setTitle('Watchlist');
-    }.bind(this));
+    });
   },
 
   render: function() {

@@ -1,30 +1,32 @@
 'use strict';
-jest.dontMock('../screens.jsx');
+jest.autoMockOff();
+jest.mock('fetch-on-rest');
+
 
 describe('Screens Tests', function() {
-  var screens, TestUtils, dummy, Api;
+  var api = require('../../api.js');
+  var screens, TestUtils;
 
   beforeEach(function() {
     var React = require('react');
-    Api = require('../../api.js');
     var Screens = require('../screens.jsx');
     TestUtils = require('react-addons-test-utils');
-    dummy = jest.genMockFunction();
     screens = TestUtils.renderIntoDocument(<Screens />);
   });
 
   afterEach(function() {
-    expect(Api.__getPending()).toEqual([]);
+    expect(api.getPending()).toEqual([]);
   });
 
-  it('should fetch screens', function() {
+  pit('should fetch screens', function() {
     var results = [
       {url: '/foo/', name: 'Foo', description: 'FooBar'},
-      {url: '/bar/', name: 'Bar', description: 'BarOne'},
+      {url: '/bar/', name: 'Bar', description: 'BarOne'}
     ];
-    Api.__setResponse(['screens', 'popular'], {results: results});
-    jest.runAllTimers();
-    expect(screens.state.screens.results).toEqual(results);
+    api.setResponse('/api/screens/popular/', JSON.stringify({results: results}));
+    return screens.componentDidMount().then(() => {
+      expect(screens.state.screens.results).toEqual(results);
+    })
   });
 
 });

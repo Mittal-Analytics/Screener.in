@@ -3,62 +3,51 @@
 var React = require('react');
 var Modal = require('app/components/modal.jsx');
 var CompanySearch = require('app/components/company.search.jsx');
-var Api = require('../api.js');
+var api = require('../api.js');
 var ActionRows = require('./action.rows.jsx');
 
 
-var WatchlistButton = React.createClass({
-  propTypes: {
-    onClose: React.PropTypes.func.isRequired,
-    style: React.PropTypes.string,
-  },
+class WatchlistButton extends React.Component {
 
-  getInitialState: function() {
-    return {
-      items: [],
-    };
-  },
+  constructor() {
+    super();
+    this.state = {items: []};
+  }
 
-  onOpen: function() {
-    Api.get(['company']).then(function(response) {
-      this.setState({
-        items: response,
-      });
-    }.bind(this));
-  },
+  onOpen() {
+    this.req = api.get('company').then(resp => {
+      this.setState({items: resp});
+    });
+  }
 
-  onClose: function() {
-    this.props.onClose();
-  },
-
-  handleAdd: function(company) {
-    Api.post(Api.cid(company.id, 'favorite')).then(function() {
+  handleAdd(company) {
+    var url = api.cid(company.id, 'favorite');
+    return api.post(url).then(() => {
       this.setState({
         items: this.state.items.concat([company])
       });
-    }.bind(this));
+    });
+  }
 
-  },
+  handleRemove(company) {
+    return api.post(api.cid(company.id, 'unfavorite'));
+  }
 
-  handleRemove: function(company) {
-    return Api.post(Api.cid(company.id, 'unfavorite'));
-  },
-
-  getDisplayName: function(item) {
+  getDisplayName(item) {
     return item.name;
-  },
+  }
 
-  render: function() {
+  render() {
     var style = this.props.style || 'default';
     return <Modal
       style={style}
       icon="plus"
       name="Add Companies"
-      onOpen={this.onOpen}
-      onClose={this.onClose}
+      onOpen={this.onOpen.bind(this)}
+      onClose={this.props.onClose}
       >
       <div>
-        <CompanySearch onSelect={this.handleAdd} large={true} />
+        <CompanySearch onSelect={this.handleAdd.bind(this)} large={true} />
         <br />
         <ActionRows
           items={this.state.items}
@@ -68,6 +57,13 @@ var WatchlistButton = React.createClass({
       </div>
     </Modal>;
   }
-});
+}
+
+
+WatchlistButton.propTypes = {
+  onClose: React.PropTypes.func.isRequired,
+  style: React.PropTypes.string
+};
+
 
 module.exports = WatchlistButton;

@@ -3,17 +3,16 @@
 jest.dontMock('../action.rows.jsx');
 
 describe('action.rows Tests', function() {
-  var actions, TestUtils, dummy, Api;
+  var actions, TestUtils, dummy;
 
   beforeEach(function() {
     var React = require('react');
-    Api = require('../../api.js');
     var ActionRows = require('../action.rows.jsx');
     TestUtils = require('react-addons-test-utils');
     dummy = jest.genMockFunction();
     var items = [
       {name: 'Foo'},
-      {name: 'Bar'},
+      {name: 'Bar'}
     ];
     function getDisplayName(item){
       return item.name;
@@ -24,10 +23,6 @@ describe('action.rows Tests', function() {
         getDisplayName={getDisplayName}
         handleRemove={dummy} />
     );
-  });
-
-  afterEach(function() {
-    expect(Api.__getPending()).toEqual([]);
   });
 
   it('should render two rows', function() {

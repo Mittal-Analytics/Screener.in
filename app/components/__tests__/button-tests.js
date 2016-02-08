@@ -3,12 +3,11 @@
 jest.dontMock('../button.jsx');
 
 describe('button Tests', function() {
-  var button, TestUtils, dummy, Api;
+  var button, TestUtils, dummy;
 
   beforeEach(function() {
     var React = require('react');
     var ReactDOM = require('react-dom');
-    Api = require('../../api.js');
     var Button = require('../button.jsx');
     TestUtils = require('react-addons-test-utils');
     dummy = jest.genMockFunction();
@@ -22,10 +21,6 @@ describe('button Tests', function() {
     </div>);
     var domNode = ReactDOM.findDOMNode(button);
     button = domNode.getElementsByTagName('button')[0];
-  });
-
-  afterEach(function() {
-    expect(Api.__getPending()).toEqual([]);
   });
 
   it('should trigger click', function() {

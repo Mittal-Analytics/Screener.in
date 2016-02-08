@@ -1,49 +1,49 @@
 "use strict";
 var React = require('react');
 var Link = require('react-router/lib/Link');
-var Button = require('app/components/button.jsx');
-var Api = require('../api.js');
+var api = require('app/api.js');
 var Utils = require('app/components/utils.js');
 var Icon = require('app/components/icon.jsx');
 var Alert = require('app/components/alerts.jsx');
 
 
-var Profile = React.createClass({
-  getInitialState: function() {
-    return {
+class Profile extends React.Component {
+  constructor() {
+    super();
+    this.state = {
       form: {__html: '<h3>Loading...</h3>'},
       saved: false,
-      errors: false,
+      errors: false
     };
-  },
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     if(!window.loggedIn)
       return (window.location = '/register/');
     Utils.setTitle('Profile');
-    var url = '/api/users/' + window.userId + '.html';
-    Api.raw(url).then(function(response) {
+    var url = '/users/' + window.userId + '.html';
+    return api.rawGet(url).then(resp => {
       this.setState({
-        form: {__html: response}
+        form: {__html: resp}
       });
-    }.bind(this));
-  },
+    });
+  }
 
-  handleSubmit: function(event) {
+  handleSubmit(event) {
     event.preventDefault();
     var data = Utils.getFormData(this.refs.form);
     var url = ['users', window.userId];
-    Api.patch(url, data).then(
-      function(response) {
+    api.patch(url, data).then(
+      () => {
         this.setState({saved: true, errors: false});
-      }.bind(this),
-      function(response) {
-        this.setState({errors: response, saved: false});
-      }.bind(this)
+      },
+      resp => {
+        this.setState({errors: resp, saved: false});
+      }
     );
-  },
+  }
 
-  render: function() {
+  render() {
     var saved = this.state.saved && <h3>Changes Saved</h3>;
     return <div className="row">
         <div className="col-md-6 col-md-offset-3">
@@ -62,12 +62,12 @@ var Profile = React.createClass({
           </Link>
         </p>
 
-        <form onSubmit={this.handleSubmit} ref="form">
+        <form onSubmit={this.handleSubmit.bind(this)} ref="form">
           <Alert errors={this.state.errors} />
           <input
             type="hidden"
             name="csrfmiddlewaretoken"
-            value={Api.getCsrf()}
+            value={api.getCsrf()}
           />
           <div dangerouslySetInnerHTML={this.state.form} />
           <button
@@ -79,7 +79,7 @@ var Profile = React.createClass({
       </div>
     </div>;
   }
-});
+}
 
 
 module.exports = Profile;

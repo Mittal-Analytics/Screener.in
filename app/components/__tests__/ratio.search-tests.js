@@ -1,13 +1,14 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../ratio.search.jsx');
+jest.autoMockOff();
+jest.mock('fetch-on-rest');
+
 
 describe('Ratio Search Tests', function() {
-  var RatioSearch, search, TestUtils, dummy, Api;
+  var api = require('app/api.js');
+  var RatioSearch, search, TestUtils, dummy, React;
 
   beforeEach(function() {
-    var React = require('react');
-    Api = require('../../api.js');
+    React = require('react');
     RatioSearch = require('../ratio.search.jsx');
     TestUtils = require('react-addons-test-utils');
     dummy = jest.genMockFunction();
@@ -18,11 +19,10 @@ describe('Ratio Search Tests', function() {
   });
 
   afterEach(function() {
-    expect(Api.__getPending()).toEqual([]);
+    expect(api.getPending()).toEqual([]);
   });
 
   it('should show login required', function() {
-    var React = require('react');
     window.loggedIn = false;
     search = TestUtils.renderIntoDocument(
       <RatioSearch onSelect={dummy} />
@@ -34,21 +34,19 @@ describe('Ratio Search Tests', function() {
     expect(divs.textContent).toEqual('Please login to use this feature.');
   });
 
-  it('should trigger select', function() {
+  pit('should trigger select', function() {
     var input = TestUtils.findRenderedDOMComponentWithTag(
       search, 'input'
     );
     var ratio = {name: 'Patanjali', id: 7, url: '/ramdev/'};
-    var req = {
-      url: Api.ratioSearch,
-      load: {q: 'Patanjali'}
-    };
-    Api.__setResponse(req, [ratio]);
+    api.setResponse('/api/ratios/search/?q=Patanjali',
+      JSON.stringify([ratio]));
     input.value = 'Patanjali';
     TestUtils.Simulate.change(input, {target: {value: 'Patanjali'}});
-    jest.runAllTimers();
-    TestUtils.Simulate.keyDown(input, {key: "Enter", keyCode: 13, which: 13});
-    expect(dummy).toBeCalledWith(ratio);
+    jest.runAllTimers(); // debounce;
+    return search.req.then(() => {
+      TestUtils.Simulate.keyDown(input, {key: "Enter", keyCode: 13, which: 13});
+      expect(dummy).toBeCalledWith(ratio);
+    })
   });
-
 });

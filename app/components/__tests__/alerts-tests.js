@@ -3,14 +3,12 @@
 jest.dontMock('../alerts.jsx');
 
 describe('alerts Tests', function() {
-  var alerts, TestUtils, dummy, Api;
+  var alerts, TestUtils;
 
   beforeEach(function() {
     var React = require('react');
-    Api = require('../../api.js');
     var Alert = require('../alerts.jsx');
     TestUtils = require('react-addons-test-utils');
-    dummy = jest.genMockFunction();
     var errors = new Error('Bad request');
     errors.json = {
       display_name: 'cannot be blank'
@@ -20,10 +18,6 @@ describe('alerts Tests', function() {
     </div>);
     var ReactDOM = require('react-dom');
     alerts = ReactDOM.findDOMNode(alerts);
-  });
-
-  afterEach(function() {
-    expect(Api.__getPending()).toEqual([]);
   });
 
   it('should show alerts', function() {

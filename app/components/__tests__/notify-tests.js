@@ -1,19 +1,22 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../notify.jsx');
+/* global setTimeout */
+jest.dontMock('app/components/button.jsx');
 
 describe('Notify Tests', function() {
-  var notify, button, TestUtils, dummy, Api;
+  var notify, button, TestUtils, dummy;
+
+  var delayed = function() {
+    return new Promise(function(resolve) {
+      setTimeout(() => resolve(true), 5000);
+    });
+  };
 
   beforeEach(function() {
     var React = require('react');
-    Api = require('../../api.js');
-    var Notify = require('../notify.jsx');
+    var Notify = require.requireActual('../notify.jsx');
     TestUtils = require('react-addons-test-utils');
     dummy = jest.genMockFunction()
-      .mockImplementation(function() {
-        return Api.get('/foo/');
-      });
+      .mockImplementation(delayed);
     notify = TestUtils.renderIntoDocument(
       <Notify
         style="primary"
@@ -27,20 +30,16 @@ describe('Notify Tests', function() {
     );
   });
 
-  afterEach(function() {
-    expect(Api.__getPending()).toEqual([]);
-  });
-
-  it('should show proceccsing', function() {
+  pit('should show proceccsing', function() {
     expect(dummy).not.toBeCalled();
     expect(notify.state.status).toBe('initial');
     TestUtils.Simulate.click(button);
     expect(dummy).toBeCalled();
     expect(notify.state.status).toBe('pending');
-    Api.__setResponse('/foo/', true);
     jest.runAllTimers();
-    expect(notify.state.status).toBe('done');
+    return notify.req.then(() => {
+      expect(notify.state.status).toBe('done');
+    });
   });
-
 
 });

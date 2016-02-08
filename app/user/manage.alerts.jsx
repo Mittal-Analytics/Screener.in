@@ -1,51 +1,52 @@
 "use strict";
 var React = require('react');
-var Api = require('../api.js');
+var api = require('../api.js');
 var ActionRows = require('app/modals/action.rows.jsx');
 var Utils = require('app/components/utils.js');
 var Button = require('app/components/button.jsx');
 
 
-var Alerts = React.createClass({
-  getInitialState: function() {
-    return {
+class Alerts extends React.Component {
+  constructor() {
+    super();
+    this.state = {
       screens: false,
-      watchlistAlert: true,
+      watchlistAlert: true
     };
-  },
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     if(!window.loggedIn)
       return (window.location = '/register/');
     Utils.setTitle('Manage Alerts');
-    Api.get(['alerts']).then(function(response) {
-      this.setState({screens: response});
-    }.bind(this));
-    Api.get(['users', 'me']).then(function(response) {
+    api.get(['alerts']).then(resp => {
+      this.setState({screens: resp});
+    });
+    return api.get(['users', 'me']).then(resp => {
       this.setState({
-        watchlistAlert: response.watchlist_alert
+        watchlistAlert: resp.watchlist_alert
       });
-    }.bind(this));
-  },
+    });
+  }
 
-  getDisplayName: function(item) {
+  getDisplayName(item) {
     return item.name;
-  },
+  }
 
-  handleRemove: function(item) {
-    return Api.delete(['alerts', item.id]);
-  },
+  handleRemove(item) {
+    return api.delete(['alerts', item.id]);
+  }
 
-  handleWatchlistToggle: function() {
+  handleWatchlistToggle() {
     var newValue = !this.state.watchlistAlert;
     var url = ['users', window.userId];
     var data = {watchlist_alert: newValue};
-    Api.patch(url, data).then(function(response) {
+    return api.patch(url, data).then(() => {
       this.setState({watchlistAlert: newValue});
-    }.bind(this));
-  },
+    });
+  }
 
-  render: function() {
+  render() {
     var current, toggle, btnCls, actions;
     if(this.state.watchlistAlert) {
       current = 'Enabled';
@@ -72,13 +73,13 @@ var Alerts = React.createClass({
       <h3>
         Watchlist alerts are currently {current}: <Button
           style={btnCls}
-          onClick={this.handleWatchlistToggle}
+          onClick={this.handleWatchlistToggle.bind(this)}
           name={toggle}
         />
       </h3>
     </div>;
   }
-});
+}
 
 
 module.exports = Alerts;

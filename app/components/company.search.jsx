@@ -2,7 +2,7 @@
 /* global require, window */
 var React = require('react');
 var classNames = require('classnames');
-var Api = require('../api.js');
+var api = require('app/api.js');
 var Typeahead = require('./typeahead.jsx');
 var Icon = require('./icon.jsx');
 
@@ -11,7 +11,7 @@ var CompanySearch = React.createClass({
   propTypes: {
     onSelect: React.PropTypes.func.isRequired,
     large: React.PropTypes.bool,
-    placeholder: React.PropTypes.string,
+    placeholder: React.PropTypes.string
   },
 
   getInitialState: function() {
@@ -19,10 +19,9 @@ var CompanySearch = React.createClass({
   },
 
   onChange: function(term) {
-    Api.get(Api.search, {q: term})
-      .then(function(response){
-        this.setState({options: response});
-      }.bind(this));
+    this.req = api.get(api.search, {q: term}).then(
+      resp => this.setState({options: resp})
+    );
   },
 
   onSelect: function(idx) {

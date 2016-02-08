@@ -1,9 +1,19 @@
 "use strict";
-/* global require, window, jest */
-jest.dontMock('../peers.jsx');
+jest.autoMockOff();
+jest.mock('fetch-on-rest');
 
 describe('Peers tests', function () {
-  it('renders a peers table', function() {
+  var api = require('app/api.js');
+  var peerResults = {
+    ratios: [],
+    results: []
+  };
+
+  afterEach(function() {
+    expect(api.getPending()).toEqual([]);
+  });
+
+  pit('renders a peers table', function() {
     var React = require('react');
     var ReactDOM = require('react-dom');
     var TestUtils = require('react-addons-test-utils');
@@ -12,7 +22,11 @@ describe('Peers tests', function () {
     var peers = TestUtils.renderIntoDocument(
       <Peers {...props} />
     );
-    var dom = ReactDOM.findDOMNode(peers);
-    expect(dom.textContent).toContain('Peer Comparison ');
+    api.setResponse('/api/company/22/peers/?industry=Hi',
+      JSON.stringify(peerResults));
+    return peers.componentDidMount().then(() => {
+      var dom = ReactDOM.findDOMNode(peers);
+      expect(dom.textContent).toContain('Peer Comparison ');
+    })
   });
 });

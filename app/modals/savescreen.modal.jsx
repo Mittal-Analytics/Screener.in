@@ -19,16 +19,16 @@ var SaveScreenModal = React.createClass({
   getInitialState: function() {
     return {
       form: {__html: '<h3>Loading...</h3>'},
-      errors: false,
+      errors: false
     };
   },
 
   onOpen: function() {
-    Api.raw('/api/screens.html').then(function(response) {
+    return Api.rawGet('screens.html').then(resp => {
       this.setState({
-        form: {__html: response}
+        form: {__html: resp}
       });
-    }.bind(this));
+    });
   },
 
   onClose: function() {},

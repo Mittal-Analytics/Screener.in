@@ -1,16 +1,16 @@
 'use strict';
 /* global jest, require */
-jest.dontMock('../manage.alerts.jsx');
+jest.autoMockOff();
+jest.mock('fetch-on-rest');
 
 describe('alerts Tests', function() {
-  var alerts, TestUtils, dummy, Api;
+  var api = require('../../api.js');
+  var alerts, TestUtils;
 
   beforeEach(function() {
     var React = require('react');
-    Api = require('../../api.js');
     var ManageAlerts = require('../manage.alerts.jsx');
     TestUtils = require('react-addons-test-utils');
-    dummy = jest.genMockFunction();
     window.loggedIn = true;
     window.userId = 7;
     alerts = TestUtils.renderIntoDocument(
@@ -19,22 +19,28 @@ describe('alerts Tests', function() {
   });
 
   afterEach(function() {
-    expect(Api.__getPending()).toEqual([]);
+    expect(api.getPending()).toEqual([]);
   });
 
-  it("should get user's alerts", function() {
-    Api.__setResponse(['users', 'me'], {watchlist_alert: false});
-    Api.__setResponse(['alerts'], {results: [{name: 'Foo'}]});
-    jest.runAllTimers();
-    expect(alerts.state.watchlistAlert).toBe(false);
-    alerts.handleWatchlistToggle();
-    var req = {
-      url: ['users', 7],
-      load: {watchlist_alert: true}
-    };
-    Api.__setResponse(req, true);
-    jest.runAllTimers();
-    expect(alerts.state.watchlistAlert).toBe(true);
+  pit("should get user's alerts", function() {
+    api.setResponse('/api/users/me/', JSON.stringify({
+      watchlist_alert: false}));
+    api.setResponse('/api/alerts/', JSON.stringify(
+      {results: [{name: 'Foo'}]}));
+    return alerts.componentDidMount().then(() => {
+      expect(alerts.state.watchlistAlert).toBe(false);
+    })
   });
+
+  pit("should toggle watchlist alerts", function() {
+    window.fetch.mockClear();
+    api.setResponse('/api/users/7/', '{}');
+    return alerts.handleWatchlistToggle().then(() => {
+      expect(window.fetch.mock.calls[0][1].method).toEqual('patch');
+      expect(window.fetch.mock.calls[0][1].body).toEqual(
+        '{"watchlist_alert":false}');
+      expect(alerts.state.watchlistAlert).toBe(false);
+    });
+  })
 
 });
