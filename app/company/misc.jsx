@@ -13,11 +13,9 @@ function CompanyHeader(props) {
     icon="heart"
     onClick={props.handleFavorite.bind(null, company.id)}
     name="Add to Watchlist" />;
-  var fileName = company.small_name.replace('.', ' ').trim();
   var excelButton = <a
-    download={`${fileName}.xlsx`}
     className="btn btn-info"
-    href={`/api/company/${company.warehouse_set.id}/excel/`}>
+    href={`/excel/${company.warehouse_set.id}/`}>
     <Icon name="save" /> Export to Excel
   </a>;
   var status = company.warehouse_set.status;
