@@ -1,36 +1,33 @@
 "use strict";
-/* global require, document */
-
 var React = require('react');
 var classNames = require('classnames');
 var Button = require('app/components/button.jsx');
 
-var Confirm = React.createClass({
-  propTypes: {
-    onClick: React.PropTypes.func.isRequired,
-    style: React.PropTypes.string,
-    icon: React.PropTypes.string,
-    name: React.PropTypes.string.isRequired,
-  },
 
-  getInitialState: function() {
-    return {showConfirm: false};
-  },
+class Confirm extends React.Component {
 
-  handleShowConfirm: function() {
+  constructor() {
+    super();
+    this.state = {showConfirm: false};
+    this.handleShowConfirm = this.handleShowConfirm.bind(this);
+    this.handleConfirm = this.handleConfirm.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+  }
+
+  handleShowConfirm() {
     this.setState({showConfirm: true});
-  },
+  }
 
-  handleConfirm: function() {
+  handleConfirm() {
     this.setState({showConfirm: false});
     this.props.onClick();
-  },
+  }
 
-  handleCancel: function() {
+  handleCancel() {
     this.setState({showConfirm: false});
-  },
+  }
 
-  render: function() {
+  render() {
     var part1cls = classNames({hide: this.state.showConfirm});
     var part2cls = classNames({hide: !this.state.showConfirm});
     var icon = this.props.icon || "trash";
@@ -56,6 +53,13 @@ var Confirm = React.createClass({
       </span>
     </span>;
   }
-});
+}
+
+Confirm.propTypes = {
+  onClick: React.PropTypes.func.isRequired,
+  style: React.PropTypes.string,
+  icon: React.PropTypes.string,
+  name: React.PropTypes.string.isRequired
+};
 
 module.exports = Confirm;
