@@ -44,15 +44,13 @@ describe('test REST apis', function () {
   });
 
   pit('calls the delete api', function() {
-    api.setResponse('/api/screens/33/', "{}");
+    api.setResponse('/api/screens/33/?foo=bar', "{}");
     return api.delete(['screens', 33], {foo: 'bar'}).then(() => {
       expect(window.fetch).toBeCalledWith(
-        '/api/screens/33/',
-        { body: '{"foo":"bar"}',
-          credentials: 'same-origin',
+        '/api/screens/33/?foo=bar',
+        { credentials: 'same-origin',
           headers: {
             Accept: 'application/json',
-            "Content-Type": 'application/json',
             'X-CSRFToken': ''
           },
           method: 'delete'
