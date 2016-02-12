@@ -1,7 +1,6 @@
 'use strict';
-/* global require, document, process */
-var React = require('react');
-var uniqueId = require('lodash/uniqueId');
+/* global process */
+
 
 function setTitle(title) {
   var fullTitle = title.trim() + ' - Screener.in';

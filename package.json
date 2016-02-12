@@ -11,7 +11,7 @@
     "fetch-on-rest": "^1.6.2",
     "history": "1.17.0",
     "jest-cli": "0.8.2",
-    "lodash": "4.3.0",
+    "lodash": "3.10.1",
     "react": "0.14.7",
     "react-addons-test-utils": "0.14.7",
     "react-bootstrap": "0.28.3",

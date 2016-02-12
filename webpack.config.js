@@ -37,11 +37,9 @@ module.exports = function(){
   if(isProduction)
     plugins.push(setProductionEnv);
 
-  var babel = 'babel?presets[]=react,presets[]=es2015';
-  var loader = [babel];
 	var loaders = [
-    {test: /\.jsx$/, loaders: loader, exclude: /(node_modules)/},
-    {test: /\.js$/, loaders: loader, exclude: /(node_modules)/}
+    { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"},
+    { test: /\.jsx$/, exclude: /node_modules/, loader: "babel-loader"}
   ];
 
   return {

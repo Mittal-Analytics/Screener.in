@@ -5,7 +5,7 @@ var Api = require('../api.js');
 var Link = require('react-router/lib/Link');
 var classNames = require('classnames');
 var Utils = require('app/components/utils.js');
-var merge = require('lodash/defaults');
+var merge = require('lodash/object/defaults');
 
 
 function getCaption(report) {

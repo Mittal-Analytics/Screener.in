@@ -2,7 +2,7 @@
 var React = require('react');
 var Api = require('../api.js');
 var TypeaheadMixin = require('app/components/typeahead.mixin.jsx');
-var debounce = require('lodash/debounce');
+var debounce = require('lodash/function/debounce');
 var getLastWord = require('./cursor.js');
 var classNames = require('classnames');
 

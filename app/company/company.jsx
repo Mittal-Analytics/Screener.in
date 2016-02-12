@@ -2,7 +2,7 @@
 /* global require */
 
 var React = require('react');
-var isEqual = require('lodash/isEqual');
+var isEqual = require('lodash/lang/isEqual');
 var Utils = require('app/components/utils.js');
 var Api = require('../api.js');
 var Misc = require('./misc.jsx');
