@@ -20,6 +20,7 @@ class Screen extends React.Component {
       screen: false
     };
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleAlert = this.handleAlert.bind(this);
     this.onColumnsChange = this.onColumnsChange.bind(this);
   }
 

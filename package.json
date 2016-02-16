@@ -7,7 +7,7 @@
     "babel-jest": "6.0.1",
     "chartist": "0.9.5",
     "classnames": "2.2.3",
-    "es6-promise": "3.0.2",
+    "es6-promise": "3.1.2",
     "fetch-on-rest": "1.6.3",
     "history": "1.17.0",
     "jest-cli": "0.8.2",
