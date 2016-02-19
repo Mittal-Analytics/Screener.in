@@ -98,14 +98,16 @@ var Results = React.createClass({
       }.bind(this));
   },
 
-  renderRow: function(trailing, dates, isChild, row, idx) {
+  renderRow: function(trailing, dates, childIdx, row, idx) {
     var field = row[0];
     var schedules = this.state.schedules[field];
     var rowClass = classNames({
       'mom': schedules,
-      'child': isChild,
+      'child': childIdx !== false,
       'strong': highlights.indexOf(field) >= 0,
-      'percent': percents.indexOf(field) >= 0});
+      'percent': percents.indexOf(field) >= 0,
+      'odd': ( childIdx === false ? idx : childIdx ) % 2 == 0
+    });
     var Cells = dates.map(function(rdt, iidx) {
       return <td key={iidx}>{Utils.toLocalNumber(row[1][rdt])}</td>;
     });
@@ -116,7 +118,7 @@ var Results = React.createClass({
       </td>
       {Cells}
       {TTMCell}
-    </tr>, schedules && schedules.map(this.renderRow.bind(this, trailing, dates, true))];
+    </tr>, schedules && schedules.map(this.renderRow.bind(this, trailing, dates, idx))];
   },
 
   render: function () {
@@ -141,7 +143,7 @@ var Results = React.createClass({
       </h2>
 
       <div className="table-responsive">
-        <table className="table table-striped table-hover">
+        <table className="table">
           <thead>
             <tr>
               <th />
