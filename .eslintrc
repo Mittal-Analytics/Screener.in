@@ -1,7 +1,4 @@
 {
-  # User recommended
-  extends: "eslint:recommended",
-
   # use babel as parser
   # https://github.com/babel/babel-eslint
   parser: "babel-eslint",
@@ -11,6 +8,7 @@
   "plugins": [
     "react"
   ],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
 
   # Global variables: false means that these are read-only
   globals: {
