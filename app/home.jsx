@@ -34,7 +34,8 @@ function Home(props) {
         Kalyani Steels</a>, <a href="company/SRIPIPES/">
         Srikalahasthi Pipes</a>, <a href="company/SHILPAMED/">
         Shilpa Medicare</a>, <a href="company/504959/">
-        Stovec Inds.</a>...
+        Stovec Inds.</a>, <a href="company/TORNTPOWER/">
+        Torrent Power</a>...
       </p>
     </div>
     <div className="row text-center home-footer">
