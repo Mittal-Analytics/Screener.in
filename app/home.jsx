@@ -28,14 +28,13 @@ function Home(props) {
       <br />
       <p className="lead">
         Or Analyse: <a href="company/AVANTIFEED/">
-        Avanti Feeds</a>, <a href="company/KITEX/">
-        Kitex Garments</a>, <a href="company/MPSLTD/">
-        MPS Ltd</a>, <a href="company/SHILPAMED/">
-        Shilpa Medicare</a>, <a href="company/506579/">
-        Oriental Carbon</a>, <a href="company/523323/">
-        Kovai Medical</a>, <a href="company/ASTRAL/">
-        Astral Poly Technik</a>, <a href="company/POLYMED/">
-        Poly Medicure</a>...
+        Avanti Feeds</a>, <a href="company/AYMSYNTEX/">
+        AYM Syntex</a>, <a href="company/CANFINHOME/">
+        Can-Fin Homes</a>, <a href="company/KSL/">
+        Kalyani Steels</a>, <a href="company/SRIPIPES/">
+        Srikalahasthi Pipes</a>, <a href="company/SHILPAMED/">
+        Shilpa Medicare</a>, <a href="company/504959/">
+        Stovec Inds.</a>...
       </p>
     </div>
     <div className="row text-center home-footer">
