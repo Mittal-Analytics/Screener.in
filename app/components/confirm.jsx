@@ -6,8 +6,8 @@ var Button = require('app/components/button.jsx');
 
 class Confirm extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
     this.state = {showConfirm: false};
     this.handleShowConfirm = this.handleShowConfirm.bind(this);
     this.handleConfirm = this.handleConfirm.bind(this);

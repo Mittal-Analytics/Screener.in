@@ -4,7 +4,7 @@
 var React = require('react');
 var WatchlistButton = require('app/modals/watchlist.button.jsx');
 var QueryBuilder = require('app/screens/builder.jsx');
-var Link = require('react-router/lib/Link');
+var Link = require('react-router').Link;
 var Utils = require('app/components/utils.js');
 var Api = require('./api.js');
 

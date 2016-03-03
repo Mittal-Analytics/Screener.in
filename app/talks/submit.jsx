@@ -6,7 +6,7 @@ var Alerts = require('app/components/alerts.jsx');
 var Icon = require('app/components/icon.jsx');
 
 
-function Header(props) {
+function Header() {
   return <div>
     <h2 className="page-header">
       Add a Link
@@ -28,24 +28,27 @@ function Header(props) {
 
 
 
-var SubmitTalk = React.createClass({
-  getInitialState: function() {
-    return {
-      form: {__html: '<h3>Loading</h3>'},
-      errors: false,
-    };
-  },
+class SubmitTalk extends React.Component {
 
-  handleUrlVals: function() {
+  constructor(props, context) {
+    super(props, context);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      form: {__html: '<h3>Loading</h3>'},
+      errors: false
+    };
+  }
+
+  handleUrlVals() {
     for (var i = 0; i < this.refs.form.elements.length; i++) {
       var elem = this.refs.form.elements[i];
       var urlVal = this.props.location.query[elem.name];
       if(urlVal)
         elem.value = urlVal;
     }
-  },
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     if(!window.loggedIn)
       window.location = '/register/';
     Utils.setTitle('Submit Talk');
@@ -54,22 +57,22 @@ var SubmitTalk = React.createClass({
         form: {__html: resp}
       }, this.handleUrlVals);
     });
-  },
+  }
 
-  handleSubmit: function(event) {
+  handleSubmit(event) {
     event.preventDefault();
     var data = Utils.getFormData(this.refs.form);
     api.post(['talks'], data).then(
-      function(response) {
-        this.props.history.pushState(null, '/talks/latest/');
+      function() {
+        this.context.router.push('/talks/latest/');
       }.bind(this),
       function(errors) {
         this.setState({errors: errors});
       }.bind(this)
     );
-  },
+  }
 
-  render: function() {
+  render() {
     var formCls = this.state.errors && 'has-error';
     return <div>
       <Header />
@@ -93,7 +96,11 @@ var SubmitTalk = React.createClass({
       </form>
     </div>;
   }
-});
+}
+
+SubmitTalk.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
 
 
 module.exports = SubmitTalk;

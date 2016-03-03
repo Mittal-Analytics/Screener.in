@@ -2,7 +2,7 @@
 /* global require, window, document */
 
 var React = require('react');
-var Link = require('react-router/lib/Link');
+var Link = require('react-router').Link;
 var Utils = require('app/components/utils.js');
 var defaults = require('lodash/defaults');
 var classNames = require('classnames');
@@ -11,10 +11,10 @@ var classNames = require('classnames');
 function Pagination(props) {
   var page = props.page;
   var limits = [15, 30, 50].map(function(limit, idx) {
-    var url = defaults({limit: limit}, props.query);
+    var query = defaults({limit: limit}, props.query);
     var classes = classNames({active: page.limit == limit});
     return <li className={classes} key={idx}>
-      <Link to={props.link} query={url}>{limit}</Link>
+      <Link to={{pathname: props.link, query: query}}>{limit}</Link>
     </li>;
   });
 
@@ -26,7 +26,7 @@ function Pagination(props) {
       disabled: pageNum == "…"
     });
     return <li className={classes} key={idx}>
-      <Link to={props.link} query={url}>{pageNum}</Link>
+      <Link to={{pathname: props.link, query: url}}>{pageNum}</Link>
     </li>;
   });
 
@@ -63,8 +63,7 @@ function UserTable(props) {
     var sorted = page.sort == ratio[0] ? page.order : '';
     return <th key={idx} className={headClass}>
       <Link
-        to={props.link}
-        query={sortOn(ratio[0])}
+        to={{pathname: props.link, query: sortOn(ratio[0])}}
         className={sorted}>
           {ratio[1]}
           <br />

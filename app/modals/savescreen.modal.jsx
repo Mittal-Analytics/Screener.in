@@ -1,7 +1,6 @@
 "use strict";
 /* global require */
 var React = require('react');
-var History = require('react-router/lib/History');
 var Button = require('app/components/button.jsx');
 var Modal = require('app/components/modal.jsx');
 var Api = require('../api.js');
@@ -9,7 +8,10 @@ var Alerts = require('app/components/alerts.jsx');
 
 
 var SaveScreenModal = React.createClass({
-  mixins: [History],
+
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
 
   propTypes: {
     screen: React.PropTypes.object.isRequired
@@ -46,7 +48,7 @@ var SaveScreenModal = React.createClass({
     data.sort = screen.sort;
     Api.post(['screens'], data).then(
       function(response) {
-        this.history.pushState(null, response.url);
+        this.context.router.push(response.url);
       }.bind(this),
       function(errors) {
         this.setState({errors: errors});

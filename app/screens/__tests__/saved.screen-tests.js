@@ -29,7 +29,7 @@ describe('Tests for Saved Screen', function() {
           pathname: '/screen/3/',
           search: '?foo=bar'
         }}
-        history={{}}
+        router={{}}
       />
     );
   });

@@ -1,86 +1,79 @@
 "use strict";
-/* global require, window */
-
 var React = require('react');
-var History = require('react-router/lib/History');
-var Link = require('react-router/lib/Link');
+var Link = require('react-router').Link;
 var Nav = require('react-bootstrap/lib/Nav');
 var Navbar = require('react-bootstrap/lib/Navbar');
 var NavbarBrand = require('react-bootstrap/lib/NavbarBrand');
-var classNames = require('classnames');
 
 var CompanySearch = require('./components/company.search.jsx');
 var Api = require('./api.js');
 
 
-var Footer = React.createClass({
-  render: function() {
-    return (
-      <footer className="footer">
-        <hr />
-        <span className="pull-right right-al no-print red">
-          Made with <i className="glyphicon glyphicon-heart" /> in <b>India</b>.
-        </span>
-        <p>
-          Navigation Links: <Link to="/">Home
-          </Link> | <Link to="/screens/">Screens
-          </Link> | <Link to="/talks/">Talks
-          </Link> | <a href="http://blog.screener.in">Change Log
-          </a> | <a href="http://dalal-street.in">Dalal-Street Blog
-          </a> | <a href="https://github.com/Mittal-Analytics/Screener.in">
-            View on Github
-          </a>
-        </p>
-        <span className="sub">
-          Data feed provided by C-MOTS Internet Technologies Pvt Ltd.
-          <br />
-          <b>DISCLAIMER:</b> Information is provided &quot;
-          <a href="http://en.wikipedia.org/wiki/As_is">as is</a>&quot;
-          and solely for informational purposes, not for trading purposes or
-          advice, and may be delayed. <a href="/disclaimer/">
-            (complete disclaimer)
-          </a>
-        </span>
-      </footer>
-    );
+function Footer() {
+  return <footer className="footer">
+    <hr />
+    <span className="pull-right right-al no-print red">
+      Made with <i className="glyphicon glyphicon-heart" /> in <b>India</b>.
+    </span>
+    <p>
+      Navigation Links: <Link to="/">Home
+      </Link> | <Link to="/screens/">Screens
+      </Link> | <Link to="/talks/">Talks
+      </Link> | <a href="http://blog.screener.in">Change Log
+      </a> | <a href="http://dalal-street.in">Dalal-Street Blog
+      </a> | <a href="https://github.com/Mittal-Analytics/Screener.in">
+        View on Github
+      </a>
+    </p>
+    <span className="sub">
+      Data feed provided by C-MOTS Internet Technologies Pvt Ltd.
+      <br />
+      <b>DISCLAIMER:</b> Information is provided &quot;
+      <a href="http://en.wikipedia.org/wiki/As_is">as is</a>&quot;
+      and solely for informational purposes, not for trading purposes or
+      advice, and may be delayed. <a href="/disclaimer/">
+        (complete disclaimer)
+      </a>
+    </span>
+  </footer>;
+}
+
+
+class Navigation extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.handleCompany = this.handleCompany.bind(this);
+    this.handleLogout = this.handelLogout.bind(this);
+    this.state = {user: {}};
   }
-});
 
-
-var Navigation = React.createClass({
-  mixins: [History],
-
-  getInitialState: function() {
-    return {user: {}};
-  },
-
-  componentDidMount: function() {
+  componentDidMount() {
     Api.get(Api.me).then(function(response) {
       var user = response;
       window.user = user;
       this.setState({user: user});
     }.bind(this));
-  },
+  }
 
-  handleCompany: function(company) {
-    this.history.pushState(null, company.url);
-  },
+  handleCompany(company) {
+    this.context.router.push(company.url);
+  }
 
-  handleLogOut: function() {
+  handelLogout() {
     Api.logout().then(function() {
       window.loggedIn = false;
       window.user = {};
       this.setState({user: window.user});
     }.bind(this));
-  },
+  }
 
-  render: function() {
+  render() {
     var user_links;
     var user = this.state.user;
     if (user.id) {
       user_links = [
         <li key={0}>
-          <a href="" onClick={this.handleLogOut}>
+          <a href="" onClick={this.handelLogout}>
             <i className="glyphicon glyphicon-off"></i>
           </a>
         </li>,
@@ -133,7 +126,12 @@ var Navigation = React.createClass({
       </Navbar>
     );
   }
-});
+}
+
+Navigation.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
 
 module.exports.Navigation = Navigation;
 module.exports.Footer = Footer;

@@ -5,8 +5,8 @@ var Button = require('app/components/button.jsx');
 
 class Confirm extends React.Component {
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {status: 'initial'};
   }
 

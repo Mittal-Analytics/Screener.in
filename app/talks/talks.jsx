@@ -1,6 +1,6 @@
 "use strict";
 var React = require('react');
-var Link = require('react-router/lib/Link');
+var Link = require('react-router').Link;
 var Utils = require('app/components/utils.js');
 var Icon = require('app/components/icon.jsx');
 var api = require('app/api.js');

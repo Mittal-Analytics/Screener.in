@@ -4,10 +4,10 @@
 var React = require('react');
 var CompanySearch = require('app/components/company.search.jsx');
 
-function Home(props) {
+function Home(props, context) {
 
   function handleCompany(company) {
-    props.history.pushState(null, company.url);
+    context.router.push(company.url);
   }
 
   return <div>

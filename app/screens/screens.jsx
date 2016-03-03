@@ -2,7 +2,7 @@
 /* global document */
 var React = require('react');
 var Button = require('app/components/button.jsx');
-var Link = require('react-router/lib/Link');
+var Link = require('react-router').Link;
 var api = require('../api.js');
 var Utils = require('app/components/utils.js');
 

@@ -9,8 +9,8 @@ var ActionRows = require('./action.rows.jsx');
 
 class WatchlistButton extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
     this.state = {items: []};
   }
 

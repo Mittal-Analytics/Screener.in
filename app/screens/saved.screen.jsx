@@ -13,8 +13,8 @@ var ScreenBase = require('./base.jsx');
 
 class Screen extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       errors: false,
       screen: false
@@ -60,7 +60,7 @@ class Screen extends React.Component {
   handleDelete() {
     var screenId = this.props.params.screenId;
     return api.delete(['screens', screenId]).then(() => {
-      this.props.history.pushState(null, '/dash/');
+      this.context.router.push('/dash/');
     });
   }
 
@@ -114,8 +114,12 @@ class Screen extends React.Component {
 
 Screen.propTypes = {
   params: React.PropTypes.object,
-  location: React.PropTypes.object,
-  history: React.PropTypes.object
+  location: React.PropTypes.object
 }
+
+Screen.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
 
 module.exports = Screen;

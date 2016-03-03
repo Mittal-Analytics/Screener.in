@@ -1,7 +1,7 @@
 "use strict";
 /* global require, window */
 var React = require('react');
-var Link = require('react-router/lib/Link');
+var Link = require('react-router').Link;
 var Api = require('../api.js');
 var Utils = require('app/components/utils.js');
 var RatioSearch = require('app/components/ratio.search.jsx');

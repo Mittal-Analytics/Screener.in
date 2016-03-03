@@ -7,8 +7,8 @@ var Button = require('app/components/button.jsx');
 
 
 class Alerts extends React.Component {
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       screens: false,
       watchlistAlert: true

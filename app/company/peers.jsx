@@ -3,7 +3,7 @@
 
 var React = require('react');
 var api = require('../api.js');
-var Link = require('react-router/lib/Link');
+var Link = require('react-router').Link;
 var Utils = require('app/components/utils.js');
 var ManageColumns = require('app/modals/columns.modal.jsx');
 

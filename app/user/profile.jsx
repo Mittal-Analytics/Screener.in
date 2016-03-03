@@ -1,6 +1,6 @@
 "use strict";
 var React = require('react');
-var Link = require('react-router/lib/Link');
+var Link = require('react-router').Link;
 var api = require('app/api.js');
 var Utils = require('app/components/utils.js');
 var Icon = require('app/components/icon.jsx');
@@ -8,8 +8,8 @@ var Alert = require('app/components/alerts.jsx');
 
 
 class Profile extends React.Component {
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       form: {__html: '<h3>Loading...</h3>'},
       saved: false,

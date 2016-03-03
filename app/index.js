@@ -1,13 +1,11 @@
 "use strict";
-/* global require, document, window */
-
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var createBrowserHistory = require('history/lib/createBrowserHistory');
-var IndexRoute = require('react-router/lib/IndexRoute');
-var Router = require('react-router/lib/Router');
-var Route = require('react-router/lib/Route');
+var Router = require('react-router').Router;
+var Route = require('react-router').Route;
+var browserHistory = require('react-router').browserHistory;
+var IndexRoute = require('react-router').IndexRoute;
 
 var Base = require('./base.jsx');
 var Home = require('./home.jsx');
@@ -23,28 +21,19 @@ var Profile = require('./user/profile.jsx');
 var ManageAlerts = require('./user/manage.alerts.jsx');
 
 
-var App = React.createClass({
-  render: function() {
-    return (
-      <div>
-        <Base.Navigation />
-        <div className="container content">
-          {this.props.children}
-          <Base.Footer />
-        </div>
-      </div>
-    );
-  }
-});
+function App(props) {
+  return <div>
+    <Base.Navigation />
+    <div className="container content">
+      {props.children}
+      <Base.Footer />
+    </div>
+  </div>;
+}
 
-var Server = React.createClass({
-  render: function() {
-    return <div></div>;
-  }
-});
 
 ReactDOM.render((
-  <Router history={createBrowserHistory()}>
+  <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
       <Route path="dash/" component={Dash} />

@@ -2,7 +2,7 @@
 /* global require, document, window */
 var React = require('react');
 var Api = require('../api.js');
-var Link = require('react-router/lib/Link');
+var Link = require('react-router').Link;
 var classNames = require('classnames');
 var Utils = require('app/components/utils.js');
 var defaults = require('lodash/defaults');
