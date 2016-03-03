@@ -1,6 +1,6 @@
 "use strict";
 var React = require('react');
-var debounce = require('lodash/function/debounce');
+var debounce = require('lodash/debounce');
 var classNames = require('classnames');
 var TypeaheadMixin = require('./typeahead.mixin.jsx');
 

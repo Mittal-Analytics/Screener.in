@@ -4,7 +4,7 @@ var Link = require('react-router/lib/Link');
 var Utils = require('app/components/utils.js');
 var Icon = require('app/components/icon.jsx');
 var api = require('app/api.js');
-var startCase = require('lodash/string/startCase');
+var startCase = require('lodash/startCase');
 
 
 function TalksHeader(props) {

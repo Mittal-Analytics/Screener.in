@@ -5,7 +5,7 @@ var Api = require('../api.js');
 var Link = require('react-router/lib/Link');
 var classNames = require('classnames');
 var Utils = require('app/components/utils.js');
-var merge = require('lodash/object/defaults');
+var defaults = require('lodash/defaults');
 
 
 function getCaption(report) {
@@ -92,7 +92,7 @@ var Results = React.createClass({
       .then(function(response) {
         if (response.length === 0)
           return;
-        var schedules = merge({}, this.state.schedules);
+        var schedules = defaults({}, this.state.schedules);
         schedules[field] = response;
         this.setState({schedules: schedules});
       }.bind(this));
