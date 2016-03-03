@@ -54,9 +54,9 @@ var Feeds = React.createClass({
       return <div className="feed-item" key={idx}>
         <Link to={row.company_url}>
           {row.company}
-        </Link> {row.verb} <Link to={row.object_url}>
+        </Link> {row.verb} <a href={row.object_url}>
           {row.title}
-        </Link> <small className="sub">{row.timesince} ago</small>
+        </a> <small className="sub">{row.timesince} ago</small>
       </div>;
     });
 
