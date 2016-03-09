@@ -46,5 +46,8 @@ function Home(props, context) {
   </div>;
 }
 
+Home.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
 
 module.exports = Home;
