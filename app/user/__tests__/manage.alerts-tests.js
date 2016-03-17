@@ -36,7 +36,7 @@ describe('alerts Tests', function() {
     window.fetch.mockClear();
     api.setResponse('/api/users/7/', '{}');
     return alerts.handleWatchlistToggle().then(() => {
-      expect(window.fetch.mock.calls[0][1].method).toEqual('patch');
+      expect(window.fetch.mock.calls[0][1].method).toEqual('PATCH');
       expect(window.fetch.mock.calls[0][1].body).toEqual(
         '{"watchlist_alert":false}');
       expect(alerts.state.watchlistAlert).toBe(false);
