@@ -10,6 +10,7 @@ var Alert = require('app/components/alerts.jsx');
 class Profile extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       form: {__html: '<h3>Loading...</h3>'},
       saved: false,
@@ -34,12 +35,8 @@ class Profile extends React.Component {
     var data = Utils.getFormData(this.refs.form);
     var url = ['users', window.userId];
     api.patch(url, data).then(
-      () => {
-        this.setState({saved: true, errors: false});
-      },
-      resp => {
-        this.setState({errors: resp, saved: false});
-      }
+      () => this.setState({saved: true, errors: false}),
+      resp => this.setState({errors: resp, saved: false})
     );
   }
 
@@ -62,7 +59,7 @@ class Profile extends React.Component {
           </Link>
         </p>
 
-        <form onSubmit={this.handleSubmit.bind(this)} ref="form">
+        <form onSubmit={this.handleSubmit} ref="form">
           <Alert errors={this.state.errors} />
           <input
             type="hidden"

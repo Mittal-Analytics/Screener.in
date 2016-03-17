@@ -9,6 +9,7 @@ var Button = require('app/components/button.jsx');
 class Alerts extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.handleWatchlistToggle = this.handleWatchlistToggle.bind(this);
     this.state = {
       screens: false,
       watchlistAlert: true
@@ -73,7 +74,7 @@ class Alerts extends React.Component {
       <h3>
         Watchlist alerts are currently {current}: <Button
           style={btnCls}
-          onClick={this.handleWatchlistToggle.bind(this)}
+          onClick={this.handleWatchlistToggle}
           name={toggle}
         />
       </h3>
