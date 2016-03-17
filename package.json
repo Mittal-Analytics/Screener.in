@@ -8,7 +8,7 @@
     "chartist": "0.9.7",
     "classnames": "2.2.3",
     "es6-promise": "3.1.2",
-    "fetch-on-rest": "1.6.3",
+    "fetch-on-rest": "1.6.4",
     "jest-cli": "0.8.2",
     "lodash": "4.6.1",
     "react": "0.14.7",
