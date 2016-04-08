@@ -42,7 +42,7 @@ class WatchlistButton extends React.Component {
     return <Modal
       style={style}
       icon="plus"
-      name="Add Companies"
+      name="Add/Remove Companies"
       onOpen={this.onOpen.bind(this)}
       onClose={this.props.onClose}
       >
