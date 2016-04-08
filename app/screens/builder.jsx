@@ -2,6 +2,7 @@
 var React = require('react');
 var Api = require('../api.js');
 var TypeaheadMixin = require('app/components/typeahead.mixin.jsx');
+var endsWith = require('lodash/endsWith');
 var debounce = require('lodash/debounce');
 var getLastWord = require('./cursor.js');
 var classNames = require('classnames');
@@ -80,11 +81,16 @@ var QueryBuilder = React.createClass({
     var fullVal = this.refs.input.value;
     var tillCursor = fullVal.substring(0, cursorPos);
     var lastWord = getLastWord(tillCursor).trim();
+    var normalized = lastWord.toLowerCase();
     this.setState({
       lastWord: lastWord,
       cursorPos: cursorPos
     });
-    if(lastWord.length >= 2) {
+    if(endsWith(normalized, ' and')) {
+      this.insertThis(' AND\n', lastWord.substr(-4));
+      return;
+    }
+    if(lastWord.length >= 2 && isNaN(lastWord)) {
       this.fetchOptions(lastWord);
       this.setState({
         hideMenu: false,
