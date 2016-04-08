@@ -1,5 +1,6 @@
 "use strict";
-/* global require, window, jest */
+jest.autoMockOff();
+jest.mock('fetch-on-rest');
 
 var kitex = {
   id: 1950,
@@ -28,11 +29,12 @@ var kitex = {
 
 
 describe('Walk tests', function () {
-  var Misc, TestUtils, api, ReactDOM;
+  var api = require('app/api.js');
+  var Misc, TestUtils, api, ReactDOM, React;
 
   beforeEach(function() {
+    React = require('react');
     ReactDOM = require('react-dom');
-    api = require.requireActual('../../api.js');
     TestUtils = require('react-addons-test-utils');
     Misc = require.requireActual('../misc.jsx');
   });
@@ -42,7 +44,6 @@ describe('Walk tests', function () {
   });
 
   it('test visible add to watchlist button', function() {
-    var React = require('react');
     var dummy = jest.genMockFunction().mockImplementation(
       function(cid) {
         return api.post(['company', cid, 'favorite']);

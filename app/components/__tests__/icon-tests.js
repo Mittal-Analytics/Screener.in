@@ -19,7 +19,7 @@ describe('icon Tests', function() {
 
   it('should render icon', function() {
     expect(icon.outerHTML).toEqual(
-      '<i class="glyphicon glyphicon-pencil" data-reactid=".0.0"></i>'
+      '<i class="glyphicon glyphicon-pencil"></i>'
     );
   });
 
