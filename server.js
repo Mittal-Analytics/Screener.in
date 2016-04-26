@@ -12,14 +12,19 @@ function onError(e) {
 var options = {
   autoRewrite: true,
   changeOrigin: true,
-  target:'http://www.screener.in',
+  target:'http://www.screener.in'
 };
 var proxy = httpProxy.createProxyServer(options);
 proxy.on('error', onError);
 
 http.createServer(function(req, res) {
   console.log('URL:', req.url);
-  if(req.url.startsWith('/static/bundle.')) {
+  if(req.url == '/static/bundle.js.map') {
+    fs.readFile('./bundle.map.js', function(err, data) {
+      res.writeHead(200);
+      res.end(data);
+    });
+  } else if(req.url.startsWith('/static/bundle.')) {
     fs.readFile('./bundle.js', function(err, data) {
       res.writeHead(200);
       res.end(data);
@@ -31,5 +36,5 @@ http.createServer(function(req, res) {
 
 console.log([
     "Ready to accept requests.",
-    "Open: http://127.0.0.1:8000 in browser.",
+    "Open: http://127.0.0.1:8000 in browser."
 ].join('\n'));

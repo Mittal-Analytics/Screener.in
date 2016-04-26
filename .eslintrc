@@ -21,6 +21,7 @@
     describe: false,
     expect: false,
     module: false,
+    exports: false,
     beforeEach: false,
     afterEach: false
   }
