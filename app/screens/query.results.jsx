@@ -1,6 +1,4 @@
 "use strict";
-/* global require, document */
-
 var React = require('react');
 var ManageColumns = require('app/modals/columns.modal.jsx');
 var SaveScreenModal = require('app/modals/savescreen.modal.jsx');

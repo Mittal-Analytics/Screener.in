@@ -1,11 +1,11 @@
 "use strict";
-var React = require('react');
+import React from 'react'
+import classNames from 'classnames'
+import TypeUtil from 'app/components/typeahead.util.js'
 var Api = require('../api.js');
-var TypeaheadMixin = require('app/components/typeahead.mixin.jsx');
 var endsWith = require('lodash/endsWith');
 var debounce = require('lodash/debounce');
 var getLastWord = require('./cursor.js');
-var classNames = require('classnames');
 
 
 function VariableDetail(props) {
@@ -31,12 +31,28 @@ function VariableDetail(props) {
   </div>;
 }
 
+VariableDetail.propTypes = {
+  selected: React.PropTypes.oneOfType([
+    React.PropTypes.bool,
+    React.PropTypes.object
+  ]),
+  className: React.PropTypes.string
+}
 
-var QueryBuilder = React.createClass({
-  mixins: [TypeaheadMixin],
 
-  getInitialState: function() {
-    return {
+export class QueryBuilder extends React.Component {
+
+  constructor(props, context) {
+    super(props, context);
+    // TypeaheadUtil defaults
+    this.handleKeyDown = TypeUtil.handleKeyDown.bind(this);
+    this.handleBlur = TypeUtil.handleBlur.bind(this);
+    this.hideMenu = TypeUtil.hideMenu.bind(this);
+    this.handleUnmount = TypeUtil.handleUnmount.bind(this);
+    // End TypeaheadUtil defaults
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.state = {
       options: [],
       lastWord: '',
       cursorPos: 0,
@@ -44,17 +60,17 @@ var QueryBuilder = React.createClass({
       hideMenu: true,
       selected: false
     };
-  },
+  }
 
-  getOptions: function() {
+  getOptions() {
     return this.state.options;
-  },
+  }
 
-  getDisplayVal: function(item) {
+  getDisplayVal(item) {
     return item.name;
-  },
+  }
 
-  insertThis: function(replacor, replacee) {
+  insertThis(replacor, replacee) {
     var fullVal = this.refs.input.value;
     var tillCursor = fullVal.substring(0, this.state.cursorPos);
     var insertPos = tillCursor.lastIndexOf(replacee);
@@ -68,15 +84,15 @@ var QueryBuilder = React.createClass({
     this.refs.input.selectionStart = newPos;
     this.refs.input.selectionEnd = newPos;
     this.hideMenu();
-  },
+  }
 
-  fetchOptions: function(word) {
-    Api.get(['ratios', 'search'], {q: word}).then(function(response) {
-      this.setState({options: response});
-    }.bind(this));
-  },
+  fetchOptions(word) {
+    return Api.get(['ratios', 'search'], {q: word}).then(
+      response => this.setState({options: response})
+    );
+  }
 
-  handleChange: function() {
+  handleChange() {
     var cursorPos = this.refs.input.selectionStart;
     var fullVal = this.refs.input.value;
     var tillCursor = fullVal.substring(0, cursorPos);
@@ -99,16 +115,16 @@ var QueryBuilder = React.createClass({
     } else {
       this.hideMenu();
     }
-  },
+  }
 
-  handleSelect: function(index) {
+  handleSelect(index) {
     var selected = this.state.options[index];
     this.setState({selected: selected});
     var displayVal = this.getDisplayVal(selected) + ' ';
     this.insertThis(displayVal, this.state.lastWord);
-  },
+  }
 
-  renderOptions: function() {
+  renderOptions() {
     var options = this.state.options.map(function(option, idx) {
       return (
         <li key={idx}
@@ -119,9 +135,9 @@ var QueryBuilder = React.createClass({
       );
     }, this);
     return options;
-  },
+  }
 
-  render: function() {
+  render() {
     var opLen = this.state.options.length;
     var queryError = this.props.error && <span className="help-block">
       {this.props.error}
@@ -130,50 +146,43 @@ var QueryBuilder = React.createClass({
       'open': opLen > 0 && !this.state.hideMenu,
       'has-error': queryError
     });
-    return <form method="get" action="/screen/raw/">
-      <h3>Query Builder</h3>
-      <p>You can customize the query below:</p>
-      <div className="row">
-        <div className={classes}>
-          <textarea
-            autoComplete="off"
-            spellCheck="false"
-            required
-            onKeyDown={this.handleKeyDown}
-            onChange={debounce(this.handleChange, 120)}
-            onBlur={this.handleBlur}
-            placeholder="eg. Book value > Current price"
-            defaultValue={this.props.defaults.query}
-            className="form-control"
-            rows="7"
-            ref="input"
-            name="query"
-          />
-          {queryError}
-          <ul className="dropdown-menu">
-            {this.renderOptions()}
-          </ul>
-        </div>
-        <VariableDetail
-          selected={this.state.selected}
-          className="callout callout-info col-md-4"
+    return <div className="row">
+      <div className={classes}>
+        <textarea
+          autoComplete="off"
+          spellCheck="false"
+          required
+          onKeyDown={this.handleKeyDown}
+          onChange={debounce(this.handleChange, 120)}
+          onBlur={this.handleBlur}
+          placeholder={this.props.placeholder}
+          defaultValue={this.props.value}
+          className="form-control"
+          rows="7"
+          ref="input"
+          name={this.props.name}
         />
+        {queryError}
+        <ul className="dropdown-menu">
+          {this.renderOptions()}
+        </ul>
       </div>
-      <div className="checkbox">
-        <label>
-          <input
-            type="checkbox"
-            name="latest"
-            value="true"
-            defaultChecked={this.props.defaults.latest} />
-          Show only latest results?
-        </label>
-      </div>
-      <button className="btn btn-primary" type="submit">
-        <i className="glyphicon glyphicon-send"/> Run this query
-      </button>
-    </form>;
+      <VariableDetail
+        selected={this.state.selected}
+        className="callout callout-info col-md-4"
+      />
+    </div>
   }
-});
+}
 
-module.exports = QueryBuilder;
+QueryBuilder.propTypes = {
+  name: React.PropTypes.string.isRequired,
+  placeholder: React.PropTypes.string.isRequired,
+  value: React.PropTypes.string,
+  error: React.PropTypes.oneOfType([
+    React.PropTypes.bool,
+    React.PropTypes.string
+  ])
+}
+
+module.exports = QueryBuilder

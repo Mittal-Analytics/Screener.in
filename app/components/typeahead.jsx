@@ -1,39 +1,50 @@
 "use strict";
-var React = require('react');
+import React from 'react';
 var debounce = require('lodash/debounce');
 var classNames = require('classnames');
-var TypeaheadMixin = require('./typeahead.mixin.jsx');
+var TypeUtil = require('./typeahead.util.js');
 
 
-var Typeahead = React.createClass({
+class Typeahead extends React.Component {
 
-  mixins: [TypeaheadMixin],
-
-  getInitialState: function() {
-    return {
+  constructor(props, context) {
+    super(props, context);
+    // TypeaheadUtil defaults
+    this.handleKeyDown = TypeUtil.handleKeyDown.bind(this);
+    this.handleBlur = TypeUtil.handleBlur.bind(this);
+    this.hideMenu = TypeUtil.hideMenu.bind(this);
+    this.handleUnmount = TypeUtil.handleUnmount.bind(this);
+    // End TypeaheadUtil defaults
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.state = {
       index: -1,
       hideMenu: true
     };
-  },
+  }
 
-  getOptions: function() {
+  componentWillUnmount() {
+    this.handleUnmount();
+  }
+
+  getOptions() {
     return this.props.options;
-  },
+  }
 
-  handleChange: function() {
+  handleChange() {
     var value = this.refs.input.value;
     if(value.length > 0)
       this.props.onChange(value);
     this.setState({hideMenu: false, index: 0});
-  },
+  }
 
-  handleSelect: function(index) {
+  handleSelect(index) {
     this.refs.input.value = '';
     this.hideMenu();
     this.props.onSelect(index);
-  },
+  }
 
-  render: function() {
+  render() {
     var options = this.props.options.map(function(option, idx) {
       return <li
         key={option.id || idx}
@@ -66,6 +77,14 @@ var Typeahead = React.createClass({
       </div>
     );
   }
-});
+}
+
+Typeahead.propTypes = {
+  options: React.PropTypes.array.isRequired,
+  onSelect: React.PropTypes.func.isRequired,
+  onChange: React.PropTypes.func.isRequired,
+  placeholder: React.PropTypes.string.isRequired,
+  className: React.PropTypes.string
+}
 
 module.exports = Typeahead;

@@ -1,5 +1,4 @@
 'use strict';
-/* global jest, require */
 jest.dontMock('lodash');
 jest.dontMock('../utils.js');
 
@@ -16,3 +15,41 @@ describe('getPageNumbers Tests', function(){
     expect(getPageNumbers(7, 100)).toEqual([1, '…', 6, 7, 8, '…', 100]);
   });
 });
+
+
+describe('getFormData Tests', function() {
+
+  var form;
+
+  beforeEach(function() {
+    var React = require('react');
+    var ReactDOM = require('react-dom');
+    var TestUtils = require('react-addons-test-utils');
+    var html = TestUtils.renderIntoDocument(<div>
+      <form>
+
+        <div className="form-group ">
+          <label>Ratio unit </label>
+          <select className="form-control" name="select_box">
+            <option value="" selected>----</option>
+            <option value="foo" selected >Foo</option>
+            <option value="bar"  >Bar</option>
+          </select>
+        </div>
+
+        <textarea name="text_area" value="Bar" />
+      </form>
+    </div>);
+    var domNode = ReactDOM.findDOMNode(html);
+    form = domNode.getElementsByTagName('form')[0];
+  });
+
+  it('should get for data in dictionary', function() {
+    var getFormData = require('../utils.js').getFormData;
+    var data = getFormData(form);
+    expect(data).toEqual({
+      select_box: 'foo',
+      text_area: 'Bar'
+    })
+  });
+})

@@ -1,5 +1,4 @@
 'use strict';
-/* global */
 
 function getLastWord(text) {
   // Find last word

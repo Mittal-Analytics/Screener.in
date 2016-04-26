@@ -2,7 +2,7 @@
 /* global require, document */
 
 var React = require('react');
-var QueryBuilder = require('./builder.jsx');
+var QueryForm = require('./query.form.jsx');
 var Alerts = require('app/components/alerts.jsx');
 
 
@@ -19,7 +19,7 @@ function ScreenBase(props) {
   if(errors)
     results = <Alerts errors={errors}></Alerts>;
   // Show builder only once default values are available
-  var builder = props.builderDefaults && <QueryBuilder
+  var builder = props.builderDefaults && <QueryForm
     defaults={props.builderDefaults}
     error={queryError} />;
   return <div>

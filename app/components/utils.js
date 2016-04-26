@@ -85,11 +85,11 @@ function getFormData(form) {
   return data;
 }
 
-module.exports.setTitle = setTitle;
-module.exports.scrollToTop = scrollToTop;
-module.exports.toSlug = toSlug;
-module.exports.toLocalNumber = toLocalNumber;
-module.exports.toMonthYear = toMonthYear;
-module.exports.withUnit = withUnit;
-module.exports.getPageNumbers = getPageNumbers;
-module.exports.getFormData = getFormData;
+exports.setTitle = setTitle;
+exports.scrollToTop = scrollToTop;
+exports.toSlug = toSlug;
+exports.toLocalNumber = toLocalNumber;
+exports.toMonthYear = toMonthYear;
+exports.withUnit = withUnit;
+exports.getPageNumbers = getPageNumbers;
+exports.getFormData = getFormData;
