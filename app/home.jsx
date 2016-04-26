@@ -32,8 +32,8 @@ function Home(props, context) {
         AYM Syntex</a>, <a href="company/CANFINHOME/">
         Can-Fin Homes</a>, <a href="company/KSL/">
         Kalyani Steels</a>, <a href="company/SHILPAMED/">
-        Shilpa Medicare</a>, <a href="company/SRIPIPES/">
-        Srikalahasthi Pipes</a>, <a href="company/504959/">
+        Shilpa Medicare</a>, <a href="company/SUZLON/consolidated/">
+        Suzlon Energy</a>, <a href="company/504959/">
         Stovec Industries</a>, <a href="company/TORNTPOWER/">
         Torrent Power</a>...
       </p>
