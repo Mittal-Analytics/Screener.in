@@ -46,10 +46,11 @@ var Watchlist = React.createClass({
         <div className="pull-right">
           <WatchlistButton
             onClose={this.handleChange}
-            style="info"/>
-          <ManageColumns
+            style="info"
+          /> <ManageColumns
             onClose={this.handleChange}
-            className="btn btn-default"/>
+            className="btn btn-default"
+          />
         </div>
         <h2>
           Stock Watchlist
