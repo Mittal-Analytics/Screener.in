@@ -7,9 +7,14 @@ function getCookie(sKey) {
 }
 
 
-function addOptions(defaults) {
+function addOptions(defaults, url) {
+  var endsWith = function(haystack, needle) {
+    return haystack.indexOf(needle, haystack.length - needle.length) !== -1;
+  };
   defaults.credentials = 'same-origin';
   if(defaults.method == 'raw')
+    defaults.headers.Accept = 'text/html,*/*';
+  if(endsWith(url, '.html'))
     defaults.headers.Accept = 'text/html,*/*';
 
   if(defaults.method != 'get')
@@ -33,7 +38,7 @@ Api.my = function(resource) {
 
 Api.logout = function() {
   var url = '/logout/';
-  var options = this._getOptions(undefined, 'post');
+  var options = this._getOptions(undefined, 'post', url);
   var raw = window.fetch(url, options);
   return raw.then(this.parseJson);
 };
