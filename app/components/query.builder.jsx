@@ -10,25 +10,18 @@ var getLastWord = require('./cursor.js');
 
 function VariableDetail(props) {
   var selected = props.selected;
-  var lead = selected ? selected.name : 'Custom Query Example';
-  var example = <p>
-    Price to earning &lt; 15 AND
-    <br />
-    Return on capital employed &gt; 22%
-  </p>;
-  var help = <a href="http://blog.screener.in/2012/07/creating-stock-screens/">
-    Detailed guide on creating stock screens
-  </a>;
+  var assist = props.assist;
+  var lead = selected ? selected.name : assist.lead;
   var unit = selected && <span>
     Value in: {selected.unit || "No unit"}
   </span>;
-  var description = selected ? <p>{selected.description}</p> : example;
-  help = selected ? unit : help;
-  return <div className={props.className}>
+  var description = selected ? <p>{selected.description}</p> : assist.description;
+  var help = selected ? unit : assist.help;
+  return <div className="callout callout-info">
     <p className="lead">{lead}</p>
     {description}
     <small>{help}</small>
-  </div>;
+  </div>
 }
 
 VariableDetail.propTypes = {
@@ -36,7 +29,7 @@ VariableDetail.propTypes = {
     React.PropTypes.bool,
     React.PropTypes.object
   ]),
-  className: React.PropTypes.string
+  assist: React.PropTypes.object.isRequired
 }
 
 
@@ -167,10 +160,12 @@ export class QueryBuilder extends React.Component {
           {this.renderOptions()}
         </ul>
       </div>
-      <VariableDetail
-        selected={this.state.selected}
-        className="callout callout-info col-md-4"
-      />
+      <div className="col-md-4">
+        <VariableDetail
+          assist={this.props.assist}
+          selected={this.state.selected}
+        />
+      </div>
     </div>
   }
 }
@@ -179,6 +174,7 @@ QueryBuilder.propTypes = {
   name: React.PropTypes.string.isRequired,
   placeholder: React.PropTypes.string.isRequired,
   value: React.PropTypes.string,
+  assist: React.PropTypes.object.isRequired,
   error: React.PropTypes.oneOfType([
     React.PropTypes.bool,
     React.PropTypes.string

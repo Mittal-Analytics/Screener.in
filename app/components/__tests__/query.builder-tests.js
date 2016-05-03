@@ -14,8 +14,13 @@ describe('Query Builder Interaction Tests', function(){
     var React = require('react')
     TestUtils = require('react-addons-test-utils')
     var Builder = require('../query.builder.jsx')
+    var assist = {
+      lead: 'Custom Builder Example',
+      description: <p>This is shown in side menu</p>,
+      help: 'Should provide more help'
+    }
     builder = TestUtils.renderIntoDocument(
-      <Builder name="query" />
+      <Builder name="query" placeholder="Eg. Foo / Bar" assist={assist} />
     )
     builder.fetchOptions = jest.genMockFunction()
   });
