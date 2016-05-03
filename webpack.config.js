@@ -33,9 +33,11 @@ module.exports = function(){
     filename: 'bundle.js',
   };
 
-  var plugins = [uglyWarnings, polyfills];
-  if(isProduction)
-    plugins.push(setProductionEnv);
+  var plugins = [polyfills];
+  if(isProduction) {
+    plugins.push(setProductionEnv)
+    plugins.push(uglyWarnings)
+  }
 
 	var loaders = [
     { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"},

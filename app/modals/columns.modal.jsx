@@ -3,6 +3,8 @@
 var React = require('react');
 var Modal = require('app/components/modal.jsx');
 var Confirm = require('app/components/confirm.jsx');
+var Icon = require('app/components/icon.jsx');
+var Link = require('react-router').Link;
 var RatioSearch = require('app/components/ratio.search.jsx');
 var api = require('../api.js');
 var ActionRows = require('./action.rows.jsx');
@@ -78,7 +80,10 @@ var ManageColumns = React.createClass({
             style="default"
             icon="repeat"
             onClick={this.handleReset}
-            name="Reset to default" />
+            name="Reset to default"
+          /> <Link to='/ratios/' className="btn btn-default">
+            <Icon name="plus" /> Create new ratio
+          </Link>
         </div>
       </Modal>
     </span>;

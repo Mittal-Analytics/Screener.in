@@ -3,12 +3,25 @@ var React = require('react');
 var QueryBuilder = require('app/components/query.builder.jsx');
 
 function QueryForm(props) {
+  var assist = {
+    lead: 'Custom Query Example',
+    description: <p>
+      Price to earning &lt; 15 AND
+      <br />
+      Return on capital employed &gt; 22%
+    </p>,
+    help: <a
+      href="http://blog.screener.in/2012/07/creating-stock-screens/"
+      >Detailed guide on creating stock screens
+    </a>
+  }
   return <form method="get" action="/screen/raw/">
     <h3>Query Builder</h3>
     <p>You can customize the query below:</p>
     <QueryBuilder
       name="query"
       placeholder="eg. Book value > Current price"
+      assist={assist}
       value={props.defaults.query}
       error={props.error}
     />
