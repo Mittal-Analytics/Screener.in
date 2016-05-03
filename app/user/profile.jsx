@@ -43,7 +43,7 @@ class Profile extends React.Component {
   render() {
     var saved = this.state.saved && <h3>Changes Saved</h3>;
     return <div className="row">
-        <div className="col-md-6 col-md-offset-3">
+      <div className="col-md-6 col-md-offset-3">
         <h2 className="page-header">My Account</h2>
         {saved}
 
