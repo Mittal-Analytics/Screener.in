@@ -3,7 +3,7 @@
 
 var React = require('react');
 var WatchlistButton = require('app/modals/watchlist.button.jsx');
-var QueryBuilder = require('app/screens/builder.jsx');
+var QueryForm = require('app/screens/query.form.jsx');
 var Link = require('react-router').Link;
 var Utils = require('app/components/utils.js');
 var Api = require('./api.js');
@@ -233,7 +233,7 @@ var Dash = React.createClass({
         </div>
       </div>
       <section>
-        <QueryBuilder defaults={{}} />
+        <QueryForm defaults={{}} />
       </section>
     </div>;
   }
