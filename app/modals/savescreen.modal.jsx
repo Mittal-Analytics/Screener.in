@@ -5,6 +5,7 @@ var Button = require('app/components/button.jsx');
 var Modal = require('app/components/modal.jsx');
 var Api = require('../api.js');
 var Alerts = require('app/components/alerts.jsx');
+var utils = require('app/components/utils.js');
 
 
 var SaveScreenModal = React.createClass({
@@ -37,11 +38,7 @@ var SaveScreenModal = React.createClass({
   handleSubmit: function(event) {
     event.preventDefault();
     var screen = this.props.screen;
-    var data = {};
-    for (var i = 0; i < this.refs.form.elements.length; i++) {
-      var elem = this.refs.form.elements[i];
-      data[elem.name] = elem.value;
-    }
+    var data = utils.getFormData(this.refs.form);
     data.query = screen.query;
     data.latest = screen.latest;
     data.order = screen.order;

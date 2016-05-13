@@ -80,6 +80,8 @@ function getFormData(form) {
   var data = {};
   for (var i = 0; i < form.elements.length; i++) {
     var elem = form.elements[i];
+    if (elem.type == 'checkbox' && !elem.checked)
+      continue
     data[elem.name] = elem.value;
   }
   return data;

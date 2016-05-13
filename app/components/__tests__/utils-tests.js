@@ -37,6 +37,9 @@ describe('getFormData Tests', function() {
           </select>
         </div>
 
+        <input type="checkbox" label="Foo" name="check_foo" value="fb" checked />
+        <input type="checkbox" label="Bar" name="check_bar" value="fb" />
+
         <textarea name="text_area" value="Bar" />
       </form>
     </div>);
@@ -49,7 +52,8 @@ describe('getFormData Tests', function() {
     var data = getFormData(form);
     expect(data).toEqual({
       select_box: 'foo',
-      text_area: 'Bar'
+      text_area: 'Bar',
+      check_foo: 'fb'
     })
   });
 })
