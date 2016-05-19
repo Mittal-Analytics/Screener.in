@@ -2,10 +2,12 @@
 import React from 'react'
 import classNames from 'classnames'
 import TypeUtil from 'app/components/typeahead.util.js'
-var Api = require('../api.js');
-var endsWith = require('lodash/endsWith');
-var debounce = require('lodash/debounce');
-var getLastWord = require('./cursor.js');
+import Button from 'app/components/button.jsx'
+import endsWith from 'lodash/endsWith'
+import debounce from 'lodash/debounce'
+import Api from 'app/api.js'
+import getLastWord from './cursor.js'
+import Variables from './variables.jsx'
 
 
 function VariableDetail(props) {
@@ -33,26 +35,29 @@ VariableDetail.propTypes = {
 }
 
 
-export class QueryBuilder extends React.Component {
+export class TextArea extends React.Component {
 
   constructor(props, context) {
-    super(props, context);
+    super(props, context)
     // TypeaheadUtil defaults
-    this.handleKeyDown = TypeUtil.handleKeyDown.bind(this);
-    this.handleBlur = TypeUtil.handleBlur.bind(this);
-    this.hideMenu = TypeUtil.hideMenu.bind(this);
-    this.handleUnmount = TypeUtil.handleUnmount.bind(this);
+    this.handleKeyDown = TypeUtil.handleKeyDown.bind(this)
+    this.handleBlur = TypeUtil.handleBlur.bind(this)
+    this.hideMenu = TypeUtil.hideMenu.bind(this)
+    this.handleUnmount = TypeUtil.handleUnmount.bind(this)
     // End TypeaheadUtil defaults
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
+    this.loadAllRatios = this.loadAllRatios.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSelect = this.handleSelect.bind(this)
+    this.insertThis = this.insertThis.bind(this)
     this.state = {
       options: [],
       lastWord: '',
       cursorPos: 0,
       index: -1,
       hideMenu: true,
-      selected: false
-    };
+      selected: false,
+      allRatios: false
+    }
   }
 
   getOptions() {
@@ -76,6 +81,7 @@ export class QueryBuilder extends React.Component {
     this.refs.input.value = newVal;
     this.refs.input.selectionStart = newPos;
     this.refs.input.selectionEnd = newPos;
+    this.setState({cursorPos: newPos});
     this.hideMenu();
   }
 
@@ -83,6 +89,12 @@ export class QueryBuilder extends React.Component {
     return Api.get(['ratios', 'search'], {q: word}).then(
       response => this.setState({options: response})
     );
+  }
+
+  loadAllRatios() {
+    return Api.get(['ratios', 'all']).then(
+      response => this.setState({allRatios: response})
+    )
   }
 
   handleChange() {
@@ -135,39 +147,70 @@ export class QueryBuilder extends React.Component {
     var queryError = this.props.error && <span className="help-block">
       {this.props.error}
     </span>;
-    var classes = classNames('col-md-8 dropdown', {
+    var classes = classNames('dropdown',
+      this.state.allRatios ? 'col-md-6': 'col-md-8', {
       'open': opLen > 0 && !this.state.hideMenu,
       'has-error': queryError
     });
-    return <div className="row">
-      <div className={classes}>
-        <textarea
-          autoComplete="off"
-          spellCheck="false"
-          required
-          onKeyDown={this.handleKeyDown}
-          onChange={debounce(this.handleChange, 120)}
-          onBlur={this.handleBlur}
-          placeholder={this.props.placeholder}
-          defaultValue={this.props.value}
-          className="form-control"
-          rows="7"
-          ref="input"
-          name={this.props.name}
-        />
-        {queryError}
-        <ul className="dropdown-menu">
-          {this.renderOptions()}
-        </ul>
+    var variables = this.state.allRatios && <Variables
+      ratios={this.state.allRatios}
+      insertThis={this.insertThis}
+    />;
+    return <div>
+      <div className="row">
+        <div className={classes}>
+          <textarea
+            autoComplete="off"
+            spellCheck="false"
+            required
+            onKeyDown={this.handleKeyDown}
+            onChange={debounce(this.handleChange, 120)}
+            onBlur={this.handleBlur}
+            placeholder={this.props.placeholder}
+            defaultValue={this.props.value}
+            className="form-control"
+            rows="7"
+            ref="input"
+            name={this.props.name}
+          />
+          {queryError}
+          <ul className="dropdown-menu">
+            {this.renderOptions()}
+          </ul>
+        </div>
+        <div className="col-md-4">
+          <VariableDetail
+            assist={this.props.assist}
+            selected={this.state.selected}
+          />
+          <Button
+            style="info"
+            icon="eye-open"
+            onClick={this.loadAllRatios}
+            name="Show all ratios"
+          />
+        </div>
       </div>
-      <div className="col-md-4">
-        <VariableDetail
-          assist={this.props.assist}
-          selected={this.state.selected}
-        />
-      </div>
+      <div className="row">{variables}</div>
     </div>
   }
+}
+
+
+function QueryBuilder(props) {
+  return <div className="row">
+    <div className="8 or 6">
+      <TextArea
+        name={props.name}
+        placeholder={props.placeholder}
+        value={props.value}
+      />
+    </div>
+    <div className="4 or 6">
+      <ShowAll />
+      <VariableDetail assist={props.assist} />
+    </div>
+  </div>
 }
 
 QueryBuilder.propTypes = {
