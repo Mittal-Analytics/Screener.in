@@ -17,6 +17,11 @@ function Home(props, context) {
         src="/static/img/screener.png"
         alt="Screener Logo" />
       <h2>Welcome to Screener.in</h2>
+      <div className="alert alert-info">
+        <a href="https://savers.moneylife.in/events/ayush_pratyush_mittal_event/">
+          <strong>Session on Screener.in</strong>
+        </a> on 21st May in Mumbai
+      </div>
       <p className="lead">
         Screener.in is a <strong>stock analysis and screening tool </strong>
         to see information of <strong>listed Indian companies </strong>
