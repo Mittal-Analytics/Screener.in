@@ -227,11 +227,6 @@ var Dash = React.createClass({
           <Feeds handleWatchlistChange={this.handleWatchlistChange} />
         </div>
         <div className="col-md-3">
-          <div className="alert alert-info">
-            <a href="https://savers.moneylife.in/events/ayush_pratyush_mittal_event/">
-              <strong>Session on Screener.in</strong>
-            </a> on 21st May in Mumbai.
-          </div>
           <UpcomingResults />
           <UserScreens />
           <PopularScreens />
