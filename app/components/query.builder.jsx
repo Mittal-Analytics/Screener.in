@@ -2,12 +2,11 @@
 import React from 'react'
 import classNames from 'classnames'
 import TypeUtil from 'app/components/typeahead.util.js'
-import Button from 'app/components/button.jsx'
 import endsWith from 'lodash/endsWith'
 import debounce from 'lodash/debounce'
 import Api from 'app/api.js'
 import getLastWord from './cursor.js'
-import Variables from './variables.jsx'
+import RatioGallery from './ratio.gallery.jsx'
 
 
 function VariableDetail(props) {
@@ -45,7 +44,6 @@ export class TextArea extends React.Component {
     this.hideMenu = TypeUtil.hideMenu.bind(this)
     this.handleUnmount = TypeUtil.handleUnmount.bind(this)
     // End TypeaheadUtil defaults
-    this.loadAllRatios = this.loadAllRatios.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
     this.insertThis = this.insertThis.bind(this)
@@ -54,9 +52,7 @@ export class TextArea extends React.Component {
       lastWord: '',
       cursorPos: 0,
       index: -1,
-      hideMenu: true,
-      selected: false,
-      allRatios: false
+      hideMenu: true
     }
   }
 
@@ -91,12 +87,6 @@ export class TextArea extends React.Component {
     );
   }
 
-  loadAllRatios() {
-    return Api.get(['ratios', 'all']).then(
-      response => this.setState({allRatios: response})
-    )
-  }
-
   handleChange() {
     var cursorPos = this.refs.input.selectionStart;
     var fullVal = this.refs.input.value;
@@ -124,9 +114,9 @@ export class TextArea extends React.Component {
 
   handleSelect(index) {
     var selected = this.state.options[index];
-    this.setState({selected: selected});
     var displayVal = this.getDisplayVal(selected) + ' ';
     this.insertThis(displayVal, this.state.lastWord);
+    this.props.onSelect(selected)
   }
 
   renderOptions() {
@@ -147,70 +137,95 @@ export class TextArea extends React.Component {
     var queryError = this.props.error && <span className="help-block">
       {this.props.error}
     </span>;
-    var classes = classNames('dropdown',
-      this.state.allRatios ? 'col-md-6': 'col-md-8', {
+    var classes = classNames('dropdown', {
       'open': opLen > 0 && !this.state.hideMenu,
       'has-error': queryError
     });
-    var variables = this.state.allRatios && <Variables
-      ratios={this.state.allRatios}
-      insertThis={this.insertThis}
-    />;
-    return <div>
-      <div className="row">
-        <div className={classes}>
-          <textarea
-            autoComplete="off"
-            spellCheck="false"
-            required
-            onKeyDown={this.handleKeyDown}
-            onChange={debounce(this.handleChange, 120)}
-            onBlur={this.handleBlur}
-            placeholder={this.props.placeholder}
-            defaultValue={this.props.value}
-            className="form-control"
-            rows="7"
-            ref="input"
-            name={this.props.name}
-          />
-          {queryError}
-          <ul className="dropdown-menu">
-            {this.renderOptions()}
-          </ul>
-        </div>
-        <div className="col-md-4">
-          <VariableDetail
-            assist={this.props.assist}
-            selected={this.state.selected}
-          />
-          <Button
-            style="info"
-            icon="eye-open"
-            onClick={this.loadAllRatios}
-            name="Show all ratios"
-          />
-        </div>
-      </div>
-      <div className="row">{variables}</div>
+    return <div className={classes}>
+      <textarea
+        autoComplete="off"
+        spellCheck="false"
+        required
+        onKeyDown={this.handleKeyDown}
+        onChange={debounce(this.handleChange, 120)}
+        onBlur={this.handleBlur}
+        placeholder={this.props.placeholder}
+        defaultValue={this.props.value}
+        className="form-control"
+        rows="7"
+        ref="input"
+        name={this.props.name}
+      />
+      {queryError}
+      <ul className="dropdown-menu">
+        {this.renderOptions()}
+      </ul>
     </div>
   }
 }
 
+TextArea.propTypes = {
+  name: React.PropTypes.string.isRequired,
+  placeholder: React.PropTypes.string.isRequired,
+  value: React.PropTypes.string,
+  onSelect: React.PropTypes.func.isRequired,
+  error: React.PropTypes.oneOfType([
+    React.PropTypes.bool,
+    React.PropTypes.string
+  ])
+}
 
-function QueryBuilder(props) {
-  return <div className="row">
-    <div className="8 or 6">
-      <TextArea
-        name={props.name}
-        placeholder={props.placeholder}
-        value={props.value}
-      />
+
+class QueryBuilder extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+    this.handleToggle = this.handleToggle.bind(this)
+    this.handleInsert = this.handleInsert.bind(this)
+    this.handleSelect = this.handleSelect.bind(this)
+    this.state = {
+      galleryOpen: false,
+      selected: false
+    }
+  }
+
+  handleToggle() {
+    this.setState({galleryOpen: !this.state.galleryOpen})
+  }
+
+  handleInsert(ratio) {
+    this.refs.textarea.insertThis(ratio, "")
+  }
+
+  handleSelect(selected) {
+    this.setState({selected: selected})
+  }
+
+  render() {
+    var textareaCls = this.state.galleryOpen ? 'col-md-6' : 'col-md-8'
+    var galleryCls = this.state.galleryOpen ? 'col-md-6' : 'col-md-4'
+    return <div className="row">
+      <div className={textareaCls}>
+        <TextArea
+          name={this.props.name}
+          placeholder={this.props.placeholder}
+          value={this.props.value}
+          onSelect={this.handleSelect}
+          ref="textarea"
+        />
+      </div>
+      <div className={galleryCls}>
+        <RatioGallery
+          onOpen={this.handleToggle}
+          onClose={this.handleToggle}
+          onRatioClick={this.handleInsert}
+        />
+        <VariableDetail
+          assist={this.props.assist}
+          selected={this.state.selected}
+        />
+      </div>
     </div>
-    <div className="4 or 6">
-      <ShowAll />
-      <VariableDetail assist={props.assist} />
-    </div>
-  </div>
+  }
 }
 
 QueryBuilder.propTypes = {
