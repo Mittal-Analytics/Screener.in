@@ -193,7 +193,13 @@ class QueryBuilder extends React.Component {
   }
 
   handleInsert(ratio) {
-    this.refs.textarea.insertThis(ratio, "")
+    var selected = {
+      unit: ratio[0],
+      name: ratio[1],
+      description: ratio[2]
+    }
+    this.refs.textarea.insertThis(selected.name, "")
+    this.setState({selected: selected})
   }
 
   handleSelect(selected) {

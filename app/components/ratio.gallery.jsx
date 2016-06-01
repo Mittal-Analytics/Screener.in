@@ -67,7 +67,7 @@ class RatioGallery extends React.Component {
           return <Button
             style="primary"
             icon="pencil"
-            onClick={() => this.props.onRatioClick('Pending')}
+            onClick={() => console.log('implement tab change')}
             name={category}
             key={idx}
           />
@@ -79,7 +79,7 @@ class RatioGallery extends React.Component {
           return <Button
             key={idx}
             style="default"
-            onClick={() => this.props.onRatioClick(variable[1])}
+            onClick={() => this.props.onRatioClick(variable)}
             name={variable[1]}
           />
         })}
