@@ -34,8 +34,7 @@ class RatioGallery extends React.Component {
   }
 
   handleCategorySelection(category) {
-    this.state.currentCategory = category
-    this.forceUpdate()
+    this.setState({currentCategory: category})
   }
 
   renderOpen() {
