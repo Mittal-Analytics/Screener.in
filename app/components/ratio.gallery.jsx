@@ -8,9 +8,11 @@ class RatioGallery extends React.Component {
     super(props, context)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.handleCategorySelection = this.handleCategorySelection.bind(this)
     this.state = {
       ratios: [],
-      galleryOpen: false
+      galleryOpen: false,
+      currentCategory: "Annual Results"
     }
   }
 
@@ -29,6 +31,10 @@ class RatioGallery extends React.Component {
   handleClose() {
     this.setState({galleryOpen: false})
     this.props.onClose()
+  }
+
+  handleCategorySelection(category) {
+    this.setState({currentCategory: category})
   }
 
   renderOpen() {
@@ -51,7 +57,7 @@ class RatioGallery extends React.Component {
     for (var i = 0; i < ratios.system_ratios.length; i++) {
       var unit = ratios.system_ratios[i][0]
       var category = ratios.system_ratios[i][3]
-      if ("Annual Results" != category)
+      if (this.state.currentCategory != category)
         continue
       variables[unit].push(ratios.system_ratios[i])
     }
@@ -67,7 +73,7 @@ class RatioGallery extends React.Component {
           return <Button
             style="primary"
             icon="pencil"
-            onClick={() => console.log('implement tab change')}
+            onClick={() => this.handleCategorySelection(category)}
             name={category}
             key={idx}
           />
