@@ -1,8 +1,10 @@
 "use strict";
 var React = require('react');
+var classNames = require('classnames');
 
 function Button(props) {
   var classes = 'btn btn-' + (props.style || 'default');
+  classes = classNames(classes, props.className)
   var icon = props.icon && 'glyphicon glyphicon-' + props.icon;
   icon = icon && <i className={icon} />;
   return <button
@@ -13,6 +15,15 @@ function Button(props) {
     >
     {icon} {props.name}
   </button>;
+}
+
+Button.propTypes = {
+  style: React.PropTypes.string,
+  className: React.PropTypes.string,
+  icon: React.PropTypes.string,
+  disabled: React.PropTypes.bool,
+  onClick: React.PropTypes.func.isRequired,
+  name: React.PropTypes.string.isRequired
 }
 
 module.exports = Button;

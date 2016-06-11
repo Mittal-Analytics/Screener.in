@@ -96,12 +96,15 @@ class RatioGallery extends React.Component {
   render() {
     if (this.state.galleryOpen)
       return this.renderOpen()
-    return <Button
-      style="info"
-      icon="eye-open"
-      onClick={this.handleOpen}
-      name="Show all ratios"
-    />
+    return <div className="pull-right">
+      <br></br>
+      <Button
+        style="default"
+        icon="eye-open"
+        onClick={this.handleOpen}
+        name="Show all ratios"
+      />
+    </div>
   }
 }
 

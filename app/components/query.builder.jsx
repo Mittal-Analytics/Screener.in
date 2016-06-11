@@ -209,25 +209,30 @@ class QueryBuilder extends React.Component {
   render() {
     var textareaCls = this.state.galleryOpen ? 'col-md-6' : 'col-md-8'
     var galleryCls = this.state.galleryOpen ? 'col-md-6' : 'col-md-4'
-    return <div className="row">
-      <div className={textareaCls}>
-        <TextArea
-          name={this.props.name}
-          placeholder={this.props.placeholder}
-          value={this.props.value}
-          onSelect={this.handleSelect}
-          ref="textarea"
-        />
+    return <div>
+      <div className="row">
+        <div className={textareaCls}>
+          <TextArea
+            name={this.props.name}
+            placeholder={this.props.placeholder}
+            value={this.props.value}
+            onSelect={this.handleSelect}
+            ref="textarea"
+          />
+        </div>
+        <div className={galleryCls}>
+          <VariableDetail
+            assist={this.props.assist}
+            selected={this.state.selected}
+          />
+        </div>
       </div>
-      <div className={galleryCls}>
+
+      <div>
         <RatioGallery
           onOpen={this.handleToggle}
           onClose={this.handleToggle}
           onRatioClick={this.handleInsert}
-        />
-        <VariableDetail
-          assist={this.props.assist}
-          selected={this.state.selected}
         />
       </div>
     </div>
