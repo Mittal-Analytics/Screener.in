@@ -61,34 +61,39 @@ class RatioGallery extends React.Component {
         continue
       variables[unit].push(ratios.system_ratios[i])
     }
-    return <div>
-      <Button
-        icon="eye-close"
-        onClick={this.handleClose}
-        name="Close Gallery"
-      />
-      <div>
-        Categories
-        {categories.map((category, idx) => {
-          return <Button
-            style="primary"
-            icon="pencil"
-            onClick={() => this.handleCategorySelection(category)}
-            name={category}
-            key={idx}
-          />
-        })}
+    return <div className="gallery">
+      <div className="pull-right">
+        <br />
+        <Button
+          style="danger"
+          icon="eye-close"
+          onClick={this.handleClose}
+          name="Close Gallery"
+        />
       </div>
-      <div>
-        Variables
-        {variables["Rs.Cr."].map((variable, idx) => {
-          return <Button
-            key={idx}
-            style="default"
-            onClick={() => this.props.onRatioClick(variable)}
-            name={variable[1]}
-          />
-        })}
+
+      <div className="row">
+        <ul className="nav col-md-2">
+          <li className="heading">Select Category</li>
+          {categories.map((category, idx) => {
+            var active = this.state.currentCategory == category ? 'active' : ''
+            return <li key={idx} className={active}>
+              <a onClick={() => this.handleCategorySelection(category)}>
+                {category}
+              </a>
+            </li>
+          })}
+        </ul>
+
+        <ul className="nav col-md-5">
+          {variables["Rs.Cr."].map((variable, idx) => {
+            return <li key={idx}>
+              <a onClick={() => this.props.onRatioClick(variable)}>
+                {variable[1]}
+              </a>
+            </li>
+          })}
+        </ul>
       </div>
     </div>
   }
@@ -97,7 +102,7 @@ class RatioGallery extends React.Component {
     if (this.state.galleryOpen)
       return this.renderOpen()
     return <div className="pull-right">
-      <br></br>
+      <br />
       <Button
         style="default"
         icon="eye-open"
