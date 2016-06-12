@@ -29,6 +29,11 @@ http.createServer(function(req, res) {
       res.writeHead(200);
       res.end(data);
     });
+  } else if(req.url.startsWith('/static/css/custom.')) {
+    fs.readFile('./custom.css', function(err, data) {
+      res.writeHead(200);
+      res.end(data);
+    });
   } else {
     proxy.web(req, res);
   }
