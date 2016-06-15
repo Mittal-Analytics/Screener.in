@@ -1,11 +1,10 @@
 "use strict";
-/* global require, document, window */
-var React = require('react');
-var Api = require('../api.js');
-var Link = require('react-router').Link;
-var classNames = require('classnames');
-var Utils = require('app/components/utils.js');
-var defaults = require('lodash/defaults');
+import React from 'react'
+import Api from 'app/api.js'
+import {Link} from 'react-router'
+import classNames from 'classnames'
+import Utils from 'app/components/utils.js'
+import defaults from 'lodash/defaults'
 
 
 function getCaption(report) {
@@ -72,19 +71,22 @@ var percentsMin = ['OPM', 'Dividend Payout'];
 var percents = percentsMin;
 
 
-var Results = React.createClass({
-  getInitialState: function() {
-    return {
-      showInPercentage : false,
+class Results extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      showInPercent : false,
       schedules: {}
-    };
-  },
+    }
+  }
 
-  componentWillReceiveProps: function(props) {
-    this.setState(this.getInitialState());
-  },
+  componentWillReceiveProps() {
+    this.setState({
+      schedules: {}
+    })
+  }
 
-  handleExpand: function(field) {
+  handleExpand(field) {
     if(this.state.schedules[field])
       return;
     var cid = this.props.company.id;
@@ -102,14 +104,9 @@ var Results = React.createClass({
         schedules[field] = response;
         this.setState({schedules: schedules});
       }.bind(this));
-  },
+  }
 
-  changePercentOption: function(optn) {
-    var val = optn == 0;
-    this.setState({showInPercentage : val});
-  },
-
-  normalizeTrailing: function(trailingNumbers) {
+  normalizeTrailing(trailingNumbers) {
     var salesValue = trailingNumbers['Sales'];
     var copyTrailing = {};
 
@@ -125,20 +122,11 @@ var Results = React.createClass({
     copyTrailing['Sales'] = 100;
 
     return copyTrailing;
-  },
+  }
 
-  normalizeNumbers: function(numbers) {
-    var dates = Object.keys(numbers[0][1]).sort();
+  normalizeNumbers(numbers) {
     var newAnnualNumbers = [];
-
-    var salesIndx = 0; // We find salesIndx inspite of it always being at 0. Just in case.
-    for (var indx = 0; indx < numbers.length; indx++) {
-      var keyName = numbers[indx][0];
-      if (keyName == 'Sales') {
-        salesIndx = indx;
-        break;
-      }
-    }
+    var salesIndx = 0; // Will be always so
 
     for (var indx = 0; indx < numbers.length; indx++) {
       newAnnualNumbers[indx] = [];
@@ -160,9 +148,9 @@ var Results = React.createClass({
     }
 
     return newAnnualNumbers;
-  },
+  }
 
-  renderRow: function(trailing, dates, childIdx, row, idx) {
+  renderRow(trailing, dates, childIdx, row, idx) {
     var field = row[0];
     var schedules = this.state.schedules[field];
     var rowClass = classNames({
@@ -183,9 +171,9 @@ var Results = React.createClass({
       {Cells}
       {TTMCell}
     </tr>, schedules && schedules.map(this.renderRow.bind(this, trailing, dates, idx))];
-  },
+  }
 
-  render: function () {
+  render() {
     var company = this.props.company;
     percents = percentsMin;
     var standalone = company.warehouse_set.result_type == 'sa';
@@ -195,9 +183,8 @@ var Results = React.createClass({
     var dates = Object.keys(numbers[0][1]).sort();
     var trailing = getTrailing(this.props.report, company.number_set, dates);
     var figuresIn = 'Rs. Crores';
-    var percentageOptions = this.props.report == 'annual' ? this.renderPercentOptions() : '';
 
-    if (this.props.report == 'annual' && this.state.showInPercentage) {
+    if (this.props.report == 'annual' && this.state.showInPercent) {
       numbers = this.normalizeNumbers(numbers);
       trailing = this.normalizeTrailing(trailing);
       percents = percentsAll;
@@ -212,8 +199,15 @@ var Results = React.createClass({
     return <div>
       <h2>{getCaption(this.props.report)}
         <small> {getPrefix(pair_url, standalone)}
-          Figures in {figuresIn} {pair_link} {percentageOptions}
+          Figures in {figuresIn} {pair_link}
         </small>
+
+        <small className="pull-right">
+          <a onClick={() => this.setState({showInPercent: !this.state.showInPercent})}
+          >Toggle %age</a>
+        </small>
+
+        <div className="clearfix"></div>
       </h2>
 
       <div className="table-responsive">
@@ -231,33 +225,13 @@ var Results = React.createClass({
         </table>
       </div>
     </div>;
-  },
-
-  renderPercentOptions: function() {
-    var options = [
-      ['Percentage'],
-      ['Absolute']
-    ];
-    var buttonOptions = options.map(function(btn, idx) {
-      var active = true;
-      var classes = classNames('btn', {
-        'btn-primary': active,
-        'btn-link': !active
-      });
-      return <button
-        key={idx}
-        onClick={this.changePercentOption.bind(null, idx)}
-        className={classes}>
-          {btn[0]}
-      </button>;
-    }.bind(this));
-    return <div>
-      <div className="pull-right">
-        Show in {buttonOptions}
-      </div>
-      <div className="clearfix"></div>
-    </div>;
   }
-});
+}
 
-module.exports = Results;
+Results.propTypes = {
+  company: React.PropTypes.object.isRequired,
+  report: React.PropTypes.string.isRequired
+}
+
+
+module.exports = Results
