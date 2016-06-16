@@ -197,17 +197,15 @@ class Results extends React.Component {
     var TTMHead = trailing && <th>TTM</th>;
 
     return <div>
+      <a
+        className="pull-right btn btn-default"
+        onClick={() => this.setState({showInPercent: !this.state.showInPercent})}
+      >Toggle %age</a>
+
       <h2>{getCaption(this.props.report)}
         <small> {getPrefix(pair_url, standalone)}
           Figures in {figuresIn} {pair_link}
         </small>
-
-        <small className="pull-right">
-          <a onClick={() => this.setState({showInPercent: !this.state.showInPercent})}
-          >Toggle %age</a>
-        </small>
-
-        <div className="clearfix"></div>
       </h2>
 
       <div className="table-responsive">
