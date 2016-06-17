@@ -66,9 +66,7 @@ var highlights = [
   'Net Cash Flow'
 ];
 
-var percentsAll = ['Sales', 'Expenses', 'Operating Profit', 'OPM', 'Other Income', 'Interest', 'Depreciation', 'Profit before tax', 'Tax', 'Net Profit', 'EPS (unadj)', 'Dividend Payout'];
-var percentsMin = ['OPM', 'Dividend Payout'];
-var percents = percentsMin;
+var percents = ['OPM', 'Dividend Payout'];
 
 
 class Results extends React.Component {
@@ -125,29 +123,18 @@ class Results extends React.Component {
   }
 
   normalizeNumbers(numbers) {
-    var newAnnualNumbers = [];
-    var salesIndx = 0; // Will be always so
-
-    for (var indx = 0; indx < numbers.length; indx++) {
-      newAnnualNumbers[indx] = [];
-      newAnnualNumbers[indx][0] = numbers[indx][0];
-      var keyName = numbers[indx][0];
-      newAnnualNumbers[indx][1] = {};
-      for (var date in numbers[indx][1]) {
-        newAnnualNumbers[indx][1][date] = numbers[indx][1][date];
-
-        if (keyName == 'OPM' || keyName == 'Dividend Payout') {
-          // No modifications
-        } else if (keyName == 'Sales') {
-          newAnnualNumbers[indx][1][date] = 100;
-        } else {
-          newAnnualNumbers[indx][1][date] = newAnnualNumbers[indx][1][date] * 100.0 / numbers[salesIndx][1][date];
-          newAnnualNumbers[indx][1][date] = newAnnualNumbers[indx][1][date].toFixed(2);
-        }
+    var denominator = numbers[0][1]
+    var normalized = numbers.map((row, idx) => {
+      if(percents.indexOf(row[0]) >= 0)
+        return row
+      var values = {}
+      for(var date in denominator) {
+        var value = row[1][date] / denominator[date] * 100
+        values[date] = value.toFixed(2)
       }
-    }
-
-    return newAnnualNumbers;
+      return [row[0], values]
+    })
+    return normalized
   }
 
   renderRow(trailing, dates, childIdx, row, idx) {
@@ -165,7 +152,7 @@ class Results extends React.Component {
     });
     var TTMCell = trailing ? <td>{trailing[field]}</td> : false;
     return [<tr className={rowClass} key={idx}>
-      <td className="text" onClick={this.handleExpand.bind(null, field)}>
+      <td className="text" onClick={() => this.handleExpand(field)}>
         {row[0]}
       </td>
       {Cells}
@@ -175,7 +162,6 @@ class Results extends React.Component {
 
   render() {
     var company = this.props.company;
-    percents = percentsMin;
     var standalone = company.warehouse_set.result_type == 'sa';
     var pair_url = company.warehouse_set.pair_url;
     var pair_link = getSuffix(pair_url, standalone, company.prime);
@@ -185,9 +171,8 @@ class Results extends React.Component {
     var figuresIn = 'Rs. Crores';
 
     if (this.props.report == 'annual' && this.state.showInPercent) {
-      numbers = this.normalizeNumbers(numbers);
+      numbers = this.normalizeNumbers(numbers)
       trailing = this.normalizeTrailing(trailing);
-      percents = percentsAll;
       figuresIn = 'Percentage of Sales';
     }
 

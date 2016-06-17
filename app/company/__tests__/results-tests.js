@@ -35,7 +35,7 @@ describe('normalizeNumbers Tests', function() {
   it('should ensure that numbers are normaliized', function() {
     var normalized = result.normalizeNumbers(NUMBERS)
     var expected = [
-      ["Sales",{"2008-03-31":100,"2009-03-31":100}],
+      ["Sales",{"2008-03-31":'100.00',"2009-03-31":'100.00'}],
       ["Expenses",{"2008-03-31":'88.56',"2009-03-31":'113.41'}],
       ["Operating Profit",{"2008-03-31":'11.44',"2009-03-31":'-13.41'}],
       ["OPM",{"2008-03-31":11.44,"2009-03-31":-13.41}]
