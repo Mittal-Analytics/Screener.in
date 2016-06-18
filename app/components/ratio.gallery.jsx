@@ -37,8 +37,24 @@ class RatioGallery extends React.Component {
     this.setState({currentCategory: category})
   }
 
-  renderOpen() {
+  getCategoryGroups() {
     var ratios = this.state.ratios
+    var groups = {
+      "Recent results": [],
+      "Preceding period": [],
+      "Historical": []
+    }
+    for (var i = 0; i < ratios.system_ratios.length; i++) {
+      var group = ratios.system_ratios[i][0]
+      var category = ratios.system_ratios[i][3]
+      if (this.state.currentCategory != category)
+        continue
+      groups[group].push(ratios.system_ratios[i])
+    }
+    return groups
+  }
+
+  renderOpen() {
     var categories = [
       "Annual Results",
       "Balance Sheet",
@@ -47,20 +63,7 @@ class RatioGallery extends React.Component {
       "Valuation",
       "Ratios"
     ]
-    var variables = {
-      "Rs.Cr.": [],
-      "Rs.": [],
-      "Cr.": [],
-      "%": [],
-      "": []
-    }
-    for (var i = 0; i < ratios.system_ratios.length; i++) {
-      var unit = ratios.system_ratios[i][0]
-      var category = ratios.system_ratios[i][3]
-      if (this.state.currentCategory != category)
-        continue
-      variables[unit].push(ratios.system_ratios[i])
-    }
+    var groups = this.getCategoryGroups()
     return <div className="gallery">
       <div className="pull-right">
         <br />
@@ -86,7 +89,7 @@ class RatioGallery extends React.Component {
         </ul>
 
         <ul className="nav col-md-5">
-          {variables["Rs.Cr."].map((variable, idx) => {
+          {groups["Recent results"].map((variable, idx) => {
             return <li key={idx}>
               <a onClick={() => this.props.onRatioClick(variable)}>
                 {variable[1]}
