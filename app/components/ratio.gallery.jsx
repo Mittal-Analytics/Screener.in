@@ -35,7 +35,8 @@ class RatioGallery extends React.Component {
     this.state = {
       ratios: [],
       galleryOpen: false,
-      currentCategory: "Annual Results"
+      currentCategory: "Annual Results",
+      searchTerm: ""
     }
   }
 
@@ -55,7 +56,10 @@ class RatioGallery extends React.Component {
   }
 
   handleCategorySelection(category) {
-    this.setState({currentCategory: category})
+    this.setState({
+      currentCategory: category,
+      searchTerm: ""
+    })
   }
 
   getCategoryGroups(ratios, currentCategory) {
@@ -67,7 +71,7 @@ class RatioGallery extends React.Component {
     for (var i = 0; i < ratios.length; i++) {
       var ratio = ratios[i]
       var category = ratio[3]
-      if (currentCategory != category)
+      if (currentCategory != 'Searched' && currentCategory != category)
         continue
       var group
       if (ratio[1].indexOf("preceding year quarter") > -1)
@@ -83,9 +87,17 @@ class RatioGallery extends React.Component {
     return groups
   }
 
+  filterRatios(ratios, searchTerm) {
+    var pattern = new RegExp(searchTerm, "i")
+    var system_ratios = ratios.system_ratios.filter(ratio => {
+      return ratio[1].search(pattern) > -1 || ratio[2].search(pattern) > -1
+    })
+    return system_ratios
+  }
+
   renderToolbar() {
     var operators = ["+", "-", "/", "*", ">", "<", "AND\n", "OR\n"]
-    return <form className="form-inline">
+    return <div className="form-inline">
       <div className="pull-right">
         <Button
           style="danger"
@@ -95,9 +107,9 @@ class RatioGallery extends React.Component {
         />
       </div>
 
-      {operators.map((operator) => {
+      {operators.map((operator, idx) => {
         var ratio = ["", operator, ""]
-        return <span><a
+        return <span key={idx}><a
           className="btn btn-default"
           onClick={() => this.props.onRatioClick(ratio)}
           >
@@ -106,10 +118,18 @@ class RatioGallery extends React.Component {
       })}
 
       <div className="form-group">
-        <input type="text" className="form-control" placeholder="Filter Ratio" />
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Filter Ratio"
+          value={this.state.searchTerm}
+          onChange={event => this.setState({
+            searchTerm: event.target.value,
+            currentCategory: 'Searched'
+          })}
+          />
       </div>
-      <button type="submit" className="btn btn-link">Reset</button>
-    </form>
+    </div>
   }
 
   renderOpen() {
@@ -119,10 +139,21 @@ class RatioGallery extends React.Component {
       "Cash Flow Statement",
       "Quarterly Results",
       "Valuation",
-      "Ratios"
+      "Ratios",
+      "User Ratios"
     ]
     var currentCategory = this.state.currentCategory
     var ratios = this.state.ratios.system_ratios
+    var searchTerm = this.state.searchTerm
+    if(searchTerm.length > 0) {
+      categories.push('Searched')
+      ratios = this.filterRatios(this.state.ratios, this.state.searchTerm)
+    }
+    var user_ratios = currentCategory == 'User Ratios' && <RatiosList
+      heading="User Ratios"
+      ratios={this.state.ratios.user_ratios}
+      onRatioClick={this.props.onRatioClick}
+      />
     var groups = this.getCategoryGroups(ratios, currentCategory)
     return <div className="gallery">
       <br />
@@ -142,6 +173,7 @@ class RatioGallery extends React.Component {
           })}
         </ul>
 
+        {user_ratios}
         <RatiosList
           heading="Recent"
           ratios={groups.recent}
