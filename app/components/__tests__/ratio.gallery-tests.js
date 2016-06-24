@@ -38,15 +38,15 @@ describe('Typeahead', function(){
     var ratios = RATIOS.system_ratios
     var result = gallery.getCategoryGroups(ratios, "Annual Results")
     var expected = {
-      "Recent results": [
+      "recent": [
         ratios[0],
         ratios[1]
       ],
-      "Preceding period": [
+      "preceding": [
         ratios[2],
         ratios[3]
       ],
-      "Historical": [
+      "historical": [
         ratios[4],
         ratios[5]
       ]

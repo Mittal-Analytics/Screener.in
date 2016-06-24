@@ -3,6 +3,27 @@ import React from 'react'
 import Button from 'app/components/button.jsx'
 import Api from 'app/api.js'
 
+
+function RatiosList(props) {
+  return <ul className="nav col-md-2">
+    <li className="heading">{props.heading}</li>
+    {props.ratios.map((ratio, idx) => {
+      return <li key={idx}>
+        <a onClick={() => props.onRatioClick(ratio)}>
+          {ratio[1]}
+        </a>
+      </li>
+    })}
+  </ul>
+}
+
+RatiosList.propTypes = {
+  heading: React.PropTypes.string.isRequired,
+  ratios: React.PropTypes.array.isRequired,
+  onRatioClick: React.PropTypes.func.isRequired
+}
+
+
 class RatioGallery extends React.Component {
   constructor(props, context) {
     super(props, context)
@@ -39,9 +60,9 @@ class RatioGallery extends React.Component {
 
   getCategoryGroups(ratios, currentCategory) {
     var groups = {
-      "Recent results": [],
-      "Preceding period": [],
-      "Historical": []
+      recent: [],
+      preceding: [],
+      historical: []
     }
     for (var i = 0; i < ratios.length; i++) {
       var ratio = ratios[i]
@@ -50,11 +71,11 @@ class RatioGallery extends React.Component {
         continue
       var group
       if (ratio[1].indexOf("receding") > -1)
-        group = "Preceding period"
+        group = "preceding"
       else if (ratio[1].search(/\dyear/i) > -1)
-        group = "Historical"
+        group = "historical"
       else
-        group = "Recent results"
+        group = "recent"
       groups[group].push(ratio)
     }
     return groups
@@ -96,15 +117,21 @@ class RatioGallery extends React.Component {
           })}
         </ul>
 
-        <ul className="nav col-md-5">
-          {groups["Recent results"].map((variable, idx) => {
-            return <li key={idx}>
-              <a onClick={() => this.props.onRatioClick(variable)}>
-                {variable[1]}
-              </a>
-            </li>
-          })}
-        </ul>
+        <RatiosList
+          heading="Recent"
+          ratios={groups.recent}
+          onRatioClick={this.props.onRatioClick}
+          />
+        <RatiosList
+          heading="Preceding"
+          ratios={groups.preceding}
+          onRatioClick={this.props.onRatioClick}
+          />
+        <RatiosList
+          heading="Historical"
+          ratios={groups.historical}
+          onRatioClick={this.props.onRatioClick}
+          />
       </div>
     </div>
   }
