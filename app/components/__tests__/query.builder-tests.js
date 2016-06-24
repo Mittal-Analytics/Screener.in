@@ -22,21 +22,22 @@ describe('Query Builder Interaction Tests', function(){
     builder = TestUtils.renderIntoDocument(
       <Builder name="query" placeholder="Eg. Foo / Bar" assist={assist} />
     )
-    builder.fetchOptions = jest.genMockFunction()
   });
 
   it('calls given function on change', function() {
-    var input = builder.refs.input;
+    var textarea = builder.refs.textarea
+    textarea.fetchOptions = jest.genMockFunction()
+    var input = textarea.refs.input;
     input.value = 'book';
     input.selectionStart = 4;
     input.selectionEnd = 4;
     TestUtils.Simulate.change(input, {target: {value: 'book'}})
     jest.runAllTimers()
-    expect(builder.state.hideMenu).toEqual(false)
-    builder.setState({options: OPTIONS})
+    expect(textarea.state.hideMenu).toEqual(false)
+    textarea.setState({options: OPTIONS})
     jest.runAllTimers()
-    expect(builder.fetchOptions).toBeCalled()
-    expect(builder.fetchOptions).toBeCalledWith('book')
+    expect(textarea.fetchOptions).toBeCalled()
+    expect(textarea.fetchOptions).toBeCalledWith('book')
     TestUtils.Simulate.keyDown(input, {key: "Down", which: 40, keyCode: 40});
     TestUtils.Simulate.keyDown(input, {key: "Enter", which: 13, keyCode: 13});
     var expected = {"short_name":"CMP / BV","name":"Price to book value","unit":"","description":"Price to book value of the stock."}

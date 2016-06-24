@@ -51,6 +51,7 @@ describe('getFormData Tests', function() {
     var getFormData = require('../utils.js').getFormData;
     var data = getFormData(form);
     expect(data).toEqual({
+      check_bar: false,
       select_box: 'foo',
       text_area: 'Bar',
       check_foo: 'fb'
