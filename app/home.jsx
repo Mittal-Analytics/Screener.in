@@ -31,11 +31,12 @@ function Home(props, context) {
         Avanti Feeds</a>, <a href="company/AYMSYNTEX/">
         AYM Syntex</a>, <a href="company/CANFINHOME/">
         Can-Fin Homes</a>, <a href="company/KSL/">
-        Kalyani Steels</a>, <a href="company/SHILPAMED/">
-        Shilpa Medicare</a>, <a href="company/SUZLON/consolidated/">
-        Suzlon Energy</a>, <a href="company/504959/">
-        Stovec Industries</a>, <a href="company/TORNTPOWER/">
-        Torrent Power</a>...
+        Kalyani Steels</a>, <a href="company/KITEX/">
+        Kitex Garments</a>, <a href="company/SHILPAMED/">
+        Shilpa Medicare</a>, <a href="company/SANGHVIMOV/">
+        Sanghvi Movers</a>, <a href="company/504959/">
+        Stovec Industries</a>, <a href="company/TATAMETALI/">
+        Tata Metaliks</a> ...
       </p>
     </div>
     <div className="row text-center home-footer">

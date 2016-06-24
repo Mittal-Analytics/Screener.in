@@ -52,9 +52,9 @@ describe('getFormData Tests', function() {
     var data = getFormData(form);
     expect(data).toEqual({
       check_bar: false,
+      check_foo: 'fb',
       select_box: 'foo',
-      text_area: 'Bar',
-      check_foo: 'fb'
+      text_area: 'Bar'
     })
   });
 })
