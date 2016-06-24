@@ -37,19 +37,25 @@ class RatioGallery extends React.Component {
     this.setState({currentCategory: category})
   }
 
-  getCategoryGroups() {
-    var ratios = this.state.ratios
+  getCategoryGroups(ratios, currentCategory) {
     var groups = {
       "Recent results": [],
       "Preceding period": [],
       "Historical": []
     }
-    for (var i = 0; i < ratios.system_ratios.length; i++) {
-      var group = ratios.system_ratios[i][0]
-      var category = ratios.system_ratios[i][3]
-      if (this.state.currentCategory != category)
+    for (var i = 0; i < ratios.length; i++) {
+      var ratio = ratios[i]
+      var category = ratio[3]
+      if (currentCategory != category)
         continue
-      groups[group].push(ratios.system_ratios[i])
+      var group
+      if (ratio[1].indexOf("receding") > -1)
+        group = "Preceding period"
+      else if (ratio[1].search(/\dyear/i) > -1)
+        group = "Historical"
+      else
+        group = "Recent results"
+      groups[group].push(ratio)
     }
     return groups
   }
@@ -63,7 +69,9 @@ class RatioGallery extends React.Component {
       "Valuation",
       "Ratios"
     ]
-    var groups = this.getCategoryGroups()
+    var currentCategory = this.state.currentCategory
+    var ratios = this.state.ratios.system_ratios
+    var groups = this.getCategoryGroups(ratios, currentCategory)
     return <div className="gallery">
       <div className="pull-right">
         <br />
@@ -79,7 +87,7 @@ class RatioGallery extends React.Component {
         <ul className="nav col-md-2">
           <li className="heading">Select Category</li>
           {categories.map((category, idx) => {
-            var active = this.state.currentCategory == category ? 'active' : ''
+            var active = currentCategory == category ? 'active' : ''
             return <li key={idx} className={active}>
               <a onClick={() => this.handleCategorySelection(category)}>
                 {category}
