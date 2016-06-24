@@ -5,7 +5,9 @@ import Api from 'app/api.js'
 
 
 function RatiosList(props) {
-  return <ul className="nav col-md-2">
+  if(props.ratios.length == 0)
+    return false
+  return <ul className="nav col-md-3">
     <li className="heading">{props.heading}</li>
     {props.ratios.map((ratio, idx) => {
       return <li key={idx}>
@@ -44,14 +46,12 @@ class RatioGallery extends React.Component {
           ratios: response,
           galleryOpen: true
         })
-        this.props.onOpen()
       }
     )
   }
 
   handleClose() {
     this.setState({galleryOpen: false})
-    this.props.onClose()
   }
 
   handleCategorySelection(category) {
@@ -70,7 +70,9 @@ class RatioGallery extends React.Component {
       if (currentCategory != category)
         continue
       var group
-      if (ratio[1].indexOf("receding") > -1)
+      if (ratio[1].indexOf("preceding year quarter") > -1)
+        group = "historical"
+      else if (ratio[1].indexOf("receding") > -1)
         group = "preceding"
       else if (ratio[1].search(/\dyear/i) > -1)
         group = "historical"
@@ -79,6 +81,35 @@ class RatioGallery extends React.Component {
       groups[group].push(ratio)
     }
     return groups
+  }
+
+  renderToolbar() {
+    var operators = ["+", "-", "/", "*", ">", "<", "AND\n", "OR\n"]
+    return <form className="form-inline">
+      <div className="pull-right">
+        <Button
+          style="danger"
+          icon="eye-close"
+          onClick={this.handleClose}
+          name="Close Gallery"
+        />
+      </div>
+
+      {operators.map((operator) => {
+        var ratio = ["", operator, ""]
+        return <span><a
+          className="btn btn-default"
+          onClick={() => this.props.onRatioClick(ratio)}
+          >
+          {operator}
+        </a>{" "}</span>
+      })}
+
+      <div className="form-group">
+        <input type="text" className="form-control" placeholder="Filter Ratio" />
+      </div>
+      <button type="submit" className="btn btn-link">Reset</button>
+    </form>
   }
 
   renderOpen() {
@@ -94,15 +125,9 @@ class RatioGallery extends React.Component {
     var ratios = this.state.ratios.system_ratios
     var groups = this.getCategoryGroups(ratios, currentCategory)
     return <div className="gallery">
-      <div className="pull-right">
-        <br />
-        <Button
-          style="danger"
-          icon="eye-close"
-          onClick={this.handleClose}
-          name="Close Gallery"
-        />
-      </div>
+      <br />
+      {this.renderToolbar()}
+      <br />
 
       <div className="row">
         <ul className="nav col-md-2">
@@ -152,8 +177,6 @@ class RatioGallery extends React.Component {
 }
 
 RatioGallery.propTypes = {
-  onOpen: React.PropTypes.func.isRequired,
-  onClose: React.PropTypes.func.isRequired,
   onRatioClick: React.PropTypes.func.isRequired
 }
 

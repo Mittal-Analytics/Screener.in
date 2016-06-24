@@ -179,17 +179,11 @@ TextArea.propTypes = {
 class QueryBuilder extends React.Component {
   constructor(props, context) {
     super(props, context)
-    this.handleToggle = this.handleToggle.bind(this)
     this.handleInsert = this.handleInsert.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
     this.state = {
-      galleryOpen: false,
       selected: false
     }
-  }
-
-  handleToggle() {
-    this.setState({galleryOpen: !this.state.galleryOpen})
   }
 
   handleInsert(ratio) {
@@ -207,11 +201,9 @@ class QueryBuilder extends React.Component {
   }
 
   render() {
-    var textareaCls = this.state.galleryOpen ? 'col-md-6' : 'col-md-8'
-    var galleryCls = this.state.galleryOpen ? 'col-md-6' : 'col-md-4'
     return <div>
       <div className="row">
-        <div className={textareaCls}>
+        <div className="col-md-8">
           <TextArea
             name={this.props.name}
             placeholder={this.props.placeholder}
@@ -220,7 +212,7 @@ class QueryBuilder extends React.Component {
             ref="textarea"
           />
         </div>
-        <div className={galleryCls}>
+        <div className="col-md-4">
           <VariableDetail
             assist={this.props.assist}
             selected={this.state.selected}
@@ -229,11 +221,7 @@ class QueryBuilder extends React.Component {
       </div>
 
       <div>
-        <RatioGallery
-          onOpen={this.handleToggle}
-          onClose={this.handleToggle}
-          onRatioClick={this.handleInsert}
-        />
+        <RatioGallery onRatioClick={this.handleInsert} />
       </div>
     </div>
   }
