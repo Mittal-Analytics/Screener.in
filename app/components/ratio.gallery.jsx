@@ -108,10 +108,9 @@ class RatioGallery extends React.Component {
       </div>
 
       {operators.map((operator, idx) => {
-        var ratio = ["", operator, ""]
         return <span key={idx}><a
           className="btn btn-default"
-          onClick={() => this.props.onRatioClick(ratio)}
+          onClick={() => this.props.onRatioClick(operator)}
           >
           {operator}
         </a>{" "}</span>
