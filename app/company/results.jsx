@@ -66,12 +66,18 @@ var highlights = [
   'Total Liabilities', 'Total Assets',
   'Net Cash Flow'
 ];
-var percents = ['OPM', 'Dividend Payout'];
+
+var percentsAll = ['Sales', 'Expenses', 'Operating Profit', 'OPM', 'Other Income', 'Interest', 'Depreciation', 'Profit before tax', 'Tax', 'Net Profit', 'EPS (unadj)', 'Dividend Payout'];
+var percentsMin = ['OPM', 'Dividend Payout'];
+var percents = percentsMin;
 
 
 var Results = React.createClass({
   getInitialState: function() {
-    return {schedules: {}};
+    return {
+      showInPercentage : false,
+      schedules: {}
+    };
   },
 
   componentWillReceiveProps: function(props) {
@@ -96,6 +102,64 @@ var Results = React.createClass({
         schedules[field] = response;
         this.setState({schedules: schedules});
       }.bind(this));
+  },
+
+  changePercentOption: function(optn) {
+    var val = optn == 0;
+    this.setState({showInPercentage : val});
+  },
+
+  normalizeTrailing: function(trailingNumbers) {
+    var salesValue = trailingNumbers['Sales'];
+    var copyTrailing = {};
+
+    for (var key in trailingNumbers) {
+      if (key == 'Sales' || key == 'OPM' || key == 'Dividend Payout') {
+        copyTrailing[key] = trailingNumbers[key];
+        continue;
+      }
+      copyTrailing[key] = trailingNumbers[key] * 100.0 / salesValue;
+      copyTrailing[key] = copyTrailing[key].toFixed(2)
+    }
+
+    copyTrailing['Sales'] = 100;
+
+    return copyTrailing;
+  },
+
+  normalizeNumbers: function(numbers) {
+    var dates = Object.keys(numbers[0][1]).sort();
+    var newAnnualNumbers = [];
+
+    var salesIndx = 0; // We find salesIndx inspite of it always being at 0. Just in case.
+    for (var indx = 0; indx < numbers.length; indx++) {
+      var keyName = numbers[indx][0];
+      if (keyName == 'Sales') {
+        salesIndx = indx;
+        break;
+      }
+    }
+
+    for (var indx = 0; indx < numbers.length; indx++) {
+      newAnnualNumbers[indx] = [];
+      newAnnualNumbers[indx][0] = numbers[indx][0];
+      var keyName = numbers[indx][0];
+      newAnnualNumbers[indx][1] = {};
+      for (var date in numbers[indx][1]) {
+        newAnnualNumbers[indx][1][date] = numbers[indx][1][date];
+
+        if (keyName == 'OPM' || keyName == 'Dividend Payout') {
+          // No modifications
+        } else if (keyName == 'Sales') {
+          newAnnualNumbers[indx][1][date] = 100;
+        } else {
+          newAnnualNumbers[indx][1][date] = newAnnualNumbers[indx][1][date] * 100.0 / numbers[salesIndx][1][date];
+          newAnnualNumbers[indx][1][date] = newAnnualNumbers[indx][1][date].toFixed(2);
+        }
+      }
+    }
+
+    return newAnnualNumbers;
   },
 
   renderRow: function(trailing, dates, childIdx, row, idx) {
@@ -123,12 +187,22 @@ var Results = React.createClass({
 
   render: function () {
     var company = this.props.company;
+    percents = percentsMin;
     var standalone = company.warehouse_set.result_type == 'sa';
     var pair_url = company.warehouse_set.pair_url;
     var pair_link = getSuffix(pair_url, standalone, company.prime);
     var numbers = company.number_set[this.props.report];
     var dates = Object.keys(numbers[0][1]).sort();
     var trailing = getTrailing(this.props.report, company.number_set, dates);
+    var figuresIn = 'Rs. Crores';
+    var percentageOptions = this.props.report == 'annual' ? this.renderPercentOptions() : '';
+
+    if (this.props.report == 'annual' && this.state.showInPercentage) {
+      numbers = this.normalizeNumbers(numbers);
+      trailing = this.normalizeTrailing(trailing);
+      percents = percentsAll;
+      figuresIn = 'Percentage of Sales';
+    }
 
     var Heads = dates.map(function(rdt, idx) {
       return <th key={idx}>{Utils.toMonthYear(rdt)}</th>;
@@ -138,7 +212,7 @@ var Results = React.createClass({
     return <div>
       <h2>{getCaption(this.props.report)}
         <small> {getPrefix(pair_url, standalone)}
-          Figures in Rs. Crores {pair_link}
+          Figures in {figuresIn} {pair_link} {percentageOptions}
         </small>
       </h2>
 
@@ -156,6 +230,32 @@ var Results = React.createClass({
           </tbody>
         </table>
       </div>
+    </div>;
+  },
+
+  renderPercentOptions: function() {
+    var options = [
+      ['Percentage'],
+      ['Absolute']
+    ];
+    var buttonOptions = options.map(function(btn, idx) {
+      var active = true;
+      var classes = classNames('btn', {
+        'btn-primary': active,
+        'btn-link': !active
+      });
+      return <button
+        key={idx}
+        onClick={this.changePercentOption.bind(null, idx)}
+        className={classes}>
+          {btn[0]}
+      </button>;
+    }.bind(this));
+    return <div>
+      <div className="pull-right">
+        Show in {buttonOptions}
+      </div>
+      <div className="clearfix"></div>
     </div>;
   }
 });
