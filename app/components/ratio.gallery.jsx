@@ -133,10 +133,13 @@ class RatioGallery extends React.Component {
 
   renderOpen() {
     var categories = [
+      "Quarterly Results",
+      "Quarterly Variations",
       "Annual Results",
+      "Annual Variations",
+      "Trailing 12 Months",
       "Balance Sheet",
       "Cash Flow Statement",
-      "Quarterly Results",
       "Valuation",
       "Ratios",
       "User Ratios"
