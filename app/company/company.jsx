@@ -3,7 +3,7 @@
 
 var React = require('react');
 var isEqual = require('lodash/isEqual');
-var Utils = require('app/components/utils.js');
+var Utils = require('../components/utils.js');
 var Api = require('../api.js');
 var Misc = require('./misc.jsx');
 var Peers = require('./peers.jsx');

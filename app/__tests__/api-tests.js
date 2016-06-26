@@ -1,15 +1,15 @@
 "use strict";
 jest.autoMockOff();
 jest.mock('fetch-on-rest');
+var api = require('../api.js');
 
 describe('test REST apis', function () {
-  var api = require('app/api.js');
 
   afterEach(function() {
     expect(api.getPending()).toEqual([]);
   });
 
-  pit('calls the get api', function() {
+  it('calls the get api', function() {
     api.setResponse('/api/users/me/', JSON.stringify({foo: 'bar'}));
     return api.get(api.me).then(resp => {
       expect(resp).toEqual({foo: 'bar'});
@@ -26,7 +26,7 @@ describe('test REST apis', function () {
     })
   });
 
-  pit('calls the post api', function() {
+  it('calls the post api', function() {
     api.setResponse('/logout/', JSON.stringify({}));
     return api.logout().then(() => {
       expect(window.fetch.mock.calls.length).toBe(1);
@@ -43,7 +43,7 @@ describe('test REST apis', function () {
     });
   });
 
-  pit('calls the delete api', function() {
+  it('calls the delete api', function() {
     api.setResponse('/api/screens/33/?foo=bar', "{}");
     return api.delete(['screens', 33], {foo: 'bar'}).then(() => {
       expect(window.fetch).toBeCalledWith(
@@ -64,7 +64,7 @@ describe('test REST apis', function () {
 
 describe('test dependent libraries', function(){
   it('checks expansions', function() {
-    var api = require('app/api.js');
+    var api = require('../api.js');
     expect(api._getUrl(api.me)).toEqual('/api/users/me/');
     expect(api._getUrl(api.me, {})).toEqual('/api/users/me/');
     expect(api._getUrl(api.me, {foo: 'bar'})).toEqual('/api/users/me/?foo=bar');

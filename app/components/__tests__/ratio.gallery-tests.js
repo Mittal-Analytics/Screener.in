@@ -1,5 +1,5 @@
 'use strict';
-jest.dontMock('../ratio.gallery.jsx');
+jest.disableAutomock();
 var RATIOS = {
   "user_ratios":[],
   "system_ratios":[

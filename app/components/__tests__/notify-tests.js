@@ -1,6 +1,5 @@
 'use strict';
-/* global setTimeout */
-jest.dontMock('app/components/button.jsx');
+jest.unmock('../../components/button.jsx');
 
 describe('Notify Tests', function() {
   var notify, button, TestUtils, dummy;
@@ -30,7 +29,7 @@ describe('Notify Tests', function() {
     );
   });
 
-  pit('should show proceccsing', function() {
+  it('should show proceccsing', function() {
     expect(dummy).not.toBeCalled();
     expect(notify.state.status).toBe('initial');
     TestUtils.Simulate.click(button);

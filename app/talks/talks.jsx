@@ -1,9 +1,9 @@
 "use strict";
 var React = require('react');
 var Link = require('react-router').Link;
-var Utils = require('app/components/utils.js');
-var Icon = require('app/components/icon.jsx');
-var api = require('app/api.js');
+var Utils = require('../components/utils.js');
+var Icon = require('../components/icon.jsx');
+var api = require('../api.js');
 var startCase = require('lodash/startCase');
 
 
@@ -44,7 +44,7 @@ var Talks = React.createClass({
 
   componentDidMount: function() {
     this.fetchStats();
-    return this.fetchResults(this.props);
+    this._req = this.fetchResults(this.props);
   },
 
   componentWillReceiveProps: function(props) {

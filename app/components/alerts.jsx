@@ -1,10 +1,8 @@
 "use strict";
-/* global require, document, window */
-
 var React = require('react');
 var map = require('lodash/map');
 var startCase = require('lodash/startCase');
-var Icon = require('app/components/icon.jsx');
+var Icon = require('./icon.jsx');
 
 
 function Alerts(props) {

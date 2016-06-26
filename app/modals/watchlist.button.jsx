@@ -1,8 +1,7 @@
 "use strict";
-/* global require, window */
 var React = require('react');
-var Modal = require('app/components/modal.jsx');
-var CompanySearch = require('app/components/company.search.jsx');
+var Modal = require('../components/modal.jsx');
+var CompanySearch = require('../components/company.search.jsx');
 var api = require('../api.js');
 var ActionRows = require('./action.rows.jsx');
 

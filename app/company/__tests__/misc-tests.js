@@ -29,7 +29,7 @@ var kitex = {
 
 
 describe('Walk tests', function () {
-  var api = require('app/api.js');
+  var api = require('../../api.js');
   var Misc, TestUtils, api, ReactDOM, React;
 
   beforeEach(function() {

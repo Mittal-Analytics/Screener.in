@@ -1,9 +1,9 @@
 "use strict";
 import React from 'react'
 import {Link} from 'react-router'
-import api from 'app/api.js'
-import Button from 'app/components/button.jsx'
-import Utils from 'app/components/utils.js'
+import api from '../api.js'
+import Button from '../components/button.jsx'
+import Utils from '../components/utils.js'
 
 
 class DeleteRatio extends React.Component {

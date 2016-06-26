@@ -1,9 +1,9 @@
 "use strict";
 var React = require('react');
 var api = require('../api.js');
-var Utils = require('app/components/utils.js');
-var Alerts = require('app/components/alerts.jsx');
-var Icon = require('app/components/icon.jsx');
+var Utils = require('../components/utils.js');
+var Alerts = require('../components/alerts.jsx');
+var Icon = require('../components/icon.jsx');
 
 
 function Header() {

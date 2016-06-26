@@ -1,10 +1,10 @@
 "use strict";
 import React from 'react'
 import classNames from 'classnames'
-import TypeUtil from 'app/components/typeahead.util.js'
+import TypeUtil from './typeahead.util.js'
 import endsWith from 'lodash/endsWith'
 import debounce from 'lodash/debounce'
-import Api from 'app/api.js'
+import Api from '../api.js'
 import getLastWord from './cursor.js'
 import RatioGallery from './ratio.gallery.jsx'
 

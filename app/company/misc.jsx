@@ -1,8 +1,8 @@
 "use strict";
 /* global require, document, window */
 var React = require('react');
-var Icon = require('app/components/icon.jsx');
-var Button = require('app/components/button.jsx');
+var Icon = require('../components/icon.jsx');
+var Button = require('../components/button.jsx');
 
 
 function CompanyHeader(props) {

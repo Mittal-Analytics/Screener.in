@@ -2,7 +2,7 @@
 /* global require, document */
 
 var React = require('react');
-var CompanySearch = require('app/components/company.search.jsx');
+var CompanySearch = require('./components/company.search.jsx');
 
 function Home(props, context) {
 

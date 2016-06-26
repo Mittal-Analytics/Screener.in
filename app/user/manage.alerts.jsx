@@ -1,9 +1,9 @@
 "use strict";
 var React = require('react');
 var api = require('../api.js');
-var ActionRows = require('app/modals/action.rows.jsx');
-var Utils = require('app/components/utils.js');
-var Button = require('app/components/button.jsx');
+var ActionRows = require('../modals/action.rows.jsx');
+var Utils = require('../components/utils.js');
+var Button = require('../components/button.jsx');
 
 
 class Alerts extends React.Component {
@@ -23,7 +23,7 @@ class Alerts extends React.Component {
     api.get(['alerts']).then(resp => {
       this.setState({screens: resp});
     });
-    return api.get(['users', 'me']).then(resp => {
+    this._req = api.get(['users', 'me']).then(resp => {
       this.setState({
         watchlistAlert: resp.watchlist_alert
       });

@@ -1,10 +1,10 @@
 "use strict";
 /* global document */
 var React = require('react');
-var Button = require('app/components/button.jsx');
+var Button = require('../components/button.jsx');
 var Link = require('react-router').Link;
 var api = require('../api.js');
-var Utils = require('app/components/utils.js');
+var Utils = require('../components/utils.js');
 
 
 function SearchForm(props) {
@@ -71,7 +71,7 @@ var Screens = React.createClass({
 
   componentDidMount: function() {
     Utils.setTitle('Browse Screens');
-    return api.get(['screens', 'popular']).then(resp => {
+    this._req = api.get(['screens', 'popular']).then(resp => {
       this.setState({
         screens: resp,
         searched: false

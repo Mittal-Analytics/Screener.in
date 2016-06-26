@@ -1,14 +1,13 @@
 'use strict';
-/* global jest, require, window */
-jest.dontMock('../modal.jsx');
+jest.disableAutomock()
+var React = require('react');
+var Modal = require('../modal.jsx');
+var TestUtils = require('react-addons-test-utils');
 
 describe('Modal Tests', function() {
-  var modal, TestUtils, onOpen, onClose;
+  var modal, onOpen, onClose;
 
   beforeEach(function() {
-    var React = require('react');
-    var Modal = require('../modal.jsx');
-    TestUtils = require('react-addons-test-utils');
     window.loggedIn = true;
     onOpen = jest.genMockFunction();
     onClose = jest.genMockFunction();

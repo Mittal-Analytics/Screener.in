@@ -1,14 +1,13 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../alerts.jsx');
+jest.disableAutomock();
+var React = require('react');
+var Alert = require('../alerts.jsx');
+var TestUtils = require('react-addons-test-utils');
 
 describe('alerts Tests', function() {
-  var alerts, TestUtils;
+  var alerts
 
   beforeEach(function() {
-    var React = require('react');
-    var Alert = require('../alerts.jsx');
-    TestUtils = require('react-addons-test-utils');
     var errors = new Error('Bad request');
     errors.json = {
       display_name: 'cannot be blank'

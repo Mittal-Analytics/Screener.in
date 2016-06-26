@@ -1,11 +1,10 @@
 "use strict";
-/* global require */
 var React = require('react');
-var Button = require('app/components/button.jsx');
-var Modal = require('app/components/modal.jsx');
+var Button = require('../components/button.jsx');
+var Modal = require('../components/modal.jsx');
 var Api = require('../api.js');
-var Alerts = require('app/components/alerts.jsx');
-var utils = require('app/components/utils.js');
+var Alerts = require('../components/alerts.jsx');
+var utils = require('../components/utils.js');
 
 
 var SaveScreenModal = React.createClass({

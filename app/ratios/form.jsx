@@ -1,11 +1,11 @@
 "use strict";
 import React from 'react'
-import api from 'app/api.js'
+import api from '../api.js'
 import classNames from 'classnames'
-import QueryBuilder from 'app/components/query.builder.jsx'
-import Alert from 'app/components/alerts.jsx'
-import Utils from 'app/components/utils.js'
-import Icon from 'app/components/icon.jsx'
+import QueryBuilder from '../components/query.builder.jsx'
+import Alert from '../components/alerts.jsx'
+import Utils from '../components/utils.js'
+import Icon from '../components/icon.jsx'
 
 
 class RatioForm extends React.Component {

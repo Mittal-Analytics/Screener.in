@@ -5,7 +5,7 @@ var React = require('react');
 var classNames = require('classnames');
 var Api = require('../api.js');
 var Chartist = require('chartist');
-var Utils = require('app/components/utils.js');
+var Utils = require('../components/utils.js');
 
 var PriceChart = React.createClass({
   barI: 0,

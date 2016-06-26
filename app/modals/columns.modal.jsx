@@ -1,11 +1,11 @@
 "use strict";
 /* global require, window */
 var React = require('react');
-var Modal = require('app/components/modal.jsx');
-var Confirm = require('app/components/confirm.jsx');
-var Icon = require('app/components/icon.jsx');
+var Modal = require('../components/modal.jsx');
+var Confirm = require('../components/confirm.jsx');
+var Icon = require('../components/icon.jsx');
 var Link = require('react-router').Link;
-var RatioSearch = require('app/components/ratio.search.jsx');
+var RatioSearch = require('../components/ratio.search.jsx');
 var api = require('../api.js');
 var ActionRows = require('./action.rows.jsx');
 

@@ -1,11 +1,9 @@
 "use strict";
-/* global require, window, document */
-
 var React = require('react');
 var api = require('../api.js');
 var Link = require('react-router').Link;
-var Utils = require('app/components/utils.js');
-var ManageColumns = require('app/modals/columns.modal.jsx');
+var Utils = require('../components/utils.js');
+var ManageColumns = require('../modals/columns.modal.jsx');
 
 
 var Peers = React.createClass({
@@ -15,7 +13,7 @@ var Peers = React.createClass({
   },
 
   componentDidMount: function() {
-    return this.fetchPeers(this.props);
+    this._req = this.fetchPeers(this.props);
   },
 
   componentWillReceiveProps: function(props) {

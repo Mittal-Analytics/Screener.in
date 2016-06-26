@@ -2,10 +2,10 @@
 /* global require, document, window */
 
 var React = require('react');
-var WatchlistButton = require('app/modals/watchlist.button.jsx');
-var QueryForm = require('app/screens/query.form.jsx');
+var WatchlistButton = require('./modals/watchlist.button.jsx');
+var QueryForm = require('./screens/query.form.jsx');
 var Link = require('react-router').Link;
-var Utils = require('app/components/utils.js');
+var Utils = require('./components/utils.js');
 var Api = require('./api.js');
 
 

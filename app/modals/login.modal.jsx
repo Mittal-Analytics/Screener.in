@@ -1,7 +1,6 @@
 "use strict";
-/* global require, window */
 var React = require('react');
-var Modal = require('app/components/modal.jsx');
+var Modal = require('./modal.jsx');
 
 
 var LoginModal = React.createClass({

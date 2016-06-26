@@ -1,19 +1,13 @@
 'use strict';
-/* global jest, require, window */
-jest.autoMockOff();
+jest.disableAutomock();
 jest.mock('fetch-on-rest');
+var api = require('../../api.js');
+var React = require('react');
+var TestUtils = require('react-addons-test-utils');
+var ManageColumns = require('../columns.modal.jsx');
 
 
 describe('Columns modal tests', function() {
-  var api = require('app/api.js');
-  var React, TestUtils, ManageColumns;
-
-  beforeEach(function() {
-    React = require('react');
-    TestUtils = require('react-addons-test-utils');
-    ManageColumns = require('../columns.modal.jsx');
-  });
-
   afterEach(function() {
     expect(api.getPending()).toEqual([]);
   });
@@ -32,7 +26,7 @@ describe('Columns modal tests', function() {
     expect(title.textContent).toEqual('Please register to use this feature');
   });
 
-  pit('shows modal box', function() {
+  it('shows modal box', function() {
     window.loggedIn = true;
     api.setResponse('/api/users/me/', JSON.stringify({icolumns: 'PE;CMP'}));
     var onClose = jest.genMockFunction();

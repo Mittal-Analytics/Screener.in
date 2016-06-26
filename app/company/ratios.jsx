@@ -1,7 +1,7 @@
 "use strict";
 /* global require */
 var React = require('react');
-var Utils = require('app/components/utils.js');
+var Utils = require('../components/utils.js');
 var URITemplate = require('urijs/src/URITemplate');
 
 

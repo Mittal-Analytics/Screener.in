@@ -1,15 +1,15 @@
 'use strict';
-jest.autoMockOff();
+jest.disableAutomock();
 jest.mock('fetch-on-rest');
+var api = require('../../api.js');
+var React = require('react');
+var TestUtils = require('react-addons-test-utils');
+var CompanySearch = require('../company.search.jsx');
 
 describe('Company Search Tests', function() {
-  var api = require('app/api.js');
-  var search, TestUtils, dummy;
+  var search, dummy;
 
   beforeEach(function() {
-    var React = require('react');
-    TestUtils = require('react-addons-test-utils');
-    var CompanySearch = require('../company.search.jsx');
     dummy = jest.genMockFunction();
     search = TestUtils.renderIntoDocument(
       <CompanySearch onSelect={dummy} />
@@ -20,7 +20,7 @@ describe('Company Search Tests', function() {
     expect(api.getPending()).toEqual([]);
   });
 
-  pit('should trigger select', function() {
+  it('should trigger select', function() {
     var company = {name: 'Patanjali', id: 7, url: '/ramdev/'};
     api.setResponse('/api/company/search/?q=Patanjali', JSON.stringify([company]));
     var input = TestUtils.findRenderedDOMComponentWithTag(

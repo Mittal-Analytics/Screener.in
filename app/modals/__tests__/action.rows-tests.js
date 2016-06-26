@@ -1,6 +1,5 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../action.rows.jsx');
+jest.disableAutomock()
 
 describe('action.rows Tests', function() {
   var actions, TestUtils, dummy;

@@ -1,7 +1,7 @@
 "use strict";
 import React from 'react'
-import api from 'app/api.js'
-import Utils from 'app/components/utils.js'
+import api from '../api.js'
+import Utils from '../components/utils.js'
 import RatioForm from './form.jsx'
 import {Link} from 'react-router';
 

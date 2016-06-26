@@ -1,9 +1,13 @@
 'use strict';
-jest.autoMockOff();
-jest.mock('fetch-on-rest');
+jest.disableAutomock()
+jest.mock('fetch-on-rest')
+var api = require('../api.js');
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Watchlist = require('../watchlist.jsx');
+var TestUtils = require('react-addons-test-utils');
 
-
-var screen = {
+var SCREEN = {
   ratios: [[
     "Current price",
     "CMP",
@@ -15,19 +19,17 @@ var screen = {
 };
 
 describe('watchlist Tests', function() {
-  var api = require('app/api.js');
-  var watchlist, TestUtils;
+  var watchlist
 
   beforeEach(function() {
-    var React = require('react');
-    var Watchlist = require('../watchlist.jsx');
-    window.loggedIn = true;
-    TestUtils = require('react-addons-test-utils');
     var params = {
       search: '',
       query: {},
       pathname: '/watchlist/'
     };
+    window.loggedIn = true;
+    api.setResponse('/api/users/watchlist/',
+      JSON.stringify(SCREEN));
     watchlist = TestUtils.renderIntoDocument(
       <Watchlist location={params}/>
     );
@@ -37,21 +39,14 @@ describe('watchlist Tests', function() {
     expect(api.getPending()).toEqual([]);
   });
 
-  it('should show loading', function() {
-    var ReactDOM = require('react-dom');
+  it('should load watchlist', function() {
     var dom = ReactDOM.findDOMNode(watchlist);
     expect(dom.textContent).toEqual('Loading...');
-  });
-
-  pit('should load watchlist', function() {
-    api.setResponse('/api/users/watchlist/',
-      JSON.stringify(screen));
-    return watchlist.componentDidMount().then(() => {
-      expect(watchlist.state.screen).toEqual(screen);
+    return watchlist._req.then(() => {
+      expect(watchlist.state.screen).toEqual(SCREEN);
       var table = TestUtils.findRenderedDOMComponentWithTag(
         watchlist, 'table');
       expect(table).toBeDefined();
     });
   });
-
 });

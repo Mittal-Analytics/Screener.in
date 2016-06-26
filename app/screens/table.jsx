@@ -1,9 +1,7 @@
 "use strict";
-/* global require, window, document */
-
 var React = require('react');
 var Link = require('react-router').Link;
-var Utils = require('app/components/utils.js');
+var Utils = require('../components/utils.js');
 var defaults = require('lodash/defaults');
 var classNames = require('classnames');
 

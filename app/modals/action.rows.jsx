@@ -1,8 +1,7 @@
 "use strict";
 var React = require('react');
 var classNames = require('classnames');
-var Icon = require('app/components/icon.jsx');
-var Button = require('app/components/button.jsx');
+var Icon = require('../components/icon.jsx');
 
 
 var ActionRows = React.createClass({

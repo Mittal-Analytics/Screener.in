@@ -1,10 +1,10 @@
 "use strict";
 var React = require('react');
 var Link = require('react-router').Link;
-var api = require('app/api.js');
-var Utils = require('app/components/utils.js');
-var Icon = require('app/components/icon.jsx');
-var Alert = require('app/components/alerts.jsx');
+var api = require('../api.js');
+var Utils = require('../components/utils.js');
+var Icon = require('../components/icon.jsx');
+var Alert = require('../components/alerts.jsx');
 
 
 class Profile extends React.Component {
@@ -23,7 +23,7 @@ class Profile extends React.Component {
       return (window.location = '/register/');
     Utils.setTitle('Profile');
     var url = '/users/' + window.userId + '.html';
-    return api.rawGet(url).then(resp => {
+    this._req = api.rawGet(url).then(resp => {
       this.setState({
         form: {__html: resp}
       });

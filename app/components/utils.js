@@ -4,7 +4,7 @@
 
 function setTitle(title) {
   var fullTitle = title.trim() + ' - Screener.in';
-  document.title = fullTitle;
+  window.document.title = fullTitle;
   var location = window.location.pathname;
   if (process.env.NODE_ENV !== "production") {
     return;

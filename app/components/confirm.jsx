@@ -1,7 +1,7 @@
 "use strict";
 var React = require('react');
 var classNames = require('classnames');
-var Button = require('app/components/button.jsx');
+var Button = require('./button.jsx');
 
 
 class Confirm extends React.Component {

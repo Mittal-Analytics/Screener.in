@@ -1,12 +1,10 @@
 "use strict";
-/* global require, document */
-
 var React = require('react');
-var ManageColumns = require('app/modals/columns.modal.jsx');
-var Confirm = require('app/components/confirm.jsx');
-var Notify = require('app/components/notify.jsx');
+var ManageColumns = require('../modals/columns.modal.jsx');
+var Confirm = require('../components/confirm.jsx');
+var Notify = require('../components/notify.jsx');
 var api = require('../api.js');
-var Utils = require('app/components/utils.js');
+var Utils = require('../components/utils.js');
 var UserTable = require('./table.jsx');
 var ScreenBase = require('./base.jsx');
 
@@ -25,7 +23,7 @@ class Screen extends React.Component {
   }
 
   componentDidMount() {
-    return this.fetchResults(
+    this._req = this.fetchResults(
       this.props.params.screenId,
       this.props.location.query
     );

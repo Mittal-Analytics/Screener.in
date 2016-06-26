@@ -1,7 +1,7 @@
 "use strict";
 /* global require */
 var React = require('react');
-var Typeahead = require('app/components/typeahead.jsx');
+var Typeahead = require('./typeahead.jsx');
 var api = require('../api.js');
 
 

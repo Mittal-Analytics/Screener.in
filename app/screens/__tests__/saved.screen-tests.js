@@ -1,7 +1,11 @@
 'use strict';
-/* global jest, require */
-jest.autoMockOff();
+jest.disableAutomock();
 jest.mock('fetch-on-rest');
+jest.mock('../../components/utils.js')
+var api = require('../../api.js');
+var React = require('react');
+var Screen = require('../saved.screen.jsx');
+var TestUtils = require('react-addons-test-utils');
 
 const screenResult = {
   name: 'Foo Bar',
@@ -14,13 +18,11 @@ const screenResult = {
 };
 
 describe('Tests for Saved Screen', function() {
-  var api = require('app/api.js');
-  var screen, TestUtils;
+  var screen
 
   beforeEach(function() {
-    var React = require('react');
-    var Screen = require('../saved.screen.jsx');
-    TestUtils = require('react-addons-test-utils');
+    api.setResponse('/api/screens/3/?foo=bar',
+      JSON.stringify(screenResult));
     screen = TestUtils.renderIntoDocument(
       <Screen
         params={{screenId: 3}}
@@ -38,10 +40,8 @@ describe('Tests for Saved Screen', function() {
     expect(api.getPending()).toEqual([]);
   });
 
-  pit('should load the screen', function() {
-    api.setResponse('/api/screens/3/?foo=bar',
-      JSON.stringify(screenResult));
-    return screen.componentDidMount().then(() => {
+  it('should load the screen', function() {
+    return screen._req.then(() => {
       expect(1).toEqual(1);
     })
   })

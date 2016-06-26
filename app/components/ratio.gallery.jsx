@@ -1,7 +1,7 @@
 "use strict";
 import React from 'react'
-import Button from 'app/components/button.jsx'
-import Api from 'app/api.js'
+import Button from './button.jsx'
+import Api from '../api.js'
 
 
 function RatiosList(props) {

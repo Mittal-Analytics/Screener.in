@@ -3,9 +3,9 @@
 var React = require('react');
 var Link = require('react-router').Link;
 var Api = require('../api.js');
-var Utils = require('app/components/utils.js');
-var RatioSearch = require('app/components/ratio.search.jsx');
-var QuickRatiosModal = require('app/modals/quickratios.modal.jsx');
+var Utils = require('../components/utils.js');
+var RatioSearch = require('../components/ratio.search.jsx');
+var QuickRatiosModal = require('../modals/quickratios.modal.jsx');
 
 
 var QuickRatios = React.createClass({

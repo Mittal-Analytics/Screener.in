@@ -1,7 +1,5 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../table.jsx');
-jest.dontMock('app/components/utils.js');
+jest.autoMockOff()
 
 
 describe('Table Tests', function(){

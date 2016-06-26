@@ -2,10 +2,10 @@
 /* global require, document */
 
 var React = require('react');
-var WatchlistButton = require('app/modals/watchlist.button.jsx');
-var ManageColumns = require('app/modals/columns.modal.jsx');
-var api = require('app/api.js');
-var Utils = require('app/components/utils.js');
+var WatchlistButton = require('./modals/watchlist.button.jsx');
+var ManageColumns = require('./modals/columns.modal.jsx');
+var api = require('./api.js');
+var Utils = require('./components/utils.js');
 var UserTable = require('./screens/table.jsx');
 
 
@@ -18,7 +18,7 @@ var Watchlist = React.createClass({
   componentDidMount: function() {
     if(!window.loggedIn)
       return (window.location = '/register/');
-    return this.fetchResults(this.props.location.query);
+    this._req = this.fetchResults(this.props.location.query)
   },
 
   componentWillReceiveProps: function(props) {

@@ -2,7 +2,7 @@
 /* global require, window */
 var React = require('react');
 var classNames = require('classnames');
-var api = require('app/api.js');
+var api = require('../api.js');
 var Typeahead = require('./typeahead.jsx');
 var Icon = require('./icon.jsx');
 

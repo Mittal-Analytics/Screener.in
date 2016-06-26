@@ -3,7 +3,7 @@
 
 var React = require('react');
 var QueryForm = require('./query.form.jsx');
-var Alerts = require('app/components/alerts.jsx');
+var Alerts = require('../components/alerts.jsx');
 
 
 function ScreenBase(props) {

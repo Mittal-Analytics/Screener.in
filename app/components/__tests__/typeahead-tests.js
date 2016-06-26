@@ -1,6 +1,5 @@
 'use strict';
-jest.dontMock('../typeahead.util.js');
-jest.dontMock('../typeahead.jsx');
+jest.disableAutomock()
 
 
 describe('Typeahead', function(){

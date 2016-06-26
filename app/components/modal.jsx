@@ -2,7 +2,7 @@
 /* global require, document, window */
 
 var React = require('react');
-var Button = require('app/components/button.jsx');
+var Button = require('../components/button.jsx');
 var Login = require('./login.jsx');
 
 

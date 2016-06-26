@@ -1,6 +1,6 @@
 "use strict";
 var React = require('react');
-var QueryBuilder = require('app/components/query.builder.jsx');
+var QueryBuilder = require('../components/query.builder.jsx');
 
 function QueryForm(props) {
   var assist = {

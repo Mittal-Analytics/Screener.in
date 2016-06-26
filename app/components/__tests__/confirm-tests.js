@@ -1,13 +1,13 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../confirm.jsx');
+jest.unmock('../button.jsx');
+jest.unmock('../confirm.jsx');
 
 
 describe('Confirm tests', function(){
   it('walk confirm test', function() {
     var React = require('react');
     var TestUtils = require('react-addons-test-utils');
-    var handleDelete = jest.genMockFunction();
+    var handleDelete = jest.fn();
     var Confirm = require('../confirm.jsx');
     var confirm = TestUtils.renderIntoDocument(
       <Confirm onClick={handleDelete} name="Delete?" />
