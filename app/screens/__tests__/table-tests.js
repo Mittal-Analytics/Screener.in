@@ -1,5 +1,5 @@
 'use strict';
-jest.autoMockOff()
+jest.disableAutomock()
 
 
 describe('Table Tests', function(){
