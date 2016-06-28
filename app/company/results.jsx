@@ -1,11 +1,11 @@
 "use strict";
-/* global require, document, window */
-var React = require('react');
-var Api = require('../api.js');
-var Link = require('react-router').Link;
-var classNames = require('classnames');
-var Utils = require('../components/utils.js');
-var defaults = require('lodash/defaults');
+import React from 'react'
+import Api from '../api.js'
+import {Link} from 'react-router'
+import classNames from 'classnames'
+import endsWith from 'lodash/endsWith'
+import defaults from 'lodash/defaults'
+import Utils from '../components/utils.js'
 
 
 function getCaption(report) {
@@ -105,7 +105,7 @@ var Results = React.createClass({
       'mom': schedules,
       'child': childIdx !== false,
       'strong': highlights.indexOf(field) >= 0,
-      'percent': percents.indexOf(field) >= 0,
+      'percent': percents.indexOf(field) >= 0 || endsWith(field, '%'),
       'odd': ( childIdx === false ? idx : childIdx ) % 2 == 0
     });
     var Cells = dates.map(function(rdt, iidx) {
