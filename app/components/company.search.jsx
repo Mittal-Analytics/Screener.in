@@ -1,39 +1,38 @@
 "use strict";
-/* global require, window */
-var React = require('react');
-var classNames = require('classnames');
-var api = require('../api.js');
-var Typeahead = require('./typeahead.jsx');
-var Icon = require('./icon.jsx');
+var React = require('react')
+var classNames = require('classnames')
+var api = require('../api.js')
+var Typeahead = require('./typeahead.jsx')
+var Icon = require('./icon.jsx')
 
 
-var CompanySearch = React.createClass({
-  propTypes: {
-    onSelect: React.PropTypes.func.isRequired,
-    large: React.PropTypes.bool,
-    placeholder: React.PropTypes.string
-  },
+class CompanySearch extends React.Component {
 
-  getInitialState: function() {
-    return {options: []};
-  },
+  constructor(props, context) {
+    super(props, context)
+    this.onChange = this.onChange.bind(this)
+    this.onSelect = this.onSelect.bind(this)
+    this.state = {
+      options: []
+    }
+  }
 
-  onChange: function(term) {
+  onChange(term) {
     this.req = api.get(api.search, {q: term}).then(
       resp => this.setState({options: resp})
-    );
-  },
+    )
+  }
 
-  onSelect: function(idx) {
-    var selected = this.state.options[idx];
-    this.props.onSelect(selected);
-  },
+  onSelect(idx) {
+    var selected = this.state.options[idx]
+    this.props.onSelect(selected)
+  }
 
-  render: function() {
+  render() {
     var buttonClass = classNames(
       'btn btn-primary',
       this.props.large && 'btn-lg'
-    );
+    )
     return <div className="input-group">
       <Typeahead
         className={this.props.large && "input-lg"}
@@ -47,8 +46,14 @@ var CompanySearch = React.createClass({
           <span className="hidden-sm hidden-xs"> Search</span>
         </button>
       </span>
-    </div>;
+    </div>
   }
-});
+}
+
+CompanySearch.propTypes = {
+  onSelect: React.PropTypes.func.isRequired,
+  large: React.PropTypes.bool,
+  placeholder: React.PropTypes.string
+}
 
 module.exports = CompanySearch;
