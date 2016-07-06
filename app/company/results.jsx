@@ -98,7 +98,7 @@ var Results = React.createClass({
       }.bind(this));
   },
 
-  renderRow: function(trailing, dates, childIdx, row, idx) {
+  renderRow: function(trailing, dates, childIdx, numbersCompareCompany, trailingCompareCompany, row, idx) {
     var field = row[0];
     var schedules = this.state.schedules[field];
     var rowClass = classNames({
@@ -112,13 +112,33 @@ var Results = React.createClass({
       return <td key={iidx}>{Utils.toLocalNumber(row[1][rdt])}</td>;
     });
     var TTMCell = trailing ? <td>{trailing[field]}</td> : false;
+    var isCompanyCompared = this.props.compareCompany && this.props.compareCompany.id;
+    var addCompanyName = isCompanyCompared && childIdx === false ? <td className="text">{this.props.company.name}</td> : isCompanyCompared ? <td /> : null;
+    var idxCompare = idx + 50; // Need a good reason for this number
+    var CellsCompare = isCompanyCompared && childIdx === false ? dates.map(function(rdt, iidx) {
+      var cellValue = numbersCompareCompany[idx][1][rdt];
+      return cellValue ? <td key={iidx}>{Utils.toLocalNumber(cellValue)}</td> : <td key={iidx} />;
+    }) : null;
+    var TTMCellCompare = isCompanyCompared && childIdx === false && trailingCompareCompany ? <td>{trailingCompareCompany[field]}</td> : false;
+    var addComparingCompany = isCompanyCompared && childIdx === false ?
+      <tr className={rowClass} key={idxCompare}>
+      <td />
+      <td className="text">{this.props.compareCompany.name}</td>
+      {CellsCompare}
+      {TTMCellCompare}
+    </tr>
+    : null;
+
     return [<tr className={rowClass} key={idx}>
       <td className="text" onClick={this.handleExpand.bind(null, field)}>
         {row[0]}
       </td>
+      {addCompanyName}
       {Cells}
       {TTMCell}
-    </tr>, schedules && schedules.map(this.renderRow.bind(this, trailing, dates, idx))];
+    </tr>,
+    schedules && schedules.map(this.renderRow.bind(this, trailing, dates, idx, null, null)),
+    addComparingCompany];
   },
 
   render: function () {
@@ -129,6 +149,10 @@ var Results = React.createClass({
     var numbers = company.number_set[this.props.report];
     var dates = Object.keys(numbers[0][1]).sort();
     var trailing = getTrailing(this.props.report, company.number_set, dates);
+    var isCompanyCompared = this.props.compareCompany && this.props.compareCompany.id;
+    var blankHeader = isCompanyCompared ? <th /> : null;
+    var numbersCompareCompany = isCompanyCompared ? this.props.compareCompany.number_set[this.props.report] : null;
+    var trailingCompareCompany = isCompanyCompared && trailing ? getTrailing(this.props.report, this.props.compareCompany.number_set, dates) : null;
 
     var Heads = dates.map(function(rdt, idx) {
       return <th key={idx}>{Utils.toMonthYear(rdt)}</th>;
@@ -147,12 +171,13 @@ var Results = React.createClass({
           <thead>
             <tr>
               <th />
+              {blankHeader}
               {Heads}
               {TTMHead}
             </tr>
           </thead>
           <tbody>
-            {numbers.map(this.renderRow.bind(this, trailing, dates, false))}
+            {numbers.map(this.renderRow.bind(this, trailing, dates, false, numbersCompareCompany, trailingCompareCompany))}
           </tbody>
         </table>
       </div>

@@ -12,6 +12,7 @@ var ScrollBar = require('./scrollbar.jsx');
 var CompanyRatios = require('./ratios.jsx');
 var PriceChart = require('./pricechart.jsx');
 var QuickRatios = require('./quickratios.jsx');
+var CompanySearch = require('../components/company.search.jsx');
 
 
 var Company = React.createClass({
@@ -22,6 +23,10 @@ var Company = React.createClass({
         short_name: 'Company name',
         industry: 'Industry',
         warehouse_set: {status: 'Active'}
+      },
+      compareCompany: {
+        exchange_code: null,
+        companyData : null
       },
       favorites: []
     };
@@ -41,6 +46,8 @@ var Company = React.createClass({
   fetchCompany: function(params) {
     var exc = params.exchange_code;
     var con = params.consolidated;
+    if (this.state.compareCompany.exchange_code)
+      this.fetchCompareCompany(this.state.compareCompany.exchange_code, con);
     Api.get(Api.company(exc, con)).then(function(response) {
       Utils.setTitle(response.name);
       this.setState({company: response});
@@ -66,6 +73,20 @@ var Company = React.createClass({
       }.bind(this));
   },
 
+  fetchCompareCompany: function(exc, con) {
+    Api.get(Api.company(exc, con)).then(function(response) {
+      var hasData = Object.keys(response.number_set['annual'][0][1]).length;
+      this.setState({compareCompany: {exchange_code: exc, companyData: hasData > 0 ? response : null}});
+    }.bind(this));
+  },
+
+  handleCompareCompany: function(company) {
+    var regsplres = company.url.split("\/");
+    var exc = regsplres[2];
+    var con = this.props.params.consolidated;
+    this.fetchCompareCompany(exc, con);
+  },
+
   render: function() {
     var company = this.state.company;
     var wid = company.warehouse_set.id;
@@ -81,7 +102,13 @@ var Company = React.createClass({
         <Results report="quarters" company={company} />
       </section>
       <section id="annuals">
-        <Results report="annual" company={company} />
+        <h4 className="pull-left">Compare with another company</h4>
+        <a
+          className="pull-right btn btn-default"
+          onClick={() => this.setState({compareCompany: {exchange_code: null, companyData: null}})}
+        >Remove comparison</a>
+        <CompanySearch large={true} onSelect={this.handleCompareCompany} />
+        <Results report="annual" company={company} compareCompany={this.state.compareCompany['companyData']} />
         <Misc.Ranges warehouse_set={company.warehouse_set} />
       </section>
       <section id="balancesheet">
