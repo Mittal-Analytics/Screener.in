@@ -90,23 +90,30 @@ var Company = React.createClass({
         favorites={this.state.favorites}
         handleFavorite={this.handleFavorite}
       />
+
       <ScrollBar short_name={company.short_name} />
+
       <section>
         <CompanyRatios company={company} />
         {quickratios}
       </section>
+
       <section id="charts">
         <PriceChart id={company.id} />
       </section>
+
       <section id="analysis">
         <Misc.Analysis analysis={company.warehouse_set.analysis} />
       </section>
+
       <section id="peers">
         <Peers wid={wid} short_name={company.short_name} industry={company.warehouse_set.industry} />
       </section>
+
       <section id="quarters">
         <Results report="quarters" company={company} />
       </section>
+
       <section id="annuals">
         <div className="pull-right col-md-4">
           <AddCompare onAdd={this.handleAddCompare} onRemove={this.handleRemoveCompare} />
@@ -114,12 +121,15 @@ var Company = React.createClass({
         <Results report="annual" company={company} compareCompany={compareCompany} />
         <Misc.Ranges warehouse_set={company.warehouse_set} />
       </section>
+
       <section id="balancesheet">
         <Results report="balancesheet" company={company} />
       </section>
+
       <section id="cashflow">
         <Results report="cashflow" company={company} />
       </section>
+
       <section id="reports" className="hidden-print row">
         <div className="col-sm-12 col-lg-6">
           <Misc.Announcements bse_code={company.bse_code} announcement_set={company.announcement_set} />
