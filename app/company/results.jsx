@@ -36,6 +36,15 @@ function getSuffix(pair_url, standalone, prime) {
   return <span> / <Link to={pair_url}>{suffix}</Link></span>
 }
 
+function getFieldNumbers(numbers, field) {
+  for (var i = 0; i < numbers.length; i++) {
+    var row = numbers[i]
+    if(row[0] == field)
+      return row
+  }
+  return [field, {}]
+}
+
 function getTrailing(report, number_set, ann_dates) {
   if(report != 'annual')
     return
@@ -70,13 +79,22 @@ var percents = ['OPM', 'Dividend Payout']
 
 
 class Results extends React.Component {
+  updateClassVariables(props) {
+    this.company = props.company
+    this.numbers = this.company.number_set[props.report]
+    this.dates = Object.keys(this.numbers[0][1]).sort()
+    this.trailing = getTrailing(props.report, this.company.number_set, this.dates)
+    this.isComparison = props.compareCompany
+  }
 
   constructor(props, context) {
     super(props, context)
+    this.updateClassVariables(props)
     this.state = {schedules: {}}
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(props) {
+    this.updateClassVariables(props)
     this.setState({schedules: {}})
   }
 
@@ -100,67 +118,68 @@ class Results extends React.Component {
       })
   }
 
-  renderRow(trailing, dates, childIdx, numbersCompareCompany, trailingCompareCompany, row, idx) {
-    var field = row[0]
+  renderSchedules(field, company, momClass) {
     var schedules = this.state.schedules[field]
-    var rowClass = classNames({
-      'mom': schedules,
-      'child': childIdx !== false,
-      'strong': highlights.indexOf(field) >= 0,
-      'percent': percents.indexOf(field) >= 0 || endsWith(field, '%'),
-      'odd': ( childIdx === false ? idx : childIdx ) % 2 == 0
-    })
-    var Cells = dates.map(function(rdt, iidx) {
-      return <td key={iidx}>{Utils.toLocalNumber(row[1][rdt])}</td>
-    })
-    var TTMCell = trailing ? <td>{trailing[field]}</td> : false
-    var isCompanyCompared = this.props.compareCompany && this.props.compareCompany.id
-    var addCompanyName = isCompanyCompared && childIdx === false ? <td className="text">{this.props.company.short_name}</td> : isCompanyCompared ? <td /> : null
-    var idxCompare = idx + 50 // Need a good reason for this number
-    var CellsCompare = isCompanyCompared && childIdx === false ? dates.map(function(rdt, iidx) {
-      var cellValue = numbersCompareCompany[idx][1][rdt]
-      return cellValue ? <td key={iidx}>{Utils.toLocalNumber(cellValue)}</td> : <td key={iidx} />
-    }) : null
-    var TTMCellCompare = isCompanyCompared && childIdx === false && trailingCompareCompany ? <td>{trailingCompareCompany[field]}</td> : false
-    var addComparingCompany = isCompanyCompared && childIdx === false ?
-      <tr className={rowClass} key={idxCompare}>
-      <td />
-      <td className="text">{this.props.compareCompany.short_name}</td>
-      {CellsCompare}
-      {TTMCellCompare}
-    </tr>
-    : null
+    if(!schedules)
+      return
+    return schedules.map(this.renderRow.bind(this, company, ['child', momClass]))
+  }
 
-    return [<tr className={rowClass} key={idx}>
-      <td className="text" onClick={() => this.handleExpand(field)}>
+  renderComparisons(field, momClass) {
+    var compared = this.props.compareCompany
+    if(!this.isComparison)
+      return
+    var row = getFieldNumbers(compared.number_set[this.props.report], field)
+    return this.renderRow(compared, ['compared', momClass], row, 2)
+  }
+
+  renderRow(company, classes, row, idx) {
+    var field = row[0]
+    var oddEvenClass = idx % 2 == 0 ? 'odd' : 'even'
+    var isPrimary = company.id == this.company.id
+    var rowClass = classNames(classes || oddEvenClass, {
+      'mom': field in this.state.schedules,
+      'strong': highlights.indexOf(field) >= 0,
+      'percent': percents.indexOf(field) >= 0 || endsWith(field, '%')
+    })
+
+    var fieldCell = isPrimary ? <td
+      className="text"
+      onClick={() => this.handleExpand(field)}>
         {row[0]}
+    </td> : <td />
+    var companyNameCell = this.isComparison && <td className="text">
+      {company.short_name}
+    </td>
+    var dataCells = this.dates.map(function(date, iidx) {
+      return <td key={iidx}>
+        {Utils.toLocalNumber(row[1][date])}
       </td>
-      {addCompanyName}
-      {Cells}
-      {TTMCell}
-    </tr>,
-    schedules && schedules.map(this.renderRow.bind(this, trailing, dates, idx, null, null)),
-    addComparingCompany]
+    })
+    var ttmCell = this.trailing && <td>{this.trailing[field]}</td>
+
+    return [
+      <tr className={rowClass} key={idx}>
+        {fieldCell}
+        {companyNameCell}
+        {dataCells}
+        {ttmCell}
+      </tr>,
+      isPrimary && this.renderComparisons(field, oddEvenClass),
+      this.renderSchedules(field, company, oddEvenClass)
+    ]
   }
 
   render() {
-    var company = this.props.company
+    var company = this.company
     var standalone = company.warehouse_set.result_type == 'sa'
     var pair_url = company.warehouse_set.pair_url
     var pair_link = getSuffix(pair_url, standalone, company.prime)
-    var numbers = company.number_set[this.props.report]
-    var dates = Object.keys(numbers[0][1]).sort()
-    var trailing = getTrailing(this.props.report, company.number_set, dates)
-    var isCompanyCompared = this.props.compareCompany && this.props.compareCompany.id
-    var blankHeader = isCompanyCompared ? <th /> : null
-    var numbersCompareCompany = isCompanyCompared ? this.props.compareCompany.number_set[this.props.report] : null
-    var trailingCompareCompany = isCompanyCompared && trailing ? getTrailing(this.props.report, this.props.compareCompany.number_set, dates) : null
-
-    var Heads = dates.map(function(rdt, idx) {
-      return <th key={idx}>{Utils.toMonthYear(rdt)}</th>
+    var compareHead = this.isComparison && <th />
+    var dateHeads = this.dates.map(function(resultDate, idx) {
+      return <th key={idx}>{Utils.toMonthYear(resultDate)}</th>
     })
-    var TTMHead = trailing && <th>TTM</th>
-
+    var ttmHead = this.trailing && <th>TTM</th>
     return <div>
       <div className="pull-right">
         {this.props.children}
@@ -177,13 +196,13 @@ class Results extends React.Component {
           <thead>
             <tr>
               <th />
-              {blankHeader}
-              {Heads}
-              {TTMHead}
+              {compareHead}
+              {dateHeads}
+              {ttmHead}
             </tr>
           </thead>
           <tbody>
-            {numbers.map(this.renderRow.bind(this, trailing, dates, false, numbersCompareCompany, trailingCompareCompany))}
+            {this.numbers.map(this.renderRow.bind(this, this.company, false))}
           </tbody>
         </table>
       </div>

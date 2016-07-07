@@ -61,7 +61,7 @@ describe('Basic rendering Tests', function() {
   it('should treat Material Cost % as %', function() {
     var dom = ReactDOM.findDOMNode(result)
     var normalRow = '<tr class="odd"><td class="text">Sales'
-    var percentRow = '<tr class="percent odd"><td class="text">Material Cost %'
+    var percentRow = '<tr class="odd percent"><td class="text">Material Cost %'
     expect(dom.innerHTML).toContain(normalRow)
     expect(dom.innerHTML).toContain(percentRow)
   })
