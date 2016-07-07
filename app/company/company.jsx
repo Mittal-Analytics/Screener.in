@@ -16,12 +16,7 @@ var AddCompare = require('./compare.jsx');
 var Company = React.createClass({
   getInitialState: function() {
     return {
-      company: {
-        name: this.props.params.exchange_code + ' Loading...',
-        short_name: 'Company name',
-        industry: 'Industry',
-        warehouse_set: {status: 'Active'}
-      },
+      company: undefined,
       compareCompany: undefined,
       favorites: []
     };
@@ -76,12 +71,33 @@ var Company = React.createClass({
     this.setState({compareCompany: undefined})
   },
 
+  renderLoading: function() {
+    return <h3>
+      Loading {this.props.params.exchange_code}...
+    </h3>
+  },
+
   render: function() {
-    var company = this.state.company;
+    var company = this.state.company
     var compareCompany = this.state.compareCompany
-    var wid = company.warehouse_set.id;
-    var quickratios = company.id ? <QuickRatios wid={company.warehouse_set.id} /> : '';
-    var loaded = company.id ? <div>
+    if (!company)
+      return this.renderLoading()
+    var wid = company.warehouse_set.id
+    var quickratios = <QuickRatios wid={company.warehouse_set.id} />
+    return <div>
+      <Misc.CompanyHeader
+        company={company}
+        favorites={this.state.favorites}
+        handleFavorite={this.handleFavorite}
+      />
+      <ScrollBar short_name={company.short_name} />
+      <section>
+        <CompanyRatios company={company} />
+        {quickratios}
+      </section>
+      <section id="charts">
+        <PriceChart id={company.id} />
+      </section>
       <section id="analysis">
         <Misc.Analysis analysis={company.warehouse_set.analysis} />
       </section>
@@ -115,23 +131,7 @@ var Company = React.createClass({
           <Misc.CompanyRatings companyrating_set={company.companyrating_set} />
         </div>
       </section>
-    </div> : <h3>Loading...</h3>;
-    return <div>
-      <Misc.CompanyHeader
-        company={company}
-        favorites={this.state.favorites}
-        handleFavorite={this.handleFavorite}
-      />
-      <ScrollBar short_name={company.short_name} />
-      <section>
-        <CompanyRatios company={company} />
-        {quickratios}
-      </section>
-      <section id="charts">
-        <PriceChart id={company.id} />
-      </section>
-      {loaded}
-    </div>;
+    </div>
   }
 });
 
