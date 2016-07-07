@@ -1,6 +1,4 @@
 "use strict";
-/* global require */
-
 var React = require('react');
 var isEqual = require('lodash/isEqual');
 var Utils = require('../components/utils.js');
@@ -12,7 +10,7 @@ var ScrollBar = require('./scrollbar.jsx');
 var CompanyRatios = require('./ratios.jsx');
 var PriceChart = require('./pricechart.jsx');
 var QuickRatios = require('./quickratios.jsx');
-var CompanySearch = require('../components/company.search.jsx');
+var AddCompare = require('./compare.jsx');
 
 
 var Company = React.createClass({
@@ -80,11 +78,17 @@ var Company = React.createClass({
     }.bind(this));
   },
 
-  handleCompareCompany: function(company) {
+  handleAddCompare: function(company) {
     var regsplres = company.url.split("\/");
     var exc = regsplres[2];
     var con = this.props.params.consolidated;
     this.fetchCompareCompany(exc, con);
+  },
+
+  handleRemoveCompare: function() {
+    this.setState({
+      compareCompany: {exchange_code: null, companyData: null}
+    })
   },
 
   render: function() {
@@ -102,12 +106,9 @@ var Company = React.createClass({
         <Results report="quarters" company={company} />
       </section>
       <section id="annuals">
-        <h4 className="pull-left">Compare with another company</h4>
-        <a
-          className="pull-right btn btn-default"
-          onClick={() => this.setState({compareCompany: {exchange_code: null, companyData: null}})}
-        >Remove comparison</a>
-        <CompanySearch large={true} onSelect={this.handleCompareCompany} />
+        <div className="pull-right col-md-4">
+          <AddCompare onAdd={this.handleAddCompare} onRemove={this.handleRemoveCompare} />
+        </div>
         <Results report="annual" company={company} compareCompany={this.state.compareCompany['companyData']} />
         <Misc.Ranges warehouse_set={company.warehouse_set} />
       </section>

@@ -8,5 +8,8 @@ function Icon(props) {
     className={name} />;
 }
 
+Icon.propTypes = {
+  name: React.PropTypes.string.isRequired
+}
 
 module.exports = Icon;
