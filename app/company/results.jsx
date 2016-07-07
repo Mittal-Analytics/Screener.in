@@ -90,14 +90,14 @@ class Results extends React.Component {
       f: this.props.report,
       q: field
     }
-    Api.get(Api.cid(cid, 'schedules'), params)
-      .then(function(response) {
+    this._req = Api.get(Api.cid(cid, 'schedules'), params)
+      .then(response => {
         if (response.length === 0)
           return
         var schedules = defaults({}, this.state.schedules)
         schedules[field] = response
         this.setState({schedules: schedules})
-      }.bind(this))
+      })
   }
 
   renderRow(trailing, dates, childIdx, numbersCompareCompany, trailingCompareCompany, row, idx) {
@@ -132,7 +132,7 @@ class Results extends React.Component {
     : null
 
     return [<tr className={rowClass} key={idx}>
-      <td className="text" onClick={this.handleExpand.bind(null, field)}>
+      <td className="text" onClick={() => this.handleExpand(field)}>
         {row[0]}
       </td>
       {addCompanyName}
