@@ -22,10 +22,7 @@ var Company = React.createClass({
         industry: 'Industry',
         warehouse_set: {status: 'Active'}
       },
-      compareCompany: {
-        exchange_code: null,
-        companyData : null
-      },
+      compareCompany: undefined,
       favorites: []
     };
   },
@@ -44,8 +41,6 @@ var Company = React.createClass({
   fetchCompany: function(params) {
     var exc = params.exchange_code;
     var con = params.consolidated;
-    if (this.state.compareCompany.exchange_code)
-      this.fetchCompareCompany(this.state.compareCompany.exchange_code, con);
     Api.get(Api.company(exc, con)).then(function(response) {
       Utils.setTitle(response.name);
       this.setState({company: response});
@@ -71,28 +66,19 @@ var Company = React.createClass({
       }.bind(this));
   },
 
-  fetchCompareCompany: function(exc, con) {
-    Api.get(Api.company(exc, con)).then(function(response) {
-      var hasData = Object.keys(response.number_set['annual'][0][1]).length;
-      this.setState({compareCompany: {exchange_code: exc, companyData: hasData > 0 ? response : null}});
-    }.bind(this));
-  },
-
   handleAddCompare: function(company) {
-    var regsplres = company.url.split("\/");
-    var exc = regsplres[2];
-    var con = this.props.params.consolidated;
-    this.fetchCompareCompany(exc, con);
+    Api.get(company.url).then(response => {
+      this.setState({compareCompany: response});
+    });
   },
 
   handleRemoveCompare: function() {
-    this.setState({
-      compareCompany: {exchange_code: null, companyData: null}
-    })
+    this.setState({compareCompany: undefined})
   },
 
   render: function() {
     var company = this.state.company;
+    var compareCompany = this.state.compareCompany
     var wid = company.warehouse_set.id;
     var quickratios = company.id ? <QuickRatios wid={company.warehouse_set.id} /> : '';
     var loaded = company.id ? <div>
@@ -109,7 +95,7 @@ var Company = React.createClass({
         <div className="pull-right col-md-4">
           <AddCompare onAdd={this.handleAddCompare} onRemove={this.handleRemoveCompare} />
         </div>
-        <Results report="annual" company={company} compareCompany={this.state.compareCompany['companyData']} />
+        <Results report="annual" company={company} compareCompany={compareCompany} />
         <Misc.Ranges warehouse_set={company.warehouse_set} />
       </section>
       <section id="balancesheet">
