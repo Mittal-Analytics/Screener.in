@@ -72,7 +72,7 @@ describe('Basic rendering Tests', function() {
     var dom = ReactDOM.findDOMNode(result)
     var salesRow = '<tr class="odd"><td class="text">Sales</td><td>1,033.36</td>'
     var materialRow = '<tr class="percent odd"><td class="text">Material Cost %</td><td>11.26</td>'
-    var normalComparisonRow = 'Spisys Ltd'
+    var normalComparisonRow = 'Spisys'
     expect(dom.innerHTML).toContain(salesRow)
     expect(dom.innerHTML).toContain(materialRow)
     expect(dom.innerHTML).not.toContain(normalComparisonRow)
@@ -83,9 +83,9 @@ describe('Basic rendering Tests', function() {
       <Results company={company} report="annual" compareCompany={compareCompany} />
     )
     var dom = ReactDOM.findDOMNode(result)
-    var salesRow = '<tr class="odd"><td class="text">Sales</td><td class="text">Avanti Feeds Ltd</td><td>1,033.36</td>'
-    var materialRow = '<tr class="percent odd"><td class="text">Material Cost %</td><td class="text">Avanti Feeds Ltd</td><td>11.26</td>'
-    var salesComparisonRow = '<tr class="odd"><td></td><td class="text">Spisys Ltd</td><td>533.36</td>'
+    var salesRow = '<tr class="odd"><td class="text">Sales</td><td class="text">Avanti Feeds</td><td>1,033.36</td>'
+    var materialRow = '<tr class="percent odd"><td class="text">Material Cost %</td><td class="text">Avanti Feeds</td><td>11.26</td>'
+    var salesComparisonRow = '<tr class="odd"><td></td><td class="text">Spisys</td><td>533.36</td>'
 //    console.log(dom.innerHTML)
     expect(dom.innerHTML).toContain(salesRow)
     expect(dom.innerHTML).toContain(materialRow)
