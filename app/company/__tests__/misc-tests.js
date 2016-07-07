@@ -1,6 +1,9 @@
 "use strict";
-jest.autoMockOff();
-jest.mock('fetch-on-rest');
+jest.disableAutomock();
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
+var Misc = require('../misc.jsx');
 
 var kitex = {
   id: 1950,
@@ -29,26 +32,9 @@ var kitex = {
 
 
 describe('Walk tests', function () {
-  var api = require('../../api.js');
-  var Misc, TestUtils, api, ReactDOM, React;
-
-  beforeEach(function() {
-    React = require('react');
-    ReactDOM = require('react-dom');
-    TestUtils = require('react-addons-test-utils');
-    Misc = require.requireActual('../misc.jsx');
-  });
-
-  afterEach(function() {
-    expect(api.getPending()).toEqual([]);
-  });
 
   it('test visible add to watchlist button', function() {
-    var dummy = jest.genMockFunction().mockImplementation(
-      function(cid) {
-        return api.post(['company', cid, 'favorite']);
-      }
-    );
+    var dummy = jest.genMockFunction()
     var header = TestUtils.renderIntoDocument(<div>
       <Misc.CompanyHeader
         company={kitex}
