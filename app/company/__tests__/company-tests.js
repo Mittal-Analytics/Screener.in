@@ -80,7 +80,7 @@ describe('Basic rendering Tests', function() {
 
   it('Company results comparing with another company', function() {
     result = TestUtils.renderIntoDocument(
-      <Results company={company} report="annual" compareCompany={compareCompany} />
+      <Results company={company} report="annual" comparisons={[compareCompany]} />
     )
     var dom = ReactDOM.findDOMNode(result)
     var salesRow = '<tr class="odd"><td class="text">Sales</td><td class="text">Avanti Feeds</td><td>1,033.36</td>'

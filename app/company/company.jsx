@@ -17,7 +17,7 @@ var Company = React.createClass({
   getInitialState: function() {
     return {
       company: undefined,
-      compareCompany: undefined,
+      comparisons: [],
       favorites: []
     };
   },
@@ -63,12 +63,13 @@ var Company = React.createClass({
 
   handleAddCompare: function(company) {
     Api.get(company.url).then(response => {
-      this.setState({compareCompany: response});
+      var comparisons = this.state.comparisons.concat(response)
+      this.setState({comparisons: comparisons});
     });
   },
 
   handleRemoveCompare: function() {
-    this.setState({compareCompany: undefined})
+    this.setState({comparisons: []})
   },
 
   renderLoading: function() {
@@ -79,7 +80,6 @@ var Company = React.createClass({
 
   render: function() {
     var company = this.state.company
-    var compareCompany = this.state.compareCompany
     if (!company)
       return this.renderLoading()
     var wid = company.warehouse_set.id
@@ -118,7 +118,7 @@ var Company = React.createClass({
         <div className="pull-right col-md-4">
           <AddCompare onAdd={this.handleAddCompare} onRemove={this.handleRemoveCompare} />
         </div>
-        <Results report="annual" company={company} compareCompany={compareCompany} />
+        <Results report="annual" company={company} comparisons={this.state.comparisons} />
         <Misc.Ranges warehouse_set={company.warehouse_set} />
       </section>
 

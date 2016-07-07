@@ -84,7 +84,7 @@ class Results extends React.Component {
     this.numbers = this.company.number_set[props.report]
     this.dates = Object.keys(this.numbers[0][1]).sort()
     this.trailing = getTrailing(props.report, this.company.number_set, this.dates)
-    this.isComparison = props.compareCompany
+    this.isComparison = props.comparisons && props.comparisons.length > 0
   }
 
   constructor(props, context) {
@@ -126,11 +126,13 @@ class Results extends React.Component {
   }
 
   renderComparisons(field, momClass) {
-    var compared = this.props.compareCompany
     if(!this.isComparison)
       return
-    var row = getFieldNumbers(compared.number_set[this.props.report], field)
-    return this.renderRow(compared, ['compared', momClass], row, 2)
+    var comparisons = this.props.comparisons
+    return comparisons.map((compared, idx) => {
+      var row = getFieldNumbers(compared.number_set[this.props.report], field)
+      return this.renderRow(compared, ['compared', momClass], row, idx)
+    })
   }
 
   renderRow(company, classes, row, idx) {
@@ -212,7 +214,7 @@ class Results extends React.Component {
 
 Results.propTypes = {
   company: React.PropTypes.object.isRequired,
-  compareCompany: React.PropTypes.object,
+  comparisons: React.PropTypes.array,
   report: React.PropTypes.string.isRequired,
   children: React.PropTypes.element
 }
