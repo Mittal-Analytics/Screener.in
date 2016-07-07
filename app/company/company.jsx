@@ -108,6 +108,7 @@ var Company = React.createClass({
 
       <section id="peers">
         <Peers wid={wid} short_name={company.short_name} industry={company.warehouse_set.industry} />
+        <AddCompare onAdd={this.handleAddCompare} onRemove={this.handleRemoveCompare} />
       </section>
 
       <section id="quarters">
@@ -115,9 +116,6 @@ var Company = React.createClass({
       </section>
 
       <section id="annuals">
-        <div className="pull-right col-md-4">
-          <AddCompare onAdd={this.handleAddCompare} onRemove={this.handleRemoveCompare} />
-        </div>
         <Results report="annual" company={company} comparisons={this.state.comparisons} />
         <Misc.Ranges warehouse_set={company.warehouse_set} />
       </section>

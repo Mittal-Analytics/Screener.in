@@ -70,6 +70,9 @@ function getTrailing(report, number_set, ann_dates) {
   return trailing
 }
 
+var skipInComparison = [
+  'Expenses', 'Operating Profit'
+]
 var highlights = [
   'Operating Profit', 'Profit before tax', 'Net Profit',
   'Total Liabilities', 'Total Assets',
@@ -137,6 +140,8 @@ class Results extends React.Component {
 
   renderRow(company, classes, row, idx) {
     var field = row[0]
+    if(this.isComparison && skipInComparison.indexOf(field) >= 0)
+      return
     var oddEvenClass = idx % 2 == 0 ? 'odd' : 'even'
     var isPrimary = company.id == this.company.id
     var rowClass = classNames(classes || oddEvenClass, {
@@ -183,10 +188,6 @@ class Results extends React.Component {
     })
     var ttmHead = this.trailing && <th>TTM</th>
     return <div>
-      <div className="pull-right">
-        {this.props.children}
-      </div>
-
       <h2>{getCaption(this.props.report)}
         <small> {getPrefix(pair_url, standalone)}
           Figures in Rs. Crores {pair_link}
@@ -215,8 +216,7 @@ class Results extends React.Component {
 Results.propTypes = {
   company: React.PropTypes.object.isRequired,
   comparisons: React.PropTypes.array,
-  report: React.PropTypes.string.isRequired,
-  children: React.PropTypes.element
+  report: React.PropTypes.string.isRequired
 }
 
 module.exports = Results
