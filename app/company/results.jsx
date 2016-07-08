@@ -70,9 +70,6 @@ function getTrailing(report, number_set, ann_dates) {
   return trailing
 }
 
-var skipInComparison = [
-  'Expenses', 'Operating Profit'
-]
 var highlights = [
   'Operating Profit', 'Profit before tax', 'Net Profit',
   'Total Liabilities', 'Total Assets',
@@ -86,8 +83,10 @@ class Results extends React.Component {
     this.company = props.company
     this.numbers = this.company.number_set[props.report]
     this.dates = Object.keys(this.numbers[0][1]).sort()
-    this.trailing = getTrailing(props.report, this.company.number_set, this.dates)
     this.isComparison = props.comparisons && props.comparisons.length > 0
+    this.trailing = !this.isComparison && getTrailing(
+      props.report, this.company.number_set, this.dates
+    )
   }
 
   constructor(props, context) {
@@ -125,7 +124,9 @@ class Results extends React.Component {
     var schedules = this.state.schedules[field]
     if(!schedules)
       return
-    return schedules.map(this.renderRow.bind(this, company, ['child', momClass]))
+    return schedules.map(
+      this.renderRow.bind(this, company, ['child', momClass])
+    )
   }
 
   renderComparisons(field, momClass) {
@@ -140,8 +141,6 @@ class Results extends React.Component {
 
   renderRow(company, classes, row, idx) {
     var field = row[0]
-    if(this.isComparison && skipInComparison.indexOf(field) >= 0)
-      return
     var oddEvenClass = idx % 2 == 0 ? 'odd' : 'even'
     var isPrimary = company.id == this.company.id
     var rowClass = classNames(classes || oddEvenClass, {
@@ -154,7 +153,7 @@ class Results extends React.Component {
       className="text"
       onClick={() => this.handleExpand(field)}>
         {row[0]}
-    </td> : <td />
+    </td> : <td className="text" />
     var companyNameCell = this.isComparison && <td className="text">
       {company.short_name}
     </td>
