@@ -1,57 +1,52 @@
 "use strict";
 import React from 'react'
 import CompanySearch from '../components/company.search.jsx'
-import UnderIcon from '../components/under.icon.jsx'
-import Icon from '../components/icon.jsx'
+import Button from '../components/button.jsx'
 
 
-class AddCompare extends React.Component {
-  constructor(props, context) {
-    super(props, context)
-    this.handleAdd = this.handleAdd.bind(this)
-    this.handleRemove = this.handleRemove.bind(this)
-    this.state = {
-      selectedCompany: undefined
-    }
+function AddCompare(props) {
+
+  function renderRemoveOptions() {
+    if (props.comparisons.length == 0)
+      return
+    return <div className="pull-right">
+      <Button
+        style="danger"
+        icon="remove"
+        onClick={props.onRemove}
+        name="Disable Comparison"
+      />
+    </div>
   }
 
-  handleAdd(company) {
-    this.setState({selectedCompany: company})
-    this.props.onAdd(company)
+  function renderStart() {
+    return <Button
+      style="default"
+      icon="plus"
+      onClick={props.onStart}
+      name="Add Detailed Comparison"
+    />
   }
 
-  handleRemove() {
-    this.setState({selectedCompany: undefined})
-    this.props.onRemove()
-  }
+  if(props.comparisons.length == 0)
+    return renderStart()
 
-  renderAlreadyComparing() {
-    var companyName = this.state.selectedCompany.name
-    return <small>
-      Comparing <b>{companyName}</b>
-      <br />
-      <a onClick={this.handleRemove}>
-        <Icon name="remove" />
-        Remove Comparison
-      </a>
-    </small>
-  }
-
-  render() {
-    if (this.state.selectedCompany)
-      return this.renderAlreadyComparing()
-    return <UnderIcon icon="plus">
-      <div>
-        <i>Company for comparison</i>
-        <CompanySearch placeholder="eg. Infosys" onSelect={this.handleAdd} />
-      </div>
-    </UnderIcon>
-  }
+  return <div>
+    <div className="col-md-4">
+      <CompanySearch
+        placeholder="Company name for comparison"
+        onSelect={props.onAdd}
+      />
+    </div>
+    {renderRemoveOptions()}
+  </div>
 }
 
 AddCompare.propTypes = {
+  onStart: React.PropTypes.func.isRequired,
   onAdd: React.PropTypes.func.isRequired,
-  onRemove: React.PropTypes.func.isRequired
+  onRemove: React.PropTypes.func.isRequired,
+  comparisons: React.PropTypes.array.isRequired
 }
 
 module.exports = AddCompare

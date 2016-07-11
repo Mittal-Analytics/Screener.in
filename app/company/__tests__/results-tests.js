@@ -18,27 +18,41 @@ var NUMBERS = [
 
 var SCHEDULE = [
   ["Schedule A",{"2008-03-31":77.27,"2009-03-31":75.49}],
-  ["Schedule B",{"2008-03-31":77.27,"2009-03-31":75.49}],
+  ["Schedule B",{"2008-03-31":77.27,"2009-03-31":75.49}]
 ]
 
+var FooCompany = {
+  id: 33,
+  short_name: 'Foo',
+  warehouse_set: {
+    result_type: 'sa',
+    pair_url: ''
+  },
+  number_set: {
+    quarters: [["Sales", {}]],
+    annual: NUMBERS
+  }
+}
+
+var BarCompany = {
+  id: 55,
+  short_name: 'Bar',
+  warehouse_set: {
+    result_type: 'sa',
+    pair_url: ''
+  },
+  number_set: {
+    quarters: [["Sales", {}]],
+    annual: NUMBERS
+  }
+}
 
 describe('Basic rendering Tests', function() {
   var result
 
   beforeEach(function() {
-    var company = {
-      id: 33,
-      warehouse_set: {
-        result_type: 'sa',
-        pair_url: ''
-      },
-      number_set: {
-        quarters: [["Sales", {}]],
-        annual: NUMBERS
-      }
-    }
     result = TestUtils.renderIntoDocument(
-      <Results company={company} report="annual" />
+      <Results company={FooCompany} report="annual" />
     )
   })
 
@@ -64,5 +78,32 @@ describe('Basic rendering Tests', function() {
     var percentRow = '<tr class="odd percent"><td class="text">Material Cost %'
     expect(dom.innerHTML).toContain(normalRow)
     expect(dom.innerHTML).toContain(percentRow)
+  })
+})
+
+
+describe('Comparison rendering Tests', function() {
+  var result
+
+  beforeEach(function() {
+    result = TestUtils.renderIntoDocument(
+      <Results
+        company={FooCompany}
+        report="annual"
+        comparisons={[FooCompany, BarCompany]}
+      />
+    )
+  })
+
+  afterEach(function() {
+    expect(api.getPending()).toEqual([])
+  })
+
+  it('should add comparison row', function() {
+    var dom = ReactDOM.findDOMNode(result)
+    var salesFoo = '<tr class="odd"><td class="text">Sales</td><td class="text">Foo</td><td>1,033.36</td>'
+    var salesBar = '<tr class="compared odd"><td class="text"></td><td class="text">Bar</td><td>1,033.36</td>'
+    expect(dom.innerHTML).toContain(salesFoo)
+    expect(dom.innerHTML).toContain(salesBar)
   })
 })

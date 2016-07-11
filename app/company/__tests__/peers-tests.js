@@ -18,11 +18,17 @@ describe('Peers tests', function () {
   });
 
   it('renders a peers table', function() {
-    var props = {wid: 22, industry: 'Hi', short_name: 'hi'};
+    var company = {
+      short_name: 'hi',
+      warehouse_set: {
+        id: 22,
+        industry: 'Hi'
+      }
+    }
     api.setResponse('/api/company/22/peers/?industry=Hi',
       JSON.stringify(peerResults));
     var peers = TestUtils.renderIntoDocument(
-      <Peers {...props} />
+      <Peers company={company} />
     );
     return peers._req.then(() => {
       var dom = ReactDOM.findDOMNode(peers);

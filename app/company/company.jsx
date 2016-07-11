@@ -38,7 +38,10 @@ var Company = React.createClass({
     var con = params.consolidated;
     Api.get(Api.company(exc, con)).then(function(response) {
       Utils.setTitle(response.name);
-      this.setState({company: response});
+      this.setState({
+        company: response,
+        comparisons: []
+      });
     }.bind(this));
   },
 
@@ -61,8 +64,15 @@ var Company = React.createClass({
       }.bind(this));
   },
 
+  handleStartCompare: function() {
+    var company = this.state.company
+    Api.get(Api.cid(company.id, 'comparison')).then(response => {
+      this.setState({comparisons: [response]});
+    });
+  },
+
   handleAddCompare: function(company) {
-    Api.get(company.url).then(response => {
+    Api.get(Api.cid(company.id, 'comparison')).then(response => {
       var comparisons = this.state.comparisons.concat(response)
       this.setState({comparisons: comparisons});
     });
@@ -80,10 +90,9 @@ var Company = React.createClass({
 
   render: function() {
     var company = this.state.company
+    var comparisons = this.state.comparisons
     if (!company)
       return this.renderLoading()
-    var wid = company.warehouse_set.id
-    var quickratios = <QuickRatios wid={company.warehouse_set.id} />
     return <div>
       <Misc.CompanyHeader
         company={company}
@@ -95,7 +104,7 @@ var Company = React.createClass({
 
       <section>
         <CompanyRatios company={company} />
-        {quickratios}
+        <QuickRatios wid={company.warehouse_set.id} />
       </section>
 
       <section id="charts">
@@ -107,25 +116,29 @@ var Company = React.createClass({
       </section>
 
       <section id="peers">
-        <Peers wid={wid} short_name={company.short_name} industry={company.warehouse_set.industry} />
-        <AddCompare onAdd={this.handleAddCompare} onRemove={this.handleRemoveCompare} />
+        <Peers company={company} />
+        <AddCompare
+          onStart={this.handleStartCompare}
+          onAdd={this.handleAddCompare}
+          onRemove={this.handleRemoveCompare}
+          comparisons={comparisons} />
       </section>
 
       <section id="quarters">
-        <Results report="quarters" company={company} />
+        <Results report="quarters" company={company} comparisons={comparisons} />
       </section>
 
       <section id="annuals">
-        <Results report="annual" company={company} comparisons={this.state.comparisons} />
+        <Results report="annual" company={company} comparisons={comparisons} />
         <Misc.Ranges warehouse_set={company.warehouse_set} />
       </section>
 
       <section id="balancesheet">
-        <Results report="balancesheet" company={company} />
+        <Results report="balancesheet" company={company} comparisons={comparisons} />
       </section>
 
       <section id="cashflow">
-        <Results report="cashflow" company={company} />
+        <Results report="cashflow" company={company} comparisons={comparisons} />
       </section>
 
       <section id="reports" className="hidden-print row">

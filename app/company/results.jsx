@@ -64,7 +64,7 @@ function getTrailing(report, number_set, ann_dates) {
     for(var j=0; j < four_qtrs.length; j++) {
       value += vals[four_qtrs[j]]
     }
-    var final_val = field == 'OPM' ? value / four_qtrs.length : value
+    var final_val = ttmAverages.indexOf(field) >= 0 ? value / four_qtrs.length : value
     trailing[field] = final_val.toFixed(2)
   }
   return trailing
@@ -75,17 +75,25 @@ var highlights = [
   'Total Liabilities', 'Total Assets',
   'Net Cash Flow'
 ]
+var compareHighlights = [
+  'OPM', 'Profit before tax', 'Net Profit',
+  'Debt / Equity', 'ROCE %',
+  'Debtor Days', 'Net Cash Flow'
+]
+var ttmAverages = ['OPM', 'Tax %']
 var percents = ['OPM', 'Dividend Payout']
 
 
 class Results extends React.Component {
   updateClassVariables(props) {
     this.company = props.company
-    this.numbers = this.company.number_set[props.report]
-    this.dates = Object.keys(this.numbers[0][1]).sort()
     this.isComparison = props.comparisons && props.comparisons.length > 0
+    this.isMulti = props.comparisons && props.comparisons.length > 1
+    var primary = this.isComparison ? props.comparisons[0] : this.company
+    this.numbers = primary.number_set[props.report]
+    this.dates = Object.keys(this.numbers[0][1]).sort()
     this.trailing = !this.isComparison && getTrailing(
-      props.report, this.company.number_set, this.dates
+      props.report, primary.number_set, this.dates
     )
   }
 
@@ -130,10 +138,12 @@ class Results extends React.Component {
   }
 
   renderComparisons(field, momClass) {
-    if(!this.isComparison)
+    if(!this.isMulti)
       return
     var comparisons = this.props.comparisons
     return comparisons.map((compared, idx) => {
+      if (idx == 0)
+        return
       var row = getFieldNumbers(compared.number_set[this.props.report], field)
       return this.renderRow(compared, ['compared', momClass], row, idx)
     })
@@ -143,9 +153,10 @@ class Results extends React.Component {
     var field = row[0]
     var oddEvenClass = idx % 2 == 0 ? 'odd' : 'even'
     var isPrimary = company.id == this.company.id
+    var strongs = this.isComparison ? compareHighlights : highlights
     var rowClass = classNames(classes || oddEvenClass, {
       'mom': field in this.state.schedules,
-      'strong': highlights.indexOf(field) >= 0,
+      'strong': strongs.indexOf(field) >= 0,
       'percent': percents.indexOf(field) >= 0 || endsWith(field, '%')
     })
 
@@ -154,7 +165,7 @@ class Results extends React.Component {
       onClick={() => this.handleExpand(field)}>
         {row[0]}
     </td> : <td className="text" />
-    var companyNameCell = this.isComparison && <td className="text">
+    var companyNameCell = this.isMulti && <td className="text">
       {company.short_name}
     </td>
     var dataCells = this.dates.map(function(date, iidx) {
@@ -181,7 +192,7 @@ class Results extends React.Component {
     var standalone = company.warehouse_set.result_type == 'sa'
     var pair_url = company.warehouse_set.pair_url
     var pair_link = getSuffix(pair_url, standalone, company.prime)
-    var compareHead = this.isComparison && <th />
+    var compareHead = this.isMulti && <th />
     var dateHeads = this.dates.map(function(resultDate, idx) {
       return <th key={idx}>{Utils.toMonthYear(resultDate)}</th>
     })
