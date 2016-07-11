@@ -1,7 +1,6 @@
 "use strict";
-/* global require, document */
-
 var React = require('react');
+var Link = require('react-router').Link;
 var CompanySearch = require('./components/company.search.jsx');
 
 function Home(props, context) {
@@ -27,16 +26,16 @@ function Home(props, context) {
       <CompanySearch large={true} onSelect={handleCompany} />
       <br />
       <p className="lead">
-        Or Analyse: <a href="company/AVANTIFEED/">
-        Avanti Feeds</a>, <a href="company/AYMSYNTEX/">
-        AYM Syntex</a>, <a href="company/CANFINHOME/">
-        Can-Fin Homes</a>, <a href="company/KSL/">
-        Kalyani Steels</a>, <a href="company/KITEX/">
-        Kitex Garments</a>, <a href="company/SHILPAMED/">
-        Shilpa Medicare</a>, <a href="company/SANGHVIMOV/">
-        Sanghvi Movers</a>, <a href="company/504959/">
-        Stovec Industries</a>, <a href="company/TATAMETALI/">
-        Tata Metaliks</a> ...
+        Or Analyse: <Link to="company/AVANTIFEED/">
+        Avanti Feeds</Link>, <Link to="company/AYMSYNTEX/">
+        AYM Syntex</Link>, <Link to="company/CANFINHOME/">
+        Can-Fin Homes</Link>, <Link to="company/KSL/">
+        Kalyani Steels</Link>, <Link to="company/KITEX/">
+        Kitex Garments</Link>, <Link to="company/SHILPAMED/">
+        Shilpa Medicare</Link>, <Link to="company/SANGHVIMOV/">
+        Sanghvi Movers</Link>, <Link to="company/504959/">
+        Stovec Industries</Link>, <Link to="company/TATAMETALI/">
+        Tata Metaliks</Link> ...
       </p>
     </div>
     <div className="row text-center home-footer">
