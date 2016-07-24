@@ -121,11 +121,13 @@ var SaveScreenModal = React.createClass({
         <div dangerouslySetInnerHTML={this.state.form} />
         <hr />
         <div className="pull-right">
+          <div className="pull-right">
+            &nbsp;&nbsp;
+            <button type="submit" className="btn btn-primary">
+              <i className="glyphicon glyphicon-save" /> {txtSaveBtn}
+            </button>
+          </div>
           {updateBtn}
-          {'  '}
-          <button type="submit" className="btn btn-primary">
-            <i className="glyphicon glyphicon-save" /> {txtSaveBtn}
-          </button>
         </div>
         <Button
           style="danger"
