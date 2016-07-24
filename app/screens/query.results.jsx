@@ -42,7 +42,7 @@ var Query = React.createClass({
 
   renderLoaded: function() {
     var screen = this.state.screen;
-    var save = <SaveScreenModal screen={screen} />;
+    var save = <SaveScreenModal screen={screen} update={this.props.location.query.update} />;
     var manageCols = <ManageColumns
       onClose={this.onColumnsChange}
       style="default"/>;

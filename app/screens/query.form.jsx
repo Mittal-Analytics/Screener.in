@@ -15,6 +15,10 @@ function QueryForm(props) {
       >Detailed guide on creating stock screens
     </a>
   }
+
+  var is_owner = props.defaults.is_owner;
+  var screenId = is_owner ? props.defaults.id : props.defaults.update;
+
   return <form method="get" action="/screen/raw/">
     <h3>Query Builder</h3>
     <p>You can customize the query below:</p>
@@ -34,6 +38,7 @@ function QueryForm(props) {
           defaultChecked={props.defaults.latest} />
         Show only latest results?
       </label>
+      <input type="hidden" name="update" value={screenId} />
     </div>
     <button className="btn btn-primary" type="submit">
       <i className="glyphicon glyphicon-send"/> Run this query
