@@ -20,7 +20,8 @@ var SaveScreenModal = React.createClass({
   getInitialState: function() {
     return {
       form: {__html: '<h3>Loading...</h3>'},
-      updateScreen: undefined,
+      isOwner: true,
+      savedScreen: undefined,
       errors: false
     };
   },
@@ -29,7 +30,10 @@ var SaveScreenModal = React.createClass({
     var screenId = this.props.update;
     if (screenId) {
       Api.get(['screens', screenId]).then(resp => {
-        this.setState({updateScreen: resp.is_owner ? resp : undefined});
+        this.setState({
+          isOwner: resp.is_owner,
+          savedScreen: resp.is_owner ? resp : undefined
+        });
       });
     }
 
@@ -37,6 +41,10 @@ var SaveScreenModal = React.createClass({
       this.setState({
         form: {__html: resp}
       });
+
+      if (screenId) {
+        this.updateForm();
+      }
     });
   },
 
@@ -51,7 +59,7 @@ var SaveScreenModal = React.createClass({
     data.order = screen.order;
     data.sort = screen.sort;
 
-    data.id = this.state.updateScreen.id;
+    data.id = this.state.savedScreen.id;
     var url = 'screens/' + data.id;
     Api.put([url], data).then(
       function(response) {
@@ -80,6 +88,19 @@ var SaveScreenModal = React.createClass({
       }.bind(this));
   },
 
+  updateFields: function() {
+    if(this.state.savedScreen) {
+      this.refs.form.name.value = this.state.savedScreen.name;
+      this.refs.form.description.value = this.state.savedScreen.description;
+    } else if (this.state.isOwner) {
+      this.updateForm();
+    }
+  },
+
+  updateForm: function() {
+    setTimeout( () => this.updateFields(), 200);
+  },
+
   handleCancel: function() {
     this.refs.modal.handleClose();
   },
@@ -87,14 +108,11 @@ var SaveScreenModal = React.createClass({
   render: function() {
     var formCls = this.state.errors && 'has-error';
 
-    var txtSaveBtn = this.state.updateScreen === undefined ? 'Save' : 'Save as new screen';
+    var txtSaveBtn = this.state.savedScreen === undefined ? 'Save' : 'Save as new screen';
     var updateBtn;
-    if(this.state.updateScreen) {
-      // This won't work if the form is not already added.
-      // this.refs.form.name.value = this.state.updateScreen.name;
-      // this.refs.form.description.value = this.state.updateScreen.description;
+    if(this.state.savedScreen) {
       updateBtn = <button type="submit" onClick={this.updateScreen} className="btn btn-primary">
-            <i className="glyphicon glyphicon-save" /> 'Overwrite {this.state.updateScreen.name}'
+            <i className="glyphicon glyphicon-save" /> 'Overwrite {this.state.savedScreen.name}'
           </button>;
     }
 
