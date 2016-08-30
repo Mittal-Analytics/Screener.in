@@ -16,8 +16,9 @@ function QueryForm(props) {
     </a>
   }
 
-  var is_owner = props.defaults.is_owner;
-  var screenId = is_owner ? props.defaults.id : props.defaults.update;
+  var updateField
+  if(props.defaults.is_owner && props.defaults.id)
+    updateField = <input type="hidden" name="update" value={props.defaults.id} />
 
   return <form method="get" action="/screen/raw/">
     <h3>Query Builder</h3>
@@ -38,8 +39,8 @@ function QueryForm(props) {
           defaultChecked={props.defaults.latest} />
         Show only latest results?
       </label>
-      <input type="hidden" name="update" value={screenId} />
     </div>
+    {updateField}
     <button className="btn btn-primary" type="submit">
       <i className="glyphicon glyphicon-send"/> Run this query
     </button>
