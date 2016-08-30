@@ -35,7 +35,7 @@ function QueryForm(props) {
         <input
           type="checkbox"
           name="latest"
-          value="true"
+          defaultValue="true"
           defaultChecked={props.defaults.latest} />
         Show only latest results?
       </label>
