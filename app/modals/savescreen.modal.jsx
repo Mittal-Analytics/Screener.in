@@ -1,5 +1,6 @@
 "use strict";
 var React = require('react');
+var classNames = require('classnames');
 var Button = require('../components/button.jsx');
 var Modal = require('../components/modal.jsx');
 var Api = require('../api.js');
@@ -14,44 +15,30 @@ var SaveScreenModal = React.createClass({
   },
 
   propTypes: {
-    screen: React.PropTypes.object.isRequired
+    screen: React.PropTypes.object.isRequired,
+    update: React.PropTypes.string
   },
 
   getInitialState: function() {
     return {
       form: {__html: '<h3>Loading...</h3>'},
-      isOwner: true,
-      savedScreen: undefined,
       errors: false
     };
   },
 
   onOpen: function() {
-    var screenId = this.props.update;
-    if (screenId) {
-      Api.get(['screens', screenId]).then(resp => {
-        this.setState({
-          isOwner: resp.is_owner,
-          savedScreen: resp.is_owner ? resp : undefined
-        });
-      });
-    }
-
-    return Api.rawGet('screens.html').then(resp => {
+    var uid = this.props.update
+    var url = uid ? 'screens/' + uid + '.html' : 'screens.html'
+    return Api.rawGet(url).then(resp => {
       this.setState({
         form: {__html: resp}
       });
-
-      if (screenId) {
-        this.updateForm();
-      }
     });
   },
 
   onClose: function() {},
 
-  updateScreen: function(event) {
-    event.preventDefault();
+  handleSubmit: function(uid) {
     var screen = this.props.screen;
     var data = utils.getFormData(this.refs.form);
     data.query = screen.query;
@@ -59,46 +46,15 @@ var SaveScreenModal = React.createClass({
     data.order = screen.order;
     data.sort = screen.sort;
 
-    data.id = this.state.savedScreen.id;
-    var url = 'screens/' + data.id;
-    Api.put([url], data).then(
+    var save = uid ? 'put' : 'post'
+    var url = uid ? ['screens', uid] : ['screens']
+    this._req = Api[save](url, data).then(
       function(response) {
         this.context.router.push(response.url);
       }.bind(this),
       function(errors) {
         this.setState({errors: errors});
       }.bind(this));
-  },
-
-  handleSubmit: function(event) {
-    event.preventDefault();
-    var screen = this.props.screen;
-    var data = utils.getFormData(this.refs.form);
-    data.query = screen.query;
-    data.latest = screen.latest;
-    data.order = screen.order;
-    data.sort = screen.sort;
-
-    Api.post(['screens'], data).then(
-      function(response) {
-        this.context.router.push(response.url);
-      }.bind(this),
-      function(errors) {
-        this.setState({errors: errors});
-      }.bind(this));
-  },
-
-  updateFields: function() {
-    if(this.state.savedScreen) {
-      this.refs.form.name.value = this.state.savedScreen.name;
-      this.refs.form.description.value = this.state.savedScreen.description;
-    } else if (this.state.isOwner) {
-      this.updateForm();
-    }
-  },
-
-  updateForm: function() {
-    setTimeout( () => this.updateFields(), 200);
   },
 
   handleCancel: function() {
@@ -106,15 +62,18 @@ var SaveScreenModal = React.createClass({
   },
 
   render: function() {
-    var formCls = this.state.errors && 'has-error';
-
-    var txtSaveBtn = this.state.savedScreen === undefined ? 'Save' : 'Save as new screen';
-    var updateBtn;
-    if(this.state.savedScreen) {
-      updateBtn = <button type="submit" onClick={this.updateScreen} className="btn btn-primary">
-            <i className="glyphicon glyphicon-save" /> 'Overwrite {this.state.savedScreen.name}'
-          </button>;
-    }
+    var btnCls = classNames('btn', this.props.update ? 'btn-link' : 'btn-primary')
+    var btnText = this.props.update ? 'Save as new screen' : <span>
+      <i className="glyphicon glyphicon-save" /> Save
+    </span>
+    var createNewBtn = <a onClick={() => this.handleSubmit()} className={btnCls}>
+      {btnText}
+    </a>
+    var updateBtn = this.props.update && <a
+      onClick={() => this.handleSubmit(this.props.update)}
+      className="btn btn-primary">
+      <i className="glyphicon glyphicon-save" /> Save Changes
+    </a>
 
     return <Modal
       onOpen={this.onOpen}
@@ -126,9 +85,9 @@ var SaveScreenModal = React.createClass({
       noFooter={true}
       >
       <form
-        onSubmit={this.handleSubmit}
+        onSubmit={event => event.preventDefault() || this.handleSubmit(this.props.update)}
         ref="form"
-        className={formCls}
+        className={this.state.errors && 'has-error'}
         >
         <Alerts errors={this.state.errors} />
         <input
@@ -139,13 +98,7 @@ var SaveScreenModal = React.createClass({
         <div dangerouslySetInnerHTML={this.state.form} />
         <hr />
         <div className="pull-right">
-          <div className="pull-right">
-            &nbsp;&nbsp;
-            <button type="submit" className="btn btn-primary">
-              <i className="glyphicon glyphicon-save" /> {txtSaveBtn}
-            </button>
-          </div>
-          {updateBtn}
+          {createNewBtn} {updateBtn}
         </div>
         <Button
           style="danger"

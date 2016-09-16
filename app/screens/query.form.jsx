@@ -16,9 +16,9 @@ function QueryForm(props) {
     </a>
   }
 
-  var updateField
-  if(props.defaults.is_owner && props.defaults.id)
-    updateField = <input type="hidden" name="update" value={props.defaults.id} />
+  var defaults = props.defaults
+  var uid = defaults.is_owner ? defaults.id : defaults.update
+  var updateField = uid && <input type="hidden" name="update" value={uid} />
 
   return <form method="get" action="/screen/raw/">
     <h3>Query Builder</h3>
