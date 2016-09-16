@@ -1,46 +1,30 @@
 "use strict";
-jest.autoMockOff();
 jest.mock('fetch-on-rest');
 var api = require('../api.js');
 
 describe('test REST apis', function () {
 
-  afterEach(function() {
+  beforeEach(() => {
+    window.fetch.mockClear()
+  })
+
+  afterEach(() => {
     expect(api.getPending()).toEqual([]);
+  });
+
+  it('calls the post api', function() {
+    api.setResponse('/logout/', JSON.stringify({}));
+    return api.logout().then(() => {
+      expect(window.fetch.mock.calls).toMatchSnapshot()
+    });
   });
 
   it('calls the get api', function() {
     api.setResponse('/api/users/me/', JSON.stringify({foo: 'bar'}));
     return api.get(api.me).then(resp => {
       expect(resp).toEqual({foo: 'bar'});
-      expect(window.fetch.mock.calls.length).toBe(1);
-      expect(window.fetch.mock.calls[0][0]).toEqual('/api/users/me/');
-      var headers = {
-        credentials: 'same-origin',
-        headers: {
-          Accept: 'application/json'
-        },
-        method: 'get'
-      };
-      expect(window.fetch.mock.calls[0][1]).toEqual(headers);
+      expect(window.fetch.mock.calls).toMatchSnapshot()
     })
-  });
-
-  it('calls the post api', function() {
-    api.setResponse('/logout/', JSON.stringify({}));
-    return api.logout().then(() => {
-      expect(window.fetch.mock.calls.length).toBe(1);
-      expect(window.fetch.mock.calls[0][0]).toEqual('/logout/');
-      var headers = {
-        credentials: 'same-origin',
-        headers: {
-          Accept: 'application/json',
-          'X-CSRFToken': ''
-        },
-        method: 'post'
-      };
-      expect(window.fetch.mock.calls[0][1]).toEqual(headers);
-    });
   });
 
   it('calls the delete api', function() {

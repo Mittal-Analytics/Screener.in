@@ -1,5 +1,5 @@
 'use strict';
-jest.unmock('../../components/button.jsx');
+jest.useFakeTimers()
 
 describe('Notify Tests', function() {
   var notify, button, TestUtils, dummy;

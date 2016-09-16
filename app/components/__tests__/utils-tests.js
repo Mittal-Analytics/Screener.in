@@ -1,7 +1,4 @@
 'use strict';
-jest.dontMock('lodash');
-jest.dontMock('../utils.js');
-
 
 describe('getPageNumbers Tests', function(){
   it('ensure the correct page numbers', function() {

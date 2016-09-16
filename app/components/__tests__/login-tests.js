@@ -1,7 +1,4 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../login.jsx');
-
 
 describe('Login tests', function(){
   it('should render the login box', function() {

@@ -1,5 +1,5 @@
 'use strict'
-jest.disableAutomock()
+jest.useFakeTimers()
 
 var OPTIONS = [{"short_name":"B.V.","name":"Book value","unit":"Rs.","description":"Book value per share"},{"short_name":"CMP / BV","name":"Price to book value","unit":"","description":"Price to book value of the stock."},{"short_name":"BV Unq Invest","name":"Book value of unquoted investments","unit":"Rs.Cr.","description":"Book value of unquoted investments from latest balance sheet."},{"short_name":"PB X PE","name":"PB X PE","unit":"","description":"Graham number is the formula Ben Graham used to calculate the maximum price one should pay for a stock. As per this rule, the product of a stock’s price to earnings (P/E) and price to book value (P/BV) should not be more than 22.5 i.e., P/E of 15 multiplied by P/BV of 1.5."},{"short_name":"Net worth","name":"Net worth","unit":"Rs.Cr.","description":"Company's net worth (or total book value)"},{"short_name":"Ind PBV","name":"Industry PBV","unit":"","description":"Industrial Price to Book Value"}]
 

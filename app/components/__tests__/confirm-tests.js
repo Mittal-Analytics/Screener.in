@@ -1,7 +1,4 @@
 'use strict';
-jest.unmock('../button.jsx');
-jest.unmock('../confirm.jsx');
-
 
 describe('Confirm tests', function(){
   it('walk confirm test', function() {

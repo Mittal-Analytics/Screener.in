@@ -1,6 +1,4 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../icon.jsx');
 
 describe('icon Tests', function() {
   var icon, TestUtils;

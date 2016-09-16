@@ -1,7 +1,5 @@
 "use strict";
-/* global require, window, jest */
 
-jest.dontMock('../cursor.js');
 
 describe('test GetLastWord', function() {
   it('gets correct last words', function() {

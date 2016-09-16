@@ -22,7 +22,7 @@ describe('talks Tests', function() {
     window.userId = 32;
     api.setResponse('/api/talks/?tab=top&page=1',
       JSON.stringify({results: results}));
-    api.setResponse('/api/talks/voted/', []);
+    api.setResponse('/api/talks/voted/', "[]");
     talks = TestUtils.renderIntoDocument(
       <Talks params={params} location={location} />
     );

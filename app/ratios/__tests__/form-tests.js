@@ -1,5 +1,5 @@
 'use strict'
-jest.disableAutomock()
+jest.useFakeTimers()
 jest.mock('fetch-on-rest')
 var api = require('../../api.js')
 var React = require('react')

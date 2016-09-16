@@ -1,6 +1,6 @@
 'use strict';
-jest.autoMockOff();
 jest.mock('fetch-on-rest');
+jest.useFakeTimers()
 var api = require('../../api.js');
 var React = require('react');
 var RatioSearch = require('../ratio.search.jsx');

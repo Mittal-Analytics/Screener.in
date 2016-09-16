@@ -1,6 +1,4 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../button.jsx');
 
 describe('button Tests', function() {
   var button, TestUtils, dummy;

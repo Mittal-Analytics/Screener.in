@@ -1,5 +1,5 @@
 'use strict';
-jest.disableAutomock()
+jest.useFakeTimers()
 
 
 describe('Typeahead', function(){
