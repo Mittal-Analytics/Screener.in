@@ -5,11 +5,11 @@ Array [
     Object {
       "credentials": "same-origin",
       "headers": Object {
-        "Accept": "application/json"
+        "Accept": "application/json",
       },
-      "method": "get"
-    }
-  ]
+      "method": "get",
+    },
+  ],
 ]
 `;
 
@@ -21,10 +21,10 @@ Array [
       "credentials": "same-origin",
       "headers": Object {
         "Accept": "application/json",
-        "X-CSRFToken": ""
+        "X-CSRFToken": "",
       },
-      "method": "post"
-    }
-  ]
+      "method": "post",
+    },
+  ],
 ]
 `;
