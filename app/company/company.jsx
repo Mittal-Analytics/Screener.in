@@ -66,8 +66,9 @@ var Company = React.createClass({
 
   handleStartCompare: function() {
     var company = this.state.company
-    Api.get(Api.cid(company.id, 'comparison')).then(response => {
-      this.setState({comparisons: [response]});
+    var data = {force: company.warehouse_set.result_type}
+    Api.get(Api.cid(company.id, 'comparison'), data).then(resp => {
+      this.setState({comparisons: [resp]});
     });
   },
 
@@ -145,10 +146,10 @@ var Company = React.createClass({
         <div className="col-sm-12 col-lg-6">
           <Misc.Announcements bse_code={company.bse_code} announcement_set={company.announcement_set} />
         </div>
-        <div className="col-sm-4 col-lg-3" ng-if="vm.company.annualreport_set.length > 0">
+        <div className="col-sm-4 col-lg-3">
           <Misc.AnnualReports annualreport_set={company.annualreport_set} />
         </div>
-        <div className="col-sm-8 col-lg-3" ng-if="vm.company.companyrating_set.length > 0">
+        <div className="col-sm-8 col-lg-3">
           <Misc.CompanyRatings companyrating_set={company.companyrating_set} />
         </div>
       </section>

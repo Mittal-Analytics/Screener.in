@@ -43,7 +43,7 @@ class Peers extends React.Component {
     var peers = this.state.peers
     var Heads = peers.ratios.map(function(ratio, idx) {
       return <th key={idx}>
-        <span tooltip={ratio[0]}>
+        <span>
           {ratio[1]}
           <br />
           {ratio[2]}

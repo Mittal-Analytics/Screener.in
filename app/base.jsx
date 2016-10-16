@@ -108,7 +108,7 @@ class Navigation extends React.Component {
         </div>
 
         <Navbar.Collapse>
-          <Nav eventKey={0}>
+          <Nav>
             <li className="visible-lg-block">
               <a href="http://dalal-street.in">Blog</a>
             </li>
