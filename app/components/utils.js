@@ -88,6 +88,26 @@ function getFormData(form) {
   return data;
 }
 
+function fixFirstKColumns(table, k)
+{
+  //Make a clone of our table
+  var tableClone = table.cloneNode(true)
+  table.parentNode.insertBefore(tableClone, table)
+  tableClone.className += ' fixed-column'
+
+  //Remove everything except for first column
+  var nodes = tableClone.querySelectorAll(['th:not(:nth-child(-n+'+k+'))', 'td:not(:nth-child(-n+'+k+')'])
+  nodes.forEach((el) => {
+    el.remove()
+  })
+
+  var trs = table.querySelectorAll('tr')
+  //Match the height of the rows to that of the original table's
+  tableClone.querySelectorAll('tr').forEach((elem, i) => {
+    elem.style.height = trs[i].offsetHeight + 'px'
+  })
+}
+
 exports.setTitle = setTitle;
 exports.scrollToTop = scrollToTop;
 exports.toSlug = toSlug;
@@ -96,3 +116,4 @@ exports.toMonthYear = toMonthYear;
 exports.withUnit = withUnit;
 exports.getPageNumbers = getPageNumbers;
 exports.getFormData = getFormData;
+exports.fixFirstKColumns = fixFirstKColumns;

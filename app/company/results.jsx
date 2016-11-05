@@ -1,5 +1,6 @@
 "use strict"
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Api from '../api.js'
 import {Link} from 'react-router'
 import classNames from 'classnames'
@@ -108,6 +109,11 @@ class Results extends React.Component {
     this.setState({schedules: {}})
   }
 
+  componentDidMount() {
+    var resultsDOMNode = ReactDOM.findDOMNode(this.refs.results)
+    Utils.fixFirstKColumns(resultsDOMNode, 1)
+  }
+
   handleExpand(field) {
     if(this.state.schedules[field])
       return
@@ -205,7 +211,7 @@ class Results extends React.Component {
       </h2>
 
       <div className="table-responsive">
-        <table className="table">
+        <table className="table" ref="results">
           <thead>
             <tr>
               <th />

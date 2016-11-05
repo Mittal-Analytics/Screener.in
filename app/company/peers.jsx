@@ -1,5 +1,6 @@
 "use strict"
 var React = require('react')
+var ReactDOM = require('react-dom')
 var api = require('../api.js')
 var Link = require('react-router').Link
 var Utils = require('../components/utils.js')
@@ -18,6 +19,10 @@ class Peers extends React.Component {
 
   componentDidMount() {
     this._req = this.fetchPeers(this.props.company)
+    this._req.then(resp => {
+      var peersDOMNode = ReactDOM.findDOMNode(this.refs.peers)
+      Utils.fixFirstKColumns(peersDOMNode, 2)
+    })
   }
 
   componentWillReceiveProps(props) {
@@ -79,7 +84,7 @@ class Peers extends React.Component {
       </h2>
 
       <div className="table-responsive">
-        <table className="table table-striped table-hover">
+        <table className="table table-striped table-hover" ref="peers">
           <thead>
             <tr>
               <th className="text">S.No.</th>
