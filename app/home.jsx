@@ -32,9 +32,9 @@ function Home(props, context) {
         Can-Fin Homes</Link>, <Link to="company/KSL/">
         Kalyani Steels</Link>, <Link to="company/KITEX/">
         Kitex Garments</Link>, <Link to="company/SHILPAMED/">
-        Shilpa Medicare</Link>, <Link to="company/SANGHVIMOV/">
-        Sanghvi Movers</Link>, <Link to="company/504959/">
-        Stovec Industries</Link>, <Link to="company/TATAMETALI/">
+        Shilpa Medicare</Link>, <Link to="company/SUZLON/consolidated/">
+        Suzlon Energy</Link>, <Link to="company/ANDHRSUGAR/">
+        Andhra Sugars</Link>, <Link to="company/TATAMETALI/">
         Tata Metaliks</Link> ...
       </p>
     </div>
