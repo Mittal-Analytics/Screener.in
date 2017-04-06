@@ -73,7 +73,7 @@ function Announcements(props) {
     </p>;
   });
 
-  var allUrl = "http://beta.bseindia.com/corporates/anncomp.aspx?type1=1&scripcode=" + props.bse_code + "%20";
+  var allUrl = "http://www.bseindia.com/corporates/ann.aspx?scrip=" + props.bse_code + "%20&dur=A";
   var viewAll = props.bse_code === '' ? false : <p>
     <a href={allUrl} target="_blank">
       View all announcements
