@@ -1,7 +1,7 @@
 "use strict";
 /* global require, document, window */
-var throttle = require('lodash/throttle');
-var React = require('react');
+import throttle from 'lodash/throttle'
+import React from 'react'
 
 
 var spyIds = [
@@ -87,4 +87,4 @@ var ScrollBar = React.createClass({
   }
 });
 
-module.exports = ScrollBar;
+export default ScrollBar

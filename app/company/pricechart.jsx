@@ -1,11 +1,11 @@
 "use strict";
 /* global require, window, document */
 
-var React = require('react');
-var classNames = require('classnames');
-var Api = require('../api.js');
-var Chartist = require('chartist');
-var Utils = require('../components/utils.js');
+import React from 'react'
+import classNames from 'classnames'
+import Api from '../api.js'
+import Chartist from 'chartist'
+import {toLocalNumber} from '../components/utils.js'
 
 var PriceChart = React.createClass({
   barI: 0,
@@ -138,7 +138,7 @@ var PriceChart = React.createClass({
     var valueStyle = {transform: 'translate3d(' + x + ', 20px, 0)'};
     var pointStyle = {transform: 'translate3d(' + x + ', ' + y + ', 0)'};
     var label = this.state.barIdx && this.state.data.dates[this.state.barIdx];
-    var value = Utils.toLocalNumber(this.state.value);
+    var value = toLocalNumber(this.state.value);
     return <div className="price-chart">
       {this.renderChartOptions()}
       <div style={display}>
@@ -177,4 +177,4 @@ var PriceChart = React.createClass({
   }
 });
 
-module.exports = PriceChart;
+export default PriceChart

@@ -1,5 +1,5 @@
 "use strict";
-var React = require('react');
+import React from 'react'
 
 
 function Icon(props) {
@@ -12,4 +12,4 @@ Icon.propTypes = {
   name: React.PropTypes.string.isRequired
 }
 
-module.exports = Icon;
+export default Icon

@@ -1,8 +1,8 @@
 "use strict";
 import React from 'react';
-var debounce = require('lodash/debounce');
-var classNames = require('classnames');
-var TypeUtil = require('./typeahead.util.js');
+import debounce from 'lodash/debounce'
+import classNames from 'classnames'
+import TypeUtil from './typeahead.util.js'
 
 
 class Typeahead extends React.Component {
@@ -87,4 +87,4 @@ Typeahead.propTypes = {
   className: React.PropTypes.string
 }
 
-module.exports = Typeahead;
+export default Typeahead

@@ -1,8 +1,7 @@
 "use strict";
-/* global require */
-var React = require('react');
-var Typeahead = require('./typeahead.jsx');
-var api = require('../api.js');
+import React from 'react'
+import Typeahead from './typeahead.jsx'
+import api from '../api.js'
 
 
 var RatioSearch = React.createClass({
@@ -53,4 +52,4 @@ var RatioSearch = React.createClass({
   }
 });
 
-module.exports = RatioSearch;
+export default RatioSearch

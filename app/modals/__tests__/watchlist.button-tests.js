@@ -1,10 +1,10 @@
 'use strict';
 jest.disableAutomock();
 jest.mock('fetch-on-rest');
-var TestUtils = require('react-addons-test-utils');
-var React = require('react');
-var WatchlistButton = require('../watchlist.button.jsx');
-var api = require('../../api.js');
+import TestUtils from 'react-addons-test-utils'
+import React from 'react'
+import WatchlistButton from '../watchlist.button.jsx'
+import api from '../../api.js'
 
 
 describe('Watchlist Button tests', function() {

@@ -1,11 +1,11 @@
 'use strict';
+import React from 'react'
+import Confirm from '../confirm.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 describe('Confirm tests', function(){
   it('walk confirm test', function() {
-    var React = require('react');
-    var TestUtils = require('react-addons-test-utils');
     var handleDelete = jest.fn();
-    var Confirm = require('../confirm.jsx');
     var confirm = TestUtils.renderIntoDocument(
       <Confirm onClick={handleDelete} name="Delete?" />
     );

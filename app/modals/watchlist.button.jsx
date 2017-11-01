@@ -1,9 +1,9 @@
 "use strict";
-var React = require('react');
-var Modal = require('../components/modal.jsx');
-var CompanySearch = require('../components/company.search.jsx');
-var api = require('../api.js');
-var ActionRows = require('./action.rows.jsx');
+import React from 'react'
+import Modal from '../components/modal.jsx'
+import CompanySearch from '../components/company.search.jsx'
+import api from '../api.js'
+import ActionRows from './action.rows.jsx'
 
 
 class WatchlistButton extends React.Component {
@@ -65,4 +65,4 @@ WatchlistButton.propTypes = {
 };
 
 
-module.exports = WatchlistButton;
+export default WatchlistButton

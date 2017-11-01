@@ -1,11 +1,11 @@
 'use strict';
 jest.disableAutomock()
 jest.mock('fetch-on-rest')
-var api = require('../api.js');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Watchlist = require('../watchlist.jsx');
-var TestUtils = require('react-addons-test-utils');
+import api from '../api.js'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Watchlist from '../watchlist.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 var SCREEN = {
   ratios: [[

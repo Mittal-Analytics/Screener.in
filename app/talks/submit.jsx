@@ -1,9 +1,9 @@
 "use strict";
-var React = require('react');
-var api = require('../api.js');
-var Utils = require('../components/utils.js');
-var Alerts = require('../components/alerts.jsx');
-var Icon = require('../components/icon.jsx');
+import React from 'react'
+import api from '../api.js'
+import {setTitle, getFormData} from '../components/utils.js'
+import Alerts from '../components/alerts.jsx'
+import Icon from '../components/icon.jsx'
 
 
 function Header() {
@@ -51,7 +51,7 @@ class SubmitTalk extends React.Component {
   componentDidMount() {
     if(!window.loggedIn)
       window.location = '/register/';
-    Utils.setTitle('Submit Talk');
+    setTitle('Submit Talk');
     return api.rawGet('/talks.html').then(resp => {
       this.setState({
         form: {__html: resp}
@@ -61,7 +61,7 @@ class SubmitTalk extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    var data = Utils.getFormData(this.refs.form);
+    var data = getFormData(this.refs.form);
     api.post(['talks'], data).then(
       function() {
         this.context.router.push('/talks/latest/');
@@ -103,4 +103,4 @@ SubmitTalk.contextTypes = {
 }
 
 
-module.exports = SubmitTalk;
+export default SubmitTalk

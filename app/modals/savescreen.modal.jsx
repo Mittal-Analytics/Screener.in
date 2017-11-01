@@ -1,11 +1,11 @@
 "use strict";
-var React = require('react');
-var classNames = require('classnames');
-var Button = require('../components/button.jsx');
-var Modal = require('../components/modal.jsx');
-var Api = require('../api.js');
-var Alerts = require('../components/alerts.jsx');
-var utils = require('../components/utils.js');
+import React from 'react'
+import classNames from 'classnames'
+import Button from '../components/button.jsx'
+import Modal from '../components/modal.jsx'
+import Api from '../api.js'
+import Alerts from '../components/alerts.jsx'
+import {getFormData} from '../components/utils.js'
 
 
 var SaveScreenModal = React.createClass({
@@ -40,7 +40,7 @@ var SaveScreenModal = React.createClass({
 
   handleSubmit: function(uid) {
     var screen = this.props.screen;
-    var data = utils.getFormData(this.refs.form);
+    var data = getFormData(this.refs.form);
     data.query = screen.query;
     data.latest = screen.latest;
     data.order = screen.order;
@@ -111,4 +111,4 @@ var SaveScreenModal = React.createClass({
 
 });
 
-module.exports = SaveScreenModal;
+export default SaveScreenModal

@@ -1,10 +1,10 @@
 'use strict'
 jest.disableAutomock()
 jest.mock('fetch-on-rest')
-var api = require('../../api.js')
-var React = require('react')
-var RatioDelete = require('../delete.jsx')
-var TestUtils = require('react-addons-test-utils')
+import api from '../../api.js'
+import React from 'react'
+import RatioDelete from '../delete.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 
 var DEPENDENTS = {

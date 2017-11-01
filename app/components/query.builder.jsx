@@ -242,4 +242,4 @@ QueryBuilder.propTypes = {
   ])
 }
 
-module.exports = QueryBuilder
+export default QueryBuilder

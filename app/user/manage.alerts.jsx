@@ -1,9 +1,9 @@
 "use strict";
-var React = require('react');
-var api = require('../api.js');
-var ActionRows = require('../modals/action.rows.jsx');
-var Utils = require('../components/utils.js');
-var Button = require('../components/button.jsx');
+import React from 'react'
+import api from '../api.js'
+import ActionRows from '../modals/action.rows.jsx'
+import {setTitle} from '../components/utils.js'
+import Button from '../components/button.jsx'
 
 
 class Alerts extends React.Component {
@@ -19,7 +19,7 @@ class Alerts extends React.Component {
   componentDidMount() {
     if(!window.loggedIn)
       return (window.location = '/register/');
-    Utils.setTitle('Manage Alerts');
+    setTitle('Manage Alerts');
     api.get(['alerts']).then(resp => {
       this.setState({screens: resp});
     });
@@ -83,4 +83,4 @@ class Alerts extends React.Component {
 }
 
 
-module.exports = Alerts;
+export default Alerts

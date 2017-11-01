@@ -1,7 +1,7 @@
-"use strict";
-var React = require('react');
-var Link = require('react-router').Link;
-var CompanySearch = require('./components/company.search.jsx');
+import React from 'react'
+import {Link} from 'react-router'
+import CompanySearch from './components/company.search.jsx'
+
 
 function Home(props, context) {
 
@@ -51,4 +51,4 @@ Home.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-module.exports = Home;
+export default Home

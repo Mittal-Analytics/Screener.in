@@ -4,7 +4,7 @@ import api from '../api.js'
 import classNames from 'classnames'
 import QueryBuilder from '../components/query.builder.jsx'
 import Alert from '../components/alerts.jsx'
-import Utils from '../components/utils.js'
+import {getFormData, toLocalNumber} from '../components/utils.js'
 import Icon from '../components/icon.jsx'
 
 
@@ -26,7 +26,7 @@ class RatioForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    var data = Utils.getFormData(this.refs.form)
+    var data = getFormData(this.refs.form)
     data['formula'] = data['builder']
     delete data['builder']
     if (this.state.isPreview) {
@@ -51,11 +51,11 @@ class RatioForm extends React.Component {
   renderPreview() {
     if(!this.state.isPreview)
       return false
-    var data = Utils.getFormData(this.refs.form)
+    var data = getFormData(this.refs.form)
     var rows = this.state.isPreview.map((company, idx) => {
       return <tr key={idx}>
         <td className="text">{company.short_name}</td>
-        <td>{Utils.toLocalNumber(company.preview)}</td>
+        <td>{toLocalNumber(company.preview)}</td>
       </tr>
     })
     return <div>
@@ -129,4 +129,4 @@ RatioForm.propTypes = {
   formula: React.PropTypes.string
 }
 
-module.exports = RatioForm
+export default RatioForm

@@ -1,15 +1,14 @@
 "use strict";
-/* global require */
-var React = require('react');
-var Utils = require('../components/utils.js');
-var URITemplate = require('urijs/src/URITemplate');
+import React from 'react'
+import {toSlug, withUnit, toLocalNumber} from '../components/utils.js'
+import URITemplate from 'urijs/src/URITemplate'
 
 
 function getExchanges(company) {
   var bse_link =  '',
       nse_link = '';
   if(company.bse_code !== "") {
-    var slug = Utils.toSlug(company.name);
+    var slug = toSlug(company.name);
     bse_link = new URITemplate(
       'http://www.bseindia.com/stock-share-price{/slugs*}/'
     );
@@ -46,7 +45,7 @@ function CompanyRatios(props) {
     {ratios.map(function(ratio, idx) {
       return <h4 className="col-sm-4" key={idx}>
         {ratio[0]}:
-        <b> {Utils.withUnit(warehouse_set[ratio[1]], ratio[2])}</b>
+        <b> {withUnit(warehouse_set[ratio[1]], ratio[2])}</b>
       </h4>;
     })}
     <h4 className="col-sm-4">{getExchanges(props.company)}</h4>
@@ -55,11 +54,11 @@ function CompanyRatios(props) {
     </h4>
     <h4 className="col-sm-4">
       52 Week High/Low:
-      <b> ₹ {Utils.toLocalNumber(warehouse_set.high_price)} /
-          ₹ {Utils.toLocalNumber(warehouse_set.low_price)}
+      <b> ₹ {toLocalNumber(warehouse_set.high_price)} /
+          ₹ {toLocalNumber(warehouse_set.low_price)}
       </b>
     </h4>
   </div>;
 }
 
-module.exports = CompanyRatios;
+export default CompanyRatios

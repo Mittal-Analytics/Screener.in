@@ -1,10 +1,10 @@
 'use strict';
 jest.disableAutomock()
 jest.mock('fetch-on-rest')
-var api = require('../../api.js');
-var React = require('react');
-var Screens = require('../screens.jsx');
-var TestUtils = require('react-addons-test-utils');
+import api from '../../api.js'
+import React from 'react'
+import Screens from '../screens.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 
 describe('Screens Tests', function() {

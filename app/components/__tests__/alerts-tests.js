@@ -1,8 +1,8 @@
 'use strict';
-jest.disableAutomock();
-var React = require('react');
-var Alert = require('../alerts.jsx');
-var TestUtils = require('react-addons-test-utils');
+import ReactDOM from 'react-dom'
+import React from 'react'
+import Alert from '../alerts.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 describe('alerts Tests', function() {
   var alerts
@@ -15,7 +15,6 @@ describe('alerts Tests', function() {
     alerts = TestUtils.renderIntoDocument(<div>
       <Alert errors={errors} />
     </div>);
-    var ReactDOM = require('react-dom');
     alerts = ReactDOM.findDOMNode(alerts);
   });
 

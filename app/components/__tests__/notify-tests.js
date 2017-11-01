@@ -1,8 +1,11 @@
 'use strict';
 jest.useFakeTimers()
+import React from 'react'
+import TestUtils from 'react-addons-test-utils'
+import Notify from '../notify.jsx'
 
 describe('Notify Tests', function() {
-  var notify, button, TestUtils, dummy;
+  var notify, button, dummy
 
   var delayed = function() {
     return new Promise(function(resolve) {
@@ -11,9 +14,6 @@ describe('Notify Tests', function() {
   };
 
   beforeEach(function() {
-    var React = require('react');
-    var Notify = require.requireActual('../notify.jsx');
-    TestUtils = require('react-addons-test-utils');
     dummy = jest.genMockFunction()
       .mockImplementation(delayed);
     notify = TestUtils.renderIntoDocument(

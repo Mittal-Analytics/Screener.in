@@ -1,10 +1,10 @@
 "use strict";
-var React = require('react');
-var Link = require('react-router').Link;
-var Utils = require('../components/utils.js');
-var Icon = require('../components/icon.jsx');
-var api = require('../api.js');
-var startCase = require('lodash/startCase');
+import React from 'react'
+import { Link } from 'react-router'
+import {scrollToTop, setTitle} from '../components/utils.js'
+import Icon from '../components/icon.jsx'
+import api from '../api.js'
+import startCase from 'lodash/startCase'
 
 
 function TalksHeader(props) {
@@ -48,7 +48,7 @@ var Talks = React.createClass({
   },
 
   componentWillReceiveProps: function(props) {
-    Utils.scrollToTop();
+    scrollToTop();
     return this.fetchResults(props);
   },
 
@@ -67,7 +67,7 @@ var Talks = React.createClass({
     return api.get(['talks'], data).then(resp => {
       this.setState({talks: resp});
       var name = startCase(tab);
-      Utils.setTitle(`${name} Talks`);
+      setTitle(`${name} Talks`);
     });
   },
 
@@ -132,4 +132,4 @@ var Talks = React.createClass({
 });
 
 
-module.exports = Talks;
+export default Talks

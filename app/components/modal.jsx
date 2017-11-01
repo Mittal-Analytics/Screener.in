@@ -1,9 +1,7 @@
 "use strict";
-/* global require, document, window */
-
-var React = require('react');
-var Button = require('../components/button.jsx');
-var Login = require('./login.jsx');
+import React from 'react'
+import Button from '../components/button.jsx'
+import Login from './login.jsx'
 
 
 var Dialog = React.createClass({
@@ -129,4 +127,4 @@ var Modal = React.createClass({
 });
 
 
-module.exports = Modal;
+export default Modal

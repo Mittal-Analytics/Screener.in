@@ -1,10 +1,10 @@
 'use strict';
 jest.disableAutomock();
 jest.mock('fetch-on-rest');
-var ManageAlerts = require('../manage.alerts.jsx');
-var React = require('react');
-var TestUtils = require('react-addons-test-utils');
-var api = require('../../api.js');
+import ManageAlerts from '../manage.alerts.jsx'
+import React from 'react'
+import TestUtils from 'react-addons-test-utils'
+import api from '../../api.js'
 
 describe('alerts Tests', function() {
   var alerts

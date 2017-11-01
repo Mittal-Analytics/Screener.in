@@ -1,7 +1,7 @@
 "use strict";
-var React = require('react');
-var classNames = require('classnames');
-var Button = require('./button.jsx');
+import React from 'react'
+import classNames from 'classnames'
+import Button from './button.jsx'
 
 
 class Confirm extends React.Component {
@@ -62,4 +62,4 @@ Confirm.propTypes = {
   name: React.PropTypes.string.isRequired
 };
 
-module.exports = Confirm;
+export default Confirm

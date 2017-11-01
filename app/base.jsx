@@ -1,12 +1,11 @@
-"use strict";
-var React = require('react');
-var Link = require('react-router').Link;
-var Nav = require('react-bootstrap/lib/Nav');
-var Navbar = require('react-bootstrap/lib/Navbar');
-var NavbarBrand = require('react-bootstrap/lib/NavbarBrand');
+import React from 'react'
+import {Link} from 'react-router'
+import Nav from 'react-bootstrap/lib/Nav'
+import Navbar from 'react-bootstrap/lib/Navbar'
+import NavbarBrand from 'react-bootstrap/lib/NavbarBrand'
 
-var CompanySearch = require('./components/company.search.jsx');
-var Api = require('./api.js');
+import CompanySearch from './components/company.search.jsx'
+import Api from './api.js'
 
 
 function Footer() {
@@ -133,5 +132,5 @@ Navigation.contextTypes = {
 }
 
 
-module.exports.Navigation = Navigation;
-module.exports.Footer = Footer;
+export { Navigation }
+export { Footer }

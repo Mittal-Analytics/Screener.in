@@ -49,4 +49,4 @@ AddCompare.propTypes = {
   comparisons: React.PropTypes.array.isRequired
 }
 
-module.exports = AddCompare
+export default AddCompare

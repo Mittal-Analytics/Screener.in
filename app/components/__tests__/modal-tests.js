@@ -1,8 +1,7 @@
 'use strict';
-jest.disableAutomock()
-var React = require('react');
-var Modal = require('../modal.jsx');
-var TestUtils = require('react-addons-test-utils');
+import React from 'react'
+import Modal from '../modal.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 describe('Modal Tests', function() {
   var modal, onOpen, onClose;

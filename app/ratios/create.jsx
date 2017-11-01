@@ -1,7 +1,7 @@
 "use strict";
 import React from 'react'
 import api from '../api.js'
-import Utils from '../components/utils.js'
+import {setTitle} from '../components/utils.js'
 import RatioForm from './form.jsx'
 import {Link} from 'react-router';
 
@@ -16,7 +16,7 @@ class CreateRatio extends React.Component {
   }
 
   componentDidMount() {
-    Utils.setTitle('Create new ratio')
+    setTitle('Create new ratio')
     api.get('ratios').then(
       resp => this.setState({ratios: resp.results})
     )
@@ -67,4 +67,4 @@ class CreateRatio extends React.Component {
   }
 }
 
-module.exports = CreateRatio
+export default CreateRatio

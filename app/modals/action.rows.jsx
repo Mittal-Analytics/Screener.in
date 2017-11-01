@@ -1,7 +1,7 @@
 "use strict";
-var React = require('react');
-var classNames = require('classnames');
-var Icon = require('../components/icon.jsx');
+import React from 'react'
+import classNames from 'classnames'
+import Icon from '../components/icon.jsx'
 
 
 var ActionRows = React.createClass({
@@ -60,4 +60,4 @@ var ActionRows = React.createClass({
   }
 });
 
-module.exports = ActionRows;
+export default ActionRows

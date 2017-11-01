@@ -1,12 +1,9 @@
-"use strict";
-/* global require, document, window */
-
-var React = require('react');
-var WatchlistButton = require('./modals/watchlist.button.jsx');
-var QueryForm = require('./screens/query.form.jsx');
-var Link = require('react-router').Link;
-var Utils = require('./components/utils.js');
-var Api = require('./api.js');
+import React from 'react'
+import WatchlistButton from './modals/watchlist.button.jsx'
+import QueryForm from './screens/query.form.jsx'
+import {Link} from 'react-router'
+import {setTitle} from './components/utils.js'
+import Api from './api.js'
 
 
 var Feeds = React.createClass({
@@ -198,7 +195,7 @@ var PopularScreens = React.createClass({
 
 var Dash = React.createClass({
   componentDidMount: function() {
-    Utils.setTitle('Dashboard');
+    setTitle('Dashboard');
   },
 
   handleWatchlistChange: function() {
@@ -239,4 +236,4 @@ var Dash = React.createClass({
   }
 });
 
-module.exports = Dash;
+export default Dash

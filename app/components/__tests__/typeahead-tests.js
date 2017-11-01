@@ -1,12 +1,12 @@
 'use strict';
 jest.useFakeTimers()
+import React from 'react'
+import TestUtils from 'react-addons-test-utils'
+import Typeahead from '../typeahead.jsx'
 
 
 describe('Typeahead', function(){
   it('calls given function on change', function() {
-    var React = require('react');
-    var TestUtils = require('react-addons-test-utils');
-    var Typeahead = require('../typeahead.jsx');
     var options = [
       {name: 'apple', url: '#', id: 3},
       {name: 'mango', url: '#', id:9}

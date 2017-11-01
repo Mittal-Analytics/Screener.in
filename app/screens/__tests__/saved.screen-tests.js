@@ -2,10 +2,10 @@
 jest.disableAutomock();
 jest.mock('fetch-on-rest');
 jest.mock('../../components/utils.js')
-var api = require('../../api.js');
-var React = require('react');
-var Screen = require('../saved.screen.jsx');
-var TestUtils = require('react-addons-test-utils');
+import api from '../../api.js'
+import React from 'react'
+import Screen from '../saved.screen.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 const screenResult = {
   name: 'Foo Bar',

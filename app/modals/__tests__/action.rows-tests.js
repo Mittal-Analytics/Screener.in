@@ -1,13 +1,13 @@
 'use strict';
 jest.disableAutomock()
+import React from 'react'
+import ActionRows from '../action.rows.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 describe('action.rows Tests', function() {
-  var actions, TestUtils, dummy;
+  var actions, dummy
 
   beforeEach(function() {
-    var React = require('react');
-    var ActionRows = require('../action.rows.jsx');
-    TestUtils = require('react-addons-test-utils');
     dummy = jest.genMockFunction();
     var items = [
       {name: 'Foo'},

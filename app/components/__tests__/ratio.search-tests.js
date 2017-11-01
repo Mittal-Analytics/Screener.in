@@ -1,10 +1,10 @@
 'use strict';
 jest.mock('fetch-on-rest');
 jest.useFakeTimers()
-var api = require('../../api.js');
-var React = require('react');
-var RatioSearch = require('../ratio.search.jsx');
-var TestUtils = require('react-addons-test-utils');
+import api from '../../api.js'
+import React from 'react'
+import RatioSearch from '../ratio.search.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 
 describe('Ratio Search Tests', function() {

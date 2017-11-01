@@ -1,10 +1,10 @@
 'use strict'
 jest.autoMockOff()
 jest.mock('fetch-on-rest')
-var api = require('../../api.js')
-var React = require('react')
-var RatioEdit = require('../edit.jsx')
-var TestUtils = require('react-addons-test-utils')
+import api from '../../api.js'
+import React from 'react'
+import RatioEdit from '../edit.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 
 var FORMHTML = '<input name="name">'

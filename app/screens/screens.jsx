@@ -1,10 +1,10 @@
 "use strict";
 /* global document */
-var React = require('react');
-var Button = require('../components/button.jsx');
-var Link = require('react-router').Link;
-var api = require('../api.js');
-var Utils = require('../components/utils.js');
+import React from 'react'
+import Button from '../components/button.jsx'
+import { Link } from 'react-router'
+import api from '../api.js'
+import {setTitle} from '../components/utils.js'
 
 
 function SearchForm(props) {
@@ -70,7 +70,7 @@ var Screens = React.createClass({
   },
 
   componentDidMount: function() {
-    Utils.setTitle('Browse Screens');
+    setTitle('Browse Screens');
     this._req = api.get(['screens', 'popular']).then(resp => {
       this.setState({
         screens: resp,
@@ -85,7 +85,7 @@ var Screens = React.createClass({
         screens: response,
         searched: false
       });
-      Utils.setTitle('Latest Screens');
+      setTitle('Latest Screens');
     }.bind(this));
   },
 
@@ -98,7 +98,7 @@ var Screens = React.createClass({
         screens: response,
         searched: searchTerm
       });
-      Utils.setTitle('Searched Screens');
+      setTitle('Searched Screens');
     }.bind(this));
   },
 
@@ -131,4 +131,4 @@ var Screens = React.createClass({
 });
 
 
-module.exports = Screens;
+export default Screens

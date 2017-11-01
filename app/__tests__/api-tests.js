@@ -1,6 +1,6 @@
 "use strict";
 jest.mock('fetch-on-rest');
-var api = require('../api.js');
+import api from '../api.js'
 
 describe('test REST apis', function () {
 
@@ -48,7 +48,6 @@ describe('test REST apis', function () {
 
 describe('test dependent libraries', function(){
   it('checks expansions', function() {
-    var api = require('../api.js');
     expect(api._getUrl(api.me)).toEqual('/api/users/me/');
     expect(api._getUrl(api.me, {})).toEqual('/api/users/me/');
     expect(api._getUrl(api.me, {foo: 'bar'})).toEqual('/api/users/me/?foo=bar');

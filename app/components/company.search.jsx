@@ -1,9 +1,9 @@
 "use strict";
-var React = require('react')
-var classNames = require('classnames')
-var api = require('../api.js')
-var Typeahead = require('./typeahead.jsx')
-var Icon = require('./icon.jsx')
+import React from 'react'
+import classNames from 'classnames'
+import api from '../api.js'
+import Typeahead from './typeahead.jsx'
+import Icon from './icon.jsx'
 
 
 class CompanySearch extends React.Component {
@@ -56,4 +56,4 @@ CompanySearch.propTypes = {
   placeholder: React.PropTypes.string
 }
 
-module.exports = CompanySearch;
+export default CompanySearch

@@ -88,11 +88,11 @@ function getFormData(form) {
   return data;
 }
 
-exports.setTitle = setTitle;
-exports.scrollToTop = scrollToTop;
-exports.toSlug = toSlug;
-exports.toLocalNumber = toLocalNumber;
-exports.toMonthYear = toMonthYear;
-exports.withUnit = withUnit;
-exports.getPageNumbers = getPageNumbers;
-exports.getFormData = getFormData;
+export {setTitle}
+export {scrollToTop}
+export {toSlug}
+export {toLocalNumber}
+export {toMonthYear}
+export {withUnit}
+export {getPageNumbers}
+export {getFormData}

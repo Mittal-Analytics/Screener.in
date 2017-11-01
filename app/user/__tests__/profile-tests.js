@@ -2,10 +2,11 @@
 /* global jest, require */
 jest.disableAutomock()
 jest.mock('fetch-on-rest');
-var api = require('../../api.js');
-var React = require('react');
-var Profile = require('../profile.jsx');
-var TestUtils = require('react-addons-test-utils');
+import {getFormData} from '../../components/utils.js'
+import api from '../../api.js'
+import React from 'react'
+import Profile from '../profile.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 describe('profile Tests', function() {
   var profile
@@ -25,8 +26,7 @@ describe('profile Tests', function() {
 
   it('should load form', function() {
     return profile._req.then(() => {
-      var Utils = require('../../components/utils.js');
-      var data = Utils.getFormData(profile.refs.form);
+      var data = getFormData(profile.refs.form);
       expect(data.name).toEqual('hi');
     });
   });

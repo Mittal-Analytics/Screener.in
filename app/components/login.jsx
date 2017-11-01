@@ -1,8 +1,6 @@
 "use strict";
-/* global require */
-
-var React = require('react');
-var Api = require('../api.js');
+import React from 'react'
+import Api from '../api.js'
 
 function Login(props) {
   return <form method="post" action="/register/">
@@ -73,4 +71,4 @@ function Login(props) {
   </form>;
 }
 
-module.exports = Login;
+export default Login

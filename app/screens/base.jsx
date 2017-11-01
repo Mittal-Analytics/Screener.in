@@ -1,9 +1,7 @@
 "use strict";
-/* global require, document */
-
-var React = require('react');
-var QueryForm = require('./query.form.jsx');
-var Alerts = require('../components/alerts.jsx');
+import React from 'react'
+import QueryForm from './query.form.jsx'
+import Alerts from '../components/alerts.jsx'
 
 
 function ScreenBase(props) {
@@ -28,4 +26,4 @@ function ScreenBase(props) {
   </div>;
 }
 
-module.exports = ScreenBase;
+export default ScreenBase

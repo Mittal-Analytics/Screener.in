@@ -1,6 +1,6 @@
-"use strict";
-var React = require('react');
-var QueryBuilder = require('../components/query.builder.jsx');
+import React from 'react'
+import QueryBuilder from '../components/query.builder.jsx'
+
 
 function QueryForm(props) {
   var assist = {
@@ -55,4 +55,4 @@ QueryForm.propTypes = {
   ])
 }
 
-module.exports = QueryForm;
+export default QueryForm

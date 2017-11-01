@@ -214,4 +214,4 @@ RatioGallery.propTypes = {
   onRatioClick: React.PropTypes.func.isRequired
 }
 
-module.exports = RatioGallery
+export default RatioGallery

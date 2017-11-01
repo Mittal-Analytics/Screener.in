@@ -1,11 +1,10 @@
 "use strict";
-/* global require, window */
-var React = require('react');
-var Link = require('react-router').Link;
-var Api = require('../api.js');
-var Utils = require('../components/utils.js');
-var RatioSearch = require('../components/ratio.search.jsx');
-var QuickRatiosModal = require('../modals/quickratios.modal.jsx');
+import React from 'react'
+import {Link} from 'react-router'
+import Api from '../api.js'
+import {withUnit} from '../components/utils.js'
+import RatioSearch from '../components/ratio.search.jsx'
+import QuickRatiosModal from '../modals/quickratios.modal.jsx'
 
 
 var QuickRatios = React.createClass({
@@ -50,7 +49,7 @@ var QuickRatios = React.createClass({
     var quickratios = this.state.quickratios;
     var values = quickratios.map(function(ratio, idx) {
       return <h4 className="col-sm-4" key={idx}>
-        {ratio[0]}: {Utils.withUnit(ratio[1], ratio[2])}
+        {ratio[0]}: {withUnit(ratio[1], ratio[2])}
       </h4>;
     });
 
@@ -86,4 +85,4 @@ var QuickRatios = React.createClass({
   }
 });
 
-module.exports = QuickRatios;
+export default QuickRatios

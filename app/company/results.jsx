@@ -5,7 +5,7 @@ import {Link} from 'react-router'
 import classNames from 'classnames'
 import endsWith from 'lodash/endsWith'
 import defaults from 'lodash/defaults'
-import Utils from '../components/utils.js'
+import {toLocalNumber, toMonthYear} from '../components/utils.js'
 
 
 function getCaption(report) {
@@ -170,7 +170,7 @@ class Results extends React.Component {
     </td>
     var dataCells = this.dates.map(function(date, iidx) {
       return <td key={iidx}>
-        {Utils.toLocalNumber(row[1][date])}
+        {toLocalNumber(row[1][date])}
       </td>
     })
     var ttmCell = this.trailing && <td>{this.trailing[field]}</td>
@@ -194,7 +194,7 @@ class Results extends React.Component {
     var pair_link = getSuffix(pair_url, standalone, company.prime)
     var compareHead = this.isMulti && <th />
     var dateHeads = this.dates.map(function(resultDate, idx) {
-      return <th key={idx}>{Utils.toMonthYear(resultDate)}</th>
+      return <th key={idx}>{toMonthYear(resultDate)}</th>
     })
     var ttmHead = this.trailing && <th>TTM</th>
     return <div>
@@ -229,4 +229,4 @@ Results.propTypes = {
   report: React.PropTypes.string.isRequired
 }
 
-module.exports = Results
+export default Results

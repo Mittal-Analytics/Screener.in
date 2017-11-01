@@ -3,7 +3,7 @@ import React from 'react'
 import {Link} from 'react-router'
 import api from '../api.js'
 import Button from '../components/button.jsx'
-import Utils from '../components/utils.js'
+import {setTitle} from '../components/utils.js'
 
 
 class DeleteRatio extends React.Component {
@@ -17,7 +17,7 @@ class DeleteRatio extends React.Component {
   }
 
   componentDidMount() {
-    Utils.setTitle('Delete ratio')
+    setTitle('Delete ratio')
     var ratioId = this.props.params.ratioId
     this._req = api.delete(['ratios', ratioId]).then(
       resp => this.setState({dependents: resp})
@@ -73,4 +73,4 @@ DeleteRatio.propTypes = {
   params: React.PropTypes.object.isRequired
 }
 
-module.exports = DeleteRatio
+export default DeleteRatio

@@ -1,8 +1,8 @@
 "use strict";
 /* global require, document, window */
-var React = require('react');
-var Icon = require('../components/icon.jsx');
-var Button = require('../components/button.jsx');
+import React from 'react'
+import Icon from '../components/icon.jsx'
+import Button from '../components/button.jsx'
 
 
 function CompanyHeader(props) {
@@ -168,9 +168,9 @@ function Ranges(props) {
 }
 
 
-module.exports.CompanyHeader = CompanyHeader;
-module.exports.Ranges = Ranges;
-module.exports.Analysis = Analysis;
-module.exports.Announcements = Announcements;
-module.exports.AnnualReports = AnnualReports;
-module.exports.CompanyRatings = CompanyRatings;
+export {CompanyHeader}
+export {Ranges}
+export {Analysis}
+export {Announcements}
+export {AnnualReports}
+export {CompanyRatings}

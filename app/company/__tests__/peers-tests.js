@@ -1,11 +1,11 @@
 "use strict";
 jest.disableAutomock();
 jest.mock('fetch-on-rest');
-var api = require('../../api.js');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var Peers = require('../peers.jsx');
+import api from '../../api.js'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import TestUtils from 'react-addons-test-utils'
+import Peers from '../peers.jsx'
 
 describe('Peers tests', function () {
   var peerResults = {

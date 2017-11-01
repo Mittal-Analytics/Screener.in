@@ -1,5 +1,9 @@
 'use strict';
 jest.disableAutomock();
+import React from 'react'
+import TestUtils from 'react-addons-test-utils'
+import RatioGallery from '../ratio.gallery.jsx'
+
 var RATIOS = {
   "user_ratios":[],
   "system_ratios":[
@@ -19,9 +23,6 @@ describe('Typeahead', function(){
   var gallery
 
   beforeEach(function() {
-    var React = require('react')
-    var TestUtils = require('react-addons-test-utils')
-    var RatioGallery = require('../ratio.gallery.jsx')
     var onOpen = jest.genMockFunction()
     var onClose = jest.genMockFunction()
     var onRatioClick = jest.genMockFunction()

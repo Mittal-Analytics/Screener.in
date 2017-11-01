@@ -1,9 +1,9 @@
 "use strict"
-var React = require('react')
-var api = require('../api.js')
-var Link = require('react-router').Link
-var Utils = require('../components/utils.js')
-var ManageColumns = require('../modals/columns.modal.jsx')
+import React from 'react'
+import api from '../api.js'
+import {Link} from 'react-router'
+import {toLocalNumber} from '../components/utils.js'
+import ManageColumns from '../modals/columns.modal.jsx'
 
 
 class Peers extends React.Component {
@@ -56,7 +56,7 @@ class Peers extends React.Component {
       var url = row[0]
       var self = (cname == company.short_name)
       var Cells = row.slice(2).map(function(cell, iidx) {
-        return <td key={iidx}>{Utils.toLocalNumber(cell)}</td>
+        return <td key={iidx}>{toLocalNumber(cell)}</td>
       })
       return <tr className={self ? 'self' : ''} key={idx}>
         <td className="text">{idx + peers.start}.</td>
@@ -100,4 +100,4 @@ Peers.propTypes = {
   company: React.PropTypes.object.isRequired
 }
 
-module.exports = Peers
+export default Peers

@@ -1,10 +1,10 @@
 'use strict';
 jest.disableAutomock();
 jest.mock('fetch-on-rest');
-var api = require('../../api.js');
-var React = require('react');
-var TestUtils = require('react-addons-test-utils');
-var ManageColumns = require('../columns.modal.jsx');
+import api from '../../api.js'
+import React from 'react'
+import TestUtils from 'react-addons-test-utils'
+import ManageColumns from '../columns.modal.jsx'
 
 
 describe('Columns modal tests', function() {

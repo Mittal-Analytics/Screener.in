@@ -1,9 +1,8 @@
 "use strict";
-/* global require */
-var React = require('react');
-var Modal = require('../components/modal.jsx');
-var Api = require('../api.js');
-var ActionRows = require('./action.rows.jsx');
+import React from 'react'
+import Modal from '../components/modal.jsx'
+import Api from '../api.js'
+import ActionRows from './action.rows.jsx'
 
 
 var QuickRatiosModal = React.createClass({
@@ -42,4 +41,4 @@ var QuickRatiosModal = React.createClass({
 
 });
 
-module.exports = QuickRatiosModal;
+export default QuickRatiosModal

@@ -1,10 +1,10 @@
 "use strict";
-var React = require('react');
-var Link = require('react-router').Link;
-var api = require('../api.js');
-var Utils = require('../components/utils.js');
-var Icon = require('../components/icon.jsx');
-var Alert = require('../components/alerts.jsx');
+import React from 'react'
+import { Link } from 'react-router'
+import api from '../api.js'
+import {setTitle, getFormData} from '../components/utils.js'
+import Icon from '../components/icon.jsx'
+import Alert from '../components/alerts.jsx'
 
 
 class Profile extends React.Component {
@@ -21,7 +21,7 @@ class Profile extends React.Component {
   componentDidMount() {
     if(!window.loggedIn)
       return (window.location = '/register/');
-    Utils.setTitle('Profile');
+    setTitle('Profile');
     var url = '/users/' + window.userId + '.html';
     this._req = api.rawGet(url).then(resp => {
       this.setState({
@@ -32,7 +32,7 @@ class Profile extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    var data = Utils.getFormData(this.refs.form);
+    var data = getFormData(this.refs.form);
     var url = ['users', window.userId];
     api.patch(url, data).then(
       () => this.setState({saved: true, errors: false}),
@@ -79,4 +79,4 @@ class Profile extends React.Component {
 }
 
 
-module.exports = Profile;
+export default Profile

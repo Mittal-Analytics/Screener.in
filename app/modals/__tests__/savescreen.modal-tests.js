@@ -1,10 +1,10 @@
 'use strict';
 jest.disableAutomock();
 jest.mock('fetch-on-rest');
-var TestUtils = require('react-addons-test-utils');
-var React = require('react');
-var SaveScreenModal = require('../savescreen.modal.jsx');
-var api = require('../../api.js');
+import TestUtils from 'react-addons-test-utils'
+import React from 'react'
+import SaveScreenModal from '../savescreen.modal.jsx'
+import api from '../../api.js'
 
 var SCREEN = {
   query: '1=1',

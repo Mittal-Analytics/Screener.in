@@ -1,9 +1,9 @@
 "use strict";
+import getLastWord from '../cursor.js'
 
 
 describe('test GetLastWord', function() {
   it('gets correct last words', function() {
-    var getLastWord = require('../cursor.js');
     var sentence;
     sentence = "Book value";
     expect(getLastWord(sentence)).toBe('Book value');

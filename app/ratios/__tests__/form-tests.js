@@ -1,10 +1,10 @@
 'use strict'
 jest.useFakeTimers()
 jest.mock('fetch-on-rest')
-var api = require('../../api.js')
-var React = require('react')
-var RatioForm = require('../form.jsx')
-var TestUtils = require('react-addons-test-utils')
+import api from '../../api.js'
+import React from 'react'
+import RatioForm from '../form.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 var PREVIEW = [{"preview": 100.1, "short_name": "Reliance Inds."},
                {"preview": 50.76, "short_name": "TCS"}]

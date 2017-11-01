@@ -1,7 +1,7 @@
 "use strict";
 import React from 'react'
 import api from '../api.js'
-import Utils from '../components/utils.js'
+import {setTitle} from '../components/utils.js'
 import RatioForm from './form.jsx'
 
 
@@ -15,7 +15,7 @@ class EditRatio extends React.Component {
   }
 
   componentDidMount() {
-    Utils.setTitle('Edit ratio')
+    setTitle('Edit ratio')
     var ratioId = this.props.params.ratioId
     this._req = api.rawGet(['ratios', ratioId + '.html']).then(
       formHTML => api.get(['ratios', ratioId]).then(
@@ -46,4 +46,4 @@ EditRatio.propTypes = {
   params: React.PropTypes.object.isRequired
 }
 
-module.exports = EditRatio
+export default EditRatio

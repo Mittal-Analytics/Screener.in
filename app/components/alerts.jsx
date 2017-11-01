@@ -1,8 +1,8 @@
 "use strict";
-var React = require('react');
-var map = require('lodash/map');
-var startCase = require('lodash/startCase');
-var Icon = require('./icon.jsx');
+import React from 'react'
+import map from 'lodash/map'
+import startCase from 'lodash/startCase'
+import Icon from './icon.jsx'
 
 
 function Alerts(props) {
@@ -23,4 +23,4 @@ function Alerts(props) {
   </div>;
 }
 
-module.exports = Alerts;
+export default Alerts

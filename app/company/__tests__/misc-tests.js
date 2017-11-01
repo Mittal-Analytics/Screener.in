@@ -1,9 +1,8 @@
 "use strict";
-jest.disableAutomock();
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var Misc = require('../misc.jsx');
+import React from 'react'
+import ReactDOM from 'react-dom'
+import TestUtils from 'react-addons-test-utils'
+import {CompanyHeader} from '../misc.jsx'
 
 var kitex = {
   id: 1950,
@@ -36,7 +35,7 @@ describe('Walk tests', function () {
   it('test visible add to watchlist button', function() {
     var dummy = jest.genMockFunction()
     var header = TestUtils.renderIntoDocument(<div>
-      <Misc.CompanyHeader
+      <CompanyHeader
         company={kitex}
         favorites={[1, 2]}
         handleFavorite={dummy}
@@ -51,7 +50,7 @@ describe('Walk tests', function () {
 
     // button hiddend when in favorites
     header = TestUtils.renderIntoDocument(<div>
-      <Misc.CompanyHeader
+      <CompanyHeader
         company={kitex}
         favorites={[1950, 2]}
         handleFavorite={dummy}
