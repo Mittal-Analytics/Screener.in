@@ -39,6 +39,7 @@ ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
+      <Route path="home/" component={Home} />
       <Route path="dash/" component={Dash} />
       <Route path="ratios/" component={CreateRatio} />
       <Route path="ratios/:ratioId/" component={EditRatio} />

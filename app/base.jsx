@@ -15,7 +15,7 @@ function Footer() {
       Made with <i className="glyphicon glyphicon-heart" /> in <b>India</b>.
     </span>
     <p>
-      Navigation Links: <Link to="/">Home
+      Navigation Links: <Link to="/home/">Home
       </Link> | <Link to="/screens/">Screens
       </Link> | <Link to="/talks/">Talks
       </Link> | <a href="http://blog.screener.in">Change Log
