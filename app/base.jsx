@@ -17,7 +17,6 @@ function Footer() {
     <p>
       Navigation Links: <Link to="/home/">Home
       </Link> | <Link to="/screens/">Screens
-      </Link> | <Link to="/talks/">Talks
       </Link> | <a href="http://blog.screener.in">Change Log
       </a> | <a href="http://dalal-street.in">Dalal-Street Blog
       </a> | <a href="https://github.com/Mittal-Analytics/Screener.in">
@@ -114,7 +113,6 @@ class Navigation extends React.Component {
             <li className="visible-lg-block"><a href="http://blog.screener.in">
               {this.state.user.id ? 'Change Log' : 'Features'}
             </a></li>
-            <li><Link to="/talks/">Talks</Link></li>
             <li><Link to="/screens/">Screens</Link></li>
             <li><Link to="/watchlist/">Watchlist</Link></li>
           </Nav>
