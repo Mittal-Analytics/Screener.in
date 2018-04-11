@@ -24,7 +24,7 @@ class ManageColumns extends React.Component {
   onOpen() {
     this.req = api.get(api.me).then(resp => {
       this.setState({
-        items: resp.icolumns.split(';')
+        items: resp.icolumns.split(',')
       });
     });
   }
@@ -49,7 +49,7 @@ class ManageColumns extends React.Component {
     var data = {columns: ''};
     return api.patch(['users', window.userId], data).then(resp => {
       this.setState({
-        items: resp.icolumns.split(';')
+        items: resp.icolumns.split(',')
       });
     })
   }
