@@ -1,7 +1,10 @@
 'use strict'
-jest.autoMockOff()
+jest.useFakeTimers()
 jest.mock('fetch-on-rest')
-var api = require('app/api.js')
+import api from '../../api.js'
+import React from 'react'
+import RatioForm from '../form.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 var PREVIEW = [{"preview": 100.1, "short_name": "Reliance Inds."},
                {"preview": 50.76, "short_name": "TCS"}]
@@ -10,12 +13,9 @@ var EVENT = {
 }
 
 describe('Form Tests for creation', function() {
-  var form, TestUtils
+  var form
 
   beforeEach(function() {
-    var React = require('react')
-    var RatioForm = require('../form.jsx')
-    TestUtils = require('react-addons-test-utils')
     var formHTML = '<input name="name">'
     form = TestUtils.renderIntoDocument(
       <RatioForm formHTML={{__html: formHTML}} />
@@ -26,7 +26,7 @@ describe('Form Tests for creation', function() {
     expect(api.getPending()).toEqual([])
   })
 
-  pit('should show preview', function() {
+  it('should show preview', function() {
     expect(form.state.isPreview).toEqual(false)
     api.setResponse('/api/ratios/preview/', '[]')
     return form.handleSubmit(EVENT).then(() => {
@@ -35,7 +35,7 @@ describe('Form Tests for creation', function() {
     })
   })
 
-  pit('should create new ratio', function() {
+  it('should create new ratio', function() {
     form.setState({isPreview: PREVIEW})
     jest.runAllTimers()
     api.setResponse('/api/ratios/', '[]')
@@ -47,12 +47,9 @@ describe('Form Tests for creation', function() {
 
 
 describe('Form Tests for updation', function() {
-  var form, TestUtils
+  var form
 
   beforeEach(function() {
-    var React = require('react')
-    var RatioForm = require('../form.jsx')
-    TestUtils = require('react-addons-test-utils')
     var formHTML = '<input name="name">'
     form = TestUtils.renderIntoDocument(
       <RatioForm
@@ -67,14 +64,14 @@ describe('Form Tests for updation', function() {
     expect(api.getPending()).toEqual([])
   })
 
-  pit('should show preview', function() {
+  it('should show preview', function() {
     api.setResponse('/api/ratios/preview/', '[]')
     return form.handleSubmit(EVENT).then(() => {
       expect(form.state.isPreview).toEqual([])
     })
   })
 
-  pit('should update existing ratio', function() {
+  it('should update existing ratio', function() {
     form.setState({isPreview: PREVIEW})
     jest.runAllTimers()
     api.setResponse('/api/ratios/33/', '[]')

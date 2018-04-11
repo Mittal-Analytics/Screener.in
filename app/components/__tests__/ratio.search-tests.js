@@ -1,16 +1,16 @@
 'use strict';
-jest.autoMockOff();
 jest.mock('fetch-on-rest');
+jest.useFakeTimers()
+import api from '../../api.js'
+import React from 'react'
+import RatioSearch from '../ratio.search.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 
 describe('Ratio Search Tests', function() {
-  var api = require('app/api.js');
-  var RatioSearch, search, TestUtils, dummy, React;
+  var search, dummy;
 
   beforeEach(function() {
-    React = require('react');
-    RatioSearch = require('../ratio.search.jsx');
-    TestUtils = require('react-addons-test-utils');
     dummy = jest.genMockFunction();
     window.loggedIn = true;
     search = TestUtils.renderIntoDocument(
@@ -34,7 +34,7 @@ describe('Ratio Search Tests', function() {
     expect(divs.textContent).toEqual('Please login to use this feature.');
   });
 
-  pit('should trigger select', function() {
+  it('should trigger select', function() {
     var input = TestUtils.findRenderedDOMComponentWithTag(
       search, 'input'
     );

@@ -1,14 +1,12 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../icon.jsx');
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Icon from '../icon.jsx'
 
 describe('icon Tests', function() {
   var icon, TestUtils;
 
   beforeEach(function() {
-    var React = require('react');
-    var ReactDOM = require('react-dom');
-    var Icon = require('../icon.jsx');
     TestUtils = require('react-addons-test-utils');
     icon = TestUtils.renderIntoDocument(<div>
       <Icon name="pencil" />

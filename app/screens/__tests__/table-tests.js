@@ -1,7 +1,9 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../table.jsx');
-jest.dontMock('app/components/utils.js');
+jest.disableAutomock()
+import React from 'react'
+import ReactDOM from 'react-dom'
+import TestUtils from 'react-addons-test-utils'
+import UserTable from '../table.jsx'
 
 
 describe('Table Tests', function(){
@@ -33,10 +35,6 @@ describe('Table Tests', function(){
   });
 
   it('ensure the call to server and fetch results', function() {
-    var React = require('react');
-    var ReactDOM = require('react-dom');
-    var TestUtils = require('react-addons-test-utils');
-    var UserTable = require('../table.jsx');
     var onColumnsChange = jest.genMockFunction();
     var table = TestUtils.renderIntoDocument(<div>
       <UserTable

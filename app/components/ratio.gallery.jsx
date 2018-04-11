@@ -1,7 +1,7 @@
 "use strict";
 import React from 'react'
-import Button from 'app/components/button.jsx'
-import Api from 'app/api.js'
+import Button from './button.jsx'
+import Api from '../api.js'
 
 
 function RatiosList(props) {
@@ -108,10 +108,9 @@ class RatioGallery extends React.Component {
       </div>
 
       {operators.map((operator, idx) => {
-        var ratio = ["", operator, ""]
         return <span key={idx}><a
           className="btn btn-default"
-          onClick={() => this.props.onRatioClick(ratio)}
+          onClick={() => this.props.onRatioClick(operator)}
           >
           {operator}
         </a>{" "}</span>
@@ -134,10 +133,13 @@ class RatioGallery extends React.Component {
 
   renderOpen() {
     var categories = [
+      "Quarterly Results",
+      "Quarterly Variations",
       "Annual Results",
+      "Annual Variations",
+      "Trailing 12 Months",
       "Balance Sheet",
       "Cash Flow Statement",
-      "Quarterly Results",
       "Valuation",
       "Ratios",
       "User Ratios"
@@ -212,4 +214,4 @@ RatioGallery.propTypes = {
   onRatioClick: React.PropTypes.func.isRequired
 }
 
-module.exports = RatioGallery
+export default RatioGallery

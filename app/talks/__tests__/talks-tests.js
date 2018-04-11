@@ -1,6 +1,10 @@
 'use strict';
-jest.autoMockOff();
+jest.disableAutomock();
 jest.mock('fetch-on-rest');
+import api from '../../api.js'
+import React from 'react'
+import Talks from '../talks.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 var results = [
   {
@@ -9,17 +13,16 @@ var results = [
 ];
 
 describe('talks Tests', function() {
-  var api = require('app/api.js');
-  var talks, TestUtils;
+  var talks
 
   beforeEach(function() {
-    var React = require('react');
-    var Talks = require('../talks.jsx');
-    TestUtils = require('react-addons-test-utils');
     var params = {};
     var location = {query: {}};
     window.loggedIn = true;
     window.userId = 32;
+    api.setResponse('/api/talks/?tab=top&page=1',
+      JSON.stringify({results: results}));
+    api.setResponse('/api/talks/voted/', "[]");
     talks = TestUtils.renderIntoDocument(
       <Talks params={params} location={location} />
     );
@@ -29,18 +32,15 @@ describe('talks Tests', function() {
     expect(api.getPending()).toEqual([]);
   });
 
-  pit('should load talks', function() {
-    api.setResponse('/api/talks/?tab=top&page=1',
-      JSON.stringify({results: results}));
-    api.setResponse('/api/talks/voted/', []);
-    return talks.componentDidMount().then(() => {
+  it('should load talks', function() {
+    return talks._req.then(() => {
       expect(talks.state.talks.results).toEqual(results);
       var latest = TestUtils.scryRenderedDOMComponentsWithTag(talks, 'a')[0];
       expect(latest.textContent).toEqual('Goto Latest Links');
     })
   });
 
-  pit('should fetch new talks', function() {
+  it('should fetch new talks', function() {
     var newProps = {
       params: {tab: 'latest'},
       location: {query: {}}

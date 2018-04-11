@@ -1,36 +1,35 @@
-"use strict";
-/* global require, window */
-var React = require('react');
-var Modal = require('app/components/modal.jsx');
-var Confirm = require('app/components/confirm.jsx');
-var Icon = require('app/components/icon.jsx');
-var Link = require('react-router').Link;
-var RatioSearch = require('app/components/ratio.search.jsx');
-var api = require('../api.js');
-var ActionRows = require('./action.rows.jsx');
+import React from 'react'
+import Modal from '../components/modal.jsx'
+import Confirm from '../components/confirm.jsx'
+import Icon from '../components/icon.jsx'
+import {Link} from 'react-router'
+import RatioSearch from '../components/ratio.search.jsx'
+import api from '../api.js'
+import ActionRows from './action.rows.jsx'
 
 
-var ManageColumns = React.createClass({
-  propTypes: {
-    onClose: React.PropTypes.func.isRequired,
-    style: React.PropTypes.string
-  },
+class ManageColumns extends React.Component {
 
-  getInitialState: function() {
-    return {
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
       items: []
-    };
-  },
+    }
+    this.onOpen = this.onOpen.bind(this)
+    this.handleAdd = this.handleAdd.bind(this)
+    this.handleRemove = this.handleRemove.bind(this)
+    this.handleReset = this.handleReset.bind(this)
+  }
 
-  onOpen: function() {
+  onOpen() {
     this.req = api.get(api.me).then(resp => {
       this.setState({
-        items: resp.icolumns.split(';')
+        items: resp.icolumns.split(',')
       });
     });
-  },
+  }
 
-  handleAdd: function(ratio) {
+  handleAdd(ratio) {
     var name = ratio.name;
     var data = {'ratio': name};
     return api.post(['users', 'column'], data).then(() => {
@@ -38,28 +37,28 @@ var ManageColumns = React.createClass({
         items: this.state.items.concat([name])
       });
     });
-  },
+  }
 
-  handleRemove: function(ratio) {
+  handleRemove(ratio) {
     var name = this.getDisplayName(ratio);
     var data = {'ratio': name};
     return api.delete(['users', 'column'], data);
-  },
+  }
 
-  handleReset: function() {
+  handleReset() {
     var data = {columns: ''};
     return api.patch(['users', window.userId], data).then(resp => {
       this.setState({
-        items: resp.icolumns.split(';')
+        items: resp.icolumns.split(',')
       });
-    });
-  },
+    })
+  }
 
-  getDisplayName: function(item) {
-    return item;
-  },
+  getDisplayName(item) {
+    return item
+  }
 
-  render: function() {
+  render() {
     return <span>
       <Modal
         onOpen={this.onOpen}
@@ -86,10 +85,15 @@ var ManageColumns = React.createClass({
           </Link>
         </div>
       </Modal>
-    </span>;
+    </span>
   }
 
-});
+}
+
+ManageColumns.propTypes = {
+  onClose: React.PropTypes.func.isRequired,
+  style: React.PropTypes.string
+}
 
 
-module.exports = ManageColumns;
+export default ManageColumns

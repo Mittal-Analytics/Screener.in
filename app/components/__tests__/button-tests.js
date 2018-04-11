@@ -1,15 +1,12 @@
-'use strict';
-/* global jest, require */
-jest.dontMock('../button.jsx');
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Button from '../button.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 describe('button Tests', function() {
-  var button, TestUtils, dummy;
+  var button, dummy
 
   beforeEach(function() {
-    var React = require('react');
-    var ReactDOM = require('react-dom');
-    var Button = require('../button.jsx');
-    TestUtils = require('react-addons-test-utils');
     dummy = jest.genMockFunction();
     button = TestUtils.renderIntoDocument(<div>
       <Button

@@ -1,6 +1,6 @@
 "use strict";
-var React = require('react');
-var classNames = require('classnames');
+import React from 'react'
+import classNames from 'classnames'
 
 function Button(props) {
   var classes = 'btn btn-' + (props.style || 'default');
@@ -26,4 +26,4 @@ Button.propTypes = {
   name: React.PropTypes.string.isRequired
 }
 
-module.exports = Button;
+export default Button

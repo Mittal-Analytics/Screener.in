@@ -1,16 +1,17 @@
 'use strict';
-jest.autoMockOff();
+jest.disableAutomock();
 jest.mock('fetch-on-rest');
+import TestUtils from 'react-addons-test-utils'
+import React from 'react'
+import WatchlistButton from '../watchlist.button.jsx'
+import api from '../../api.js'
+
 
 describe('Watchlist Button tests', function() {
-  var api = require('../../api.js');
-  var TestUtils, watchlist;
+  var watchlist;
 
   beforeEach(function() {
     window.loggedIn = true;
-    TestUtils = require('react-addons-test-utils');
-    var React = require('react');
-    var WatchlistButton = require('../watchlist.button.jsx');
     var onClose = jest.genMockFunction();
     watchlist = TestUtils.renderIntoDocument(
       <WatchlistButton onClose={onClose} />
@@ -21,7 +22,7 @@ describe('Watchlist Button tests', function() {
     expect(api.getPending()).toEqual([]);
   });
 
-  pit('should load companies on open', function() {
+  it('should load companies on open', function() {
     // Open the modal
     var button = TestUtils.findRenderedDOMComponentWithTag(
       watchlist, 'button'
@@ -34,7 +35,7 @@ describe('Watchlist Button tests', function() {
     });
   })
 
-  pit('adds company', function() {
+  it('adds company', function() {
     var company = {name: 'Patanjali', id: 7, url: '/ramdev/'};
     api.setResponse('/api/company/7/favorite/', JSON.stringify([company]));
     return watchlist.handleAdd(company).then(() => {

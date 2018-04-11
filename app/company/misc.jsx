@@ -1,8 +1,8 @@
 "use strict";
 /* global require, document, window */
-var React = require('react');
-var Icon = require('app/components/icon.jsx');
-var Button = require('app/components/button.jsx');
+import React from 'react'
+import Icon from '../components/icon.jsx'
+import Button from '../components/button.jsx'
 
 
 function CompanyHeader(props) {
@@ -73,7 +73,7 @@ function Announcements(props) {
     </p>;
   });
 
-  var allUrl = "http://beta.bseindia.com/corporates/anncomp.aspx?type1=1&scripcode=" + props.bse_code + "%20";
+  var allUrl = "http://www.bseindia.com/corporates/ann.aspx?scrip=" + props.bse_code + "%20&dur=A";
   var viewAll = props.bse_code === '' ? false : <p>
     <a href={allUrl} target="_blank">
       View all announcements
@@ -168,9 +168,9 @@ function Ranges(props) {
 }
 
 
-module.exports.CompanyHeader = CompanyHeader;
-module.exports.Ranges = Ranges;
-module.exports.Analysis = Analysis;
-module.exports.Announcements = Announcements;
-module.exports.AnnualReports = AnnualReports;
-module.exports.CompanyRatings = CompanyRatings;
+export {CompanyHeader}
+export {Ranges}
+export {Analysis}
+export {Announcements}
+export {AnnualReports}
+export {CompanyRatings}

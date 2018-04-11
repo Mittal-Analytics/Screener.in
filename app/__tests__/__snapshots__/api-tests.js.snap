@@ -1,0 +1,30 @@
+exports[`test REST apis calls the get api 1`] = `
+Array [
+  Array [
+    "/api/users/me/",
+    Object {
+      "credentials": "same-origin",
+      "headers": Object {
+        "Accept": "application/json",
+      },
+      "method": "get",
+    },
+  ],
+]
+`;
+
+exports[`test REST apis calls the post api 1`] = `
+Array [
+  Array [
+    "/logout/",
+    Object {
+      "credentials": "same-origin",
+      "headers": Object {
+        "Accept": "application/json",
+        "X-CSRFToken": "",
+      },
+      "method": "post",
+    },
+  ],
+]
+`;

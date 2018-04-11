@@ -1,12 +1,11 @@
-"use strict";
-var React = require('react');
-var ManageColumns = require('app/modals/columns.modal.jsx');
-var SaveScreenModal = require('app/modals/savescreen.modal.jsx');
-var Utils = require('app/components/utils.js');
-var Api = require('../api.js');
-var UserTable = require('./table.jsx');
-var ScreenBase = require('./base.jsx');
-var isEqual = require('lodash/isEqual');
+import React from 'react'
+import ManageColumns from '../modals/columns.modal.jsx'
+import SaveScreenModal from '../modals/savescreen.modal.jsx'
+import {setTitle} from '../components/utils.js'
+import Api from '../api.js'
+import UserTable from './table.jsx'
+import ScreenBase from './base.jsx'
+import isEqual from 'lodash/isEqual'
 
 
 var Query = React.createClass({
@@ -31,7 +30,7 @@ var Query = React.createClass({
   },
 
   fetchResults: function(params) {
-    Utils.setTitle('Query Builder');
+    setTitle('Query Builder');
     var url = '/screens/query/'
     return Api.get(url, params).then(function(response) {
       this.setState({screen: response, errors: false});
@@ -42,7 +41,7 @@ var Query = React.createClass({
 
   renderLoaded: function() {
     var screen = this.state.screen;
-    var save = <SaveScreenModal screen={screen} />;
+    var save = <SaveScreenModal screen={screen} update={this.props.location.query.update} />;
     var manageCols = <ManageColumns
       onClose={this.onColumnsChange}
       style="default"/>;
@@ -71,4 +70,4 @@ var Query = React.createClass({
   }
 });
 
-module.exports = Query;
+export default Query

@@ -134,20 +134,22 @@ th:hover .tooltip {
 
 table .text {
   text-align: left;
+  max-width: 150px;
+  text-overflow: ellipsis;
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
 }
 table .odd {
   background-color: #f9f9f9;
 }
-.percent td:after {
+.percent td:not(.text):after {
   content: '%';
-}
-.percent td:first-child:after {
-  content: '';
 }
 .child .text:before {
   content: "﹂ ";
 }
-.table > tbody > .child > td {
+.table > tbody > .child > td, .table > tbody > .compared > td {
   border-top: none;
 }
 .mom {

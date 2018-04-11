@@ -4,7 +4,7 @@
 
 function setTitle(title) {
   var fullTitle = title.trim() + ' - Screener.in';
-  document.title = fullTitle;
+  window.document.title = fullTitle;
   var location = window.location.pathname;
   if (process.env.NODE_ENV !== "production") {
     return;
@@ -88,11 +88,11 @@ function getFormData(form) {
   return data;
 }
 
-exports.setTitle = setTitle;
-exports.scrollToTop = scrollToTop;
-exports.toSlug = toSlug;
-exports.toLocalNumber = toLocalNumber;
-exports.toMonthYear = toMonthYear;
-exports.withUnit = withUnit;
-exports.getPageNumbers = getPageNumbers;
-exports.getFormData = getFormData;
+export {setTitle}
+export {scrollToTop}
+export {toSlug}
+export {toLocalNumber}
+export {toMonthYear}
+export {withUnit}
+export {getPageNumbers}
+export {getFormData}

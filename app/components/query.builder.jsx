@@ -1,10 +1,10 @@
 "use strict";
 import React from 'react'
 import classNames from 'classnames'
-import TypeUtil from 'app/components/typeahead.util.js'
+import TypeUtil from './typeahead.util.js'
 import endsWith from 'lodash/endsWith'
 import debounce from 'lodash/debounce'
-import Api from 'app/api.js'
+import Api from '../api.js'
 import getLastWord from './cursor.js'
 import RatioGallery from './ratio.gallery.jsx'
 
@@ -187,13 +187,17 @@ class QueryBuilder extends React.Component {
   }
 
   handleInsert(ratio) {
-    var selected = {
-      unit: ratio[0],
-      name: ratio[1],
-      description: ratio[2]
+    if(ratio.constructor === Array) {
+      var selected = {
+        unit: ratio[0],
+        name: ratio[1],
+        description: ratio[2]
+      }
+      this.refs.textarea.insertThis(selected.name + " ", "")
+      this.setState({selected: selected})
+    } else {
+      this.refs.textarea.insertThis(ratio + " ", "")
     }
-    this.refs.textarea.insertThis(selected.name, "")
-    this.setState({selected: selected})
   }
 
   handleSelect(selected) {
@@ -238,4 +242,4 @@ QueryBuilder.propTypes = {
   ])
 }
 
-module.exports = QueryBuilder
+export default QueryBuilder

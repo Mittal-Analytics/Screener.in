@@ -1,14 +1,13 @@
 'use strict';
-/* global jest, require */
-jest.dontMock('../alerts.jsx');
+import ReactDOM from 'react-dom'
+import React from 'react'
+import Alert from '../alerts.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 describe('alerts Tests', function() {
-  var alerts, TestUtils;
+  var alerts
 
   beforeEach(function() {
-    var React = require('react');
-    var Alert = require('../alerts.jsx');
-    TestUtils = require('react-addons-test-utils');
     var errors = new Error('Bad request');
     errors.json = {
       display_name: 'cannot be blank'
@@ -16,7 +15,6 @@ describe('alerts Tests', function() {
     alerts = TestUtils.renderIntoDocument(<div>
       <Alert errors={errors} />
     </div>);
-    var ReactDOM = require('react-dom');
     alerts = ReactDOM.findDOMNode(alerts);
   });
 

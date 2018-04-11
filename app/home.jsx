@@ -1,8 +1,7 @@
-"use strict";
-/* global require, document */
+import React from 'react'
+import {Link} from 'react-router'
+import CompanySearch from './components/company.search.jsx'
 
-var React = require('react');
-var CompanySearch = require('app/components/company.search.jsx');
 
 function Home(props, context) {
 
@@ -27,16 +26,16 @@ function Home(props, context) {
       <CompanySearch large={true} onSelect={handleCompany} />
       <br />
       <p className="lead">
-        Or Analyse: <a href="company/AVANTIFEED/">
-        Avanti Feeds</a>, <a href="company/AYMSYNTEX/">
-        AYM Syntex</a>, <a href="company/CANFINHOME/">
-        Can-Fin Homes</a>, <a href="company/KSL/">
-        Kalyani Steels</a>, <a href="company/KITEX/">
-        Kitex Garments</a>, <a href="company/SHILPAMED/">
-        Shilpa Medicare</a>, <a href="company/SANGHVIMOV/">
-        Sanghvi Movers</a>, <a href="company/504959/">
-        Stovec Industries</a>, <a href="company/TATAMETALI/">
-        Tata Metaliks</a> ...
+        Or Analyse: {' '}
+        <Link to="company/AVANTIFEED/">Avanti Feeds</Link>,{' '}
+        <Link to="company/ALLSEC/consolidated/">Allsec Tech</Link>,{' '}
+        <Link to="company/HESTERBIO/">Hester Bio</Link>,{' '}
+        <Link to="company/KAMATHOTEL/">Kamat Hotels</Link>,{' '}
+        <Link to="company/NESCO/">NESCO</Link>,{' '}
+        <Link to="company/OCCL/">Oriental Carbon</Link>,{' '}
+        <Link to="company/SHILPAMED/">Shilpa Medicare</Link>,{' '}
+        <Link to="company/SRIPIPES/">Srikalahasthi Pipes</Link>,{' '}
+        <Link to="company/ANDHRSUGAR/">Andhra Sugars</Link> ...
       </p>
     </div>
     <div className="row text-center home-footer">
@@ -51,4 +50,4 @@ Home.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-module.exports = Home;
+export default Home

@@ -1,12 +1,11 @@
-"use strict";
-var React = require('react');
-var Link = require('react-router').Link;
-var Nav = require('react-bootstrap/lib/Nav');
-var Navbar = require('react-bootstrap/lib/Navbar');
-var NavbarBrand = require('react-bootstrap/lib/NavbarBrand');
+import React from 'react'
+import {Link} from 'react-router'
+import Nav from 'react-bootstrap/lib/Nav'
+import Navbar from 'react-bootstrap/lib/Navbar'
+import NavbarBrand from 'react-bootstrap/lib/NavbarBrand'
 
-var CompanySearch = require('./components/company.search.jsx');
-var Api = require('./api.js');
+import CompanySearch from './components/company.search.jsx'
+import Api from './api.js'
 
 
 function Footer() {
@@ -16,9 +15,8 @@ function Footer() {
       Made with <i className="glyphicon glyphicon-heart" /> in <b>India</b>.
     </span>
     <p>
-      Navigation Links: <Link to="/">Home
+      Navigation Links: <Link to="/home/">Home
       </Link> | <Link to="/screens/">Screens
-      </Link> | <Link to="/talks/">Talks
       </Link> | <a href="http://blog.screener.in">Change Log
       </a> | <a href="http://dalal-street.in">Dalal-Street Blog
       </a> | <a href="https://github.com/Mittal-Analytics/Screener.in">
@@ -108,14 +106,13 @@ class Navigation extends React.Component {
         </div>
 
         <Navbar.Collapse>
-          <Nav eventKey={0}>
+          <Nav>
             <li className="visible-lg-block">
               <a href="http://dalal-street.in">Blog</a>
             </li>
             <li className="visible-lg-block"><a href="http://blog.screener.in">
               {this.state.user.id ? 'Change Log' : 'Features'}
             </a></li>
-            <li><Link to="/talks/">Talks</Link></li>
             <li><Link to="/screens/">Screens</Link></li>
             <li><Link to="/watchlist/">Watchlist</Link></li>
           </Nav>
@@ -133,5 +130,5 @@ Navigation.contextTypes = {
 }
 
 
-module.exports.Navigation = Navigation;
-module.exports.Footer = Footer;
+export { Navigation }
+export { Footer }

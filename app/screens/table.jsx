@@ -1,11 +1,9 @@
 "use strict";
-/* global require, window, document */
-
-var React = require('react');
-var Link = require('react-router').Link;
-var Utils = require('app/components/utils.js');
-var defaults = require('lodash/defaults');
-var classNames = require('classnames');
+import React from 'react'
+import {Link} from 'react-router'
+import {getPageNumbers, toLocalNumber} from '../components/utils.js'
+import defaults from 'lodash/defaults'
+import classNames from 'classnames'
 
 
 function Pagination(props) {
@@ -18,7 +16,7 @@ function Pagination(props) {
     </li>;
   });
 
-  var adjacentPages = Utils.getPageNumbers(page.current, page.total);
+  var adjacentPages = getPageNumbers(page.current, page.total);
   adjacentPages = adjacentPages.map(function(pageNum, idx) {
     var url = defaults({page: pageNum}, props.query);
     var classes = classNames({
@@ -81,7 +79,7 @@ function UserTable(props) {
     var cname = row[1];
     var url = row[0];
     var Cells = row.slice(2).map(function(cell, iidx) {
-      return <td key={iidx}>{Utils.toLocalNumber(cell)}</td>;
+      return <td key={iidx}>{toLocalNumber(cell)}</td>;
     });
     return <tr key={idx}>
       <td className="text">{idx + page.start}.</td>
@@ -118,4 +116,4 @@ function UserTable(props) {
 }
 
 
-module.exports = UserTable;
+export default UserTable

@@ -1,14 +1,12 @@
 "use strict";
-/* global require, document */
-
-var React = require('react');
-var ManageColumns = require('app/modals/columns.modal.jsx');
-var Confirm = require('app/components/confirm.jsx');
-var Notify = require('app/components/notify.jsx');
-var api = require('../api.js');
-var Utils = require('app/components/utils.js');
-var UserTable = require('./table.jsx');
-var ScreenBase = require('./base.jsx');
+import React from 'react'
+import ManageColumns from '../modals/columns.modal.jsx'
+import Confirm from '../components/confirm.jsx'
+import Notify from '../components/notify.jsx'
+import api from '../api.js'
+import {setTitle} from '../components/utils.js'
+import UserTable from './table.jsx'
+import ScreenBase from './base.jsx'
 
 
 class Screen extends React.Component {
@@ -25,7 +23,7 @@ class Screen extends React.Component {
   }
 
   componentDidMount() {
-    return this.fetchResults(
+    this._req = this.fetchResults(
       this.props.params.screenId,
       this.props.location.query
     );
@@ -50,7 +48,7 @@ class Screen extends React.Component {
   fetchResults(screenId, params) {
     var url = '/screens/' + screenId + '/';
     return api.get(url, params).then(resp => {
-      Utils.setTitle(resp.name);
+      setTitle(resp.name);
       this.setState({screen: resp, errors: false});
     }, resp => {
       this.setState({errors: resp, screen: false});
@@ -122,4 +120,4 @@ Screen.contextTypes = {
 }
 
 
-module.exports = Screen;
+export default Screen

@@ -1,66 +1,69 @@
-"use strict";
-/* global require, window, document */
-
-var React = require('react');
-var api = require('../api.js');
-var Link = require('react-router').Link;
-var Utils = require('app/components/utils.js');
-var ManageColumns = require('app/modals/columns.modal.jsx');
+"use strict"
+import React from 'react'
+import api from '../api.js'
+import {Link} from 'react-router'
+import {toLocalNumber} from '../components/utils.js'
+import ManageColumns from '../modals/columns.modal.jsx'
 
 
-var Peers = React.createClass({
+class Peers extends React.Component {
 
-  getInitialState: function() {
-    return {peers: {results: [], ratios: []}};
-  },
-
-  componentDidMount: function() {
-    return this.fetchPeers(this.props);
-  },
-
-  componentWillReceiveProps: function(props) {
-    if(props.wid != this.props.wid) {
-      this.fetchPeers(props);
+  constructor(props) {
+    super(props)
+    this.onColumnsChange = this.onColumnsChange.bind(this)
+    this.state = {
+      peers: {results: [], ratios: []}
     }
-  },
+  }
 
-  fetchPeers: function(props) {
-    var params = {industry: props.industry};
-    return api.get(api.cid(props.wid, 'peers'), params).then(resp => {
-      this.setState({peers: resp});
-    });
-  },
+  componentDidMount() {
+    this._req = this.fetchPeers(this.props.company)
+  }
 
-  onColumnsChange: function() {
-    this.fetchPeers(this.props);
-  },
+  componentWillReceiveProps(props) {
+    if(props.company.id != this.props.company.id) {
+      this.fetchPeers(props.company)
+    }
+  }
 
-  render: function() {
-    var peers = this.state.peers;
+  fetchPeers(company) {
+    var params = {industry: company.warehouse_set.industry}
+    var wid = company.warehouse_set.id
+    return api.get(api.cid(wid, 'peers'), params).then(resp => {
+      this.setState({peers: resp})
+    })
+  }
+
+  onColumnsChange() {
+    this.fetchPeers(this.props.company)
+  }
+
+  render() {
+    var company = this.props.company
+    var peers = this.state.peers
     var Heads = peers.ratios.map(function(ratio, idx) {
       return <th key={idx}>
-        <span tooltip={ratio[0]}>
+        <span>
           {ratio[1]}
           <br />
           {ratio[2]}
         </span>
-      </th>;
-    });
+      </th>
+    })
 
-    var ownName = this.props.short_name;
     var Rows =  peers.results.map(function(row, idx) {
-      var cname = row[1];
-      var url = row[0];
-      var self = (cname == ownName);
+      var cname = row[1]
+      var url = row[0]
+      var self = (cname == company.short_name)
       var Cells = row.slice(2).map(function(cell, iidx) {
-        return <td key={iidx}>{Utils.toLocalNumber(cell)}</td>;
-      });
+        return <td key={iidx}>{toLocalNumber(cell)}</td>
+      })
       return <tr className={self ? 'self' : ''} key={idx}>
         <td className="text">{idx + peers.start}.</td>
         <td className="text"><Link to={url}>{cname}</Link></td>
         {Cells}
-      </tr>;
-    });
+      </tr>
+    })
 
     return <div>
       <div className="pull-right">
@@ -69,10 +72,12 @@ var Peers = React.createClass({
           className="btn btn-default"
         />
       </div>
+
       <h2>
         Peer Comparison
         <small> Top 7 companies in the same business</small>
       </h2>
+
       <div className="table-responsive">
         <table className="table table-striped table-hover">
           <thead>
@@ -87,9 +92,12 @@ var Peers = React.createClass({
           </tbody>
         </table>
       </div>
-    </div>;
+    </div>
   }
-});
+}
 
+Peers.propTypes = {
+  company: React.PropTypes.object.isRequired
+}
 
-module.exports = Peers;
+export default Peers

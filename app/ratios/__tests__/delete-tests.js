@@ -1,6 +1,11 @@
 'use strict'
-jest.autoMockOff()
+jest.disableAutomock()
 jest.mock('fetch-on-rest')
+import api from '../../api.js'
+import React from 'react'
+import RatioDelete from '../delete.jsx'
+import TestUtils from 'react-addons-test-utils'
+
 
 var DEPENDENTS = {
   "screens":[],
@@ -10,14 +15,9 @@ var DEPENDENTS = {
 }
 
 describe('Ratio Delete Unit Tests', function() {
-  var api = require('app/api.js')
   var confirm
 
   beforeEach(function() {
-    var React = require('react')
-    var RatioDelete = require('../delete.jsx')
-    var TestUtils = require('react-addons-test-utils')
-
     api.setResponse('/api/ratios/33/', JSON.stringify(DEPENDENTS))
     confirm = TestUtils.renderIntoDocument(
       <RatioDelete params={{ratioId: "33"}} />
@@ -28,7 +28,7 @@ describe('Ratio Delete Unit Tests', function() {
     expect(api.getPending()).toEqual([])
   })
 
-  pit('should confirm delete', function() {
+  it('should confirm delete', function() {
     return confirm._req.then(() => {
       expect(confirm.state.dependents).toEqual(DEPENDENTS)
       api.setResponse('/api/ratios/33/?confirm=true', '[]')

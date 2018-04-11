@@ -1,5 +1,5 @@
 "use strict";
-var Rest = require('fetch-on-rest');
+import Rest from 'fetch-on-rest'
 
 function getCookie(sKey) {
   if (!sKey) { return ''; }
@@ -54,4 +54,4 @@ Api.cid = function(cid, component) {
   return ['company', cid, component];
 };
 
-module.exports = Api;
+export default Api

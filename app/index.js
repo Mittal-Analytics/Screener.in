@@ -1,35 +1,35 @@
 "use strict";
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-var Router = require('react-router').Router;
-var Route = require('react-router').Route;
-var browserHistory = require('react-router').browserHistory;
-var IndexRoute = require('react-router').IndexRoute;
+import { Router } from 'react-router'
+import { Route } from 'react-router'
+import { browserHistory } from 'react-router'
+import { IndexRoute } from 'react-router'
 
-var Base = require('./base.jsx');
-var Home = require('./home.jsx');
-var Dash = require('./dash.jsx');
-var CreateRatio = require('./ratios/create.jsx');
-var EditRatio = require('./ratios/edit.jsx');
-var DeleteRatio = require('./ratios/delete.jsx');
-var Company = require('./company/company.jsx');
-var Screens = require('./screens/screens.jsx');
-var SavedScreen = require('./screens/saved.screen.jsx');
-var Query = require('./screens/query.results.jsx');
-var SubmitTalk = require('./talks/submit.jsx');
-var Talks = require('./talks/talks.jsx');
-var Watchlist = require('./watchlist.jsx');
-var Profile = require('./user/profile.jsx');
-var ManageAlerts = require('./user/manage.alerts.jsx');
+import { Navigation, Footer } from './base.jsx'
+import Home from './home.jsx'
+import Dash from './dash.jsx'
+import CreateRatio from './ratios/create.jsx'
+import EditRatio from './ratios/edit.jsx'
+import DeleteRatio from './ratios/delete.jsx'
+import Company from './company/company.jsx'
+import Screens from './screens/screens.jsx'
+import SavedScreen from './screens/saved.screen.jsx'
+import Query from './screens/query.results.jsx'
+import SubmitTalk from './talks/submit.jsx'
+import Talks from './talks/talks.jsx'
+import Watchlist from './watchlist.jsx'
+import Profile from './user/profile.jsx'
+import ManageAlerts from './user/manage.alerts.jsx'
 
 
 function App(props) {
   return <div>
-    <Base.Navigation />
+    <Navigation />
     <div className="container content">
       {props.children}
-      <Base.Footer />
+      <Footer />
     </div>
   </div>;
 }
@@ -39,6 +39,7 @@ ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
+      <Route path="home/" component={Home} />
       <Route path="dash/" component={Dash} />
       <Route path="ratios/" component={CreateRatio} />
       <Route path="ratios/:ratioId/" component={EditRatio} />

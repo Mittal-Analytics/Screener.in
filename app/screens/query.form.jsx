@@ -1,6 +1,6 @@
-"use strict";
-var React = require('react');
-var QueryBuilder = require('app/components/query.builder.jsx');
+import React from 'react'
+import QueryBuilder from '../components/query.builder.jsx'
+
 
 function QueryForm(props) {
   var assist = {
@@ -15,6 +15,11 @@ function QueryForm(props) {
       >Detailed guide on creating stock screens
     </a>
   }
+
+  var defaults = props.defaults
+  var uid = defaults.is_owner ? defaults.id : defaults.update
+  var updateField = uid && <input type="hidden" name="update" value={uid} />
+
   return <form method="get" action="/screen/raw/">
     <h3>Query Builder</h3>
     <p>You can customize the query below:</p>
@@ -30,11 +35,12 @@ function QueryForm(props) {
         <input
           type="checkbox"
           name="latest"
-          value="true"
+          defaultValue="true"
           defaultChecked={props.defaults.latest} />
         Show only latest results?
       </label>
     </div>
+    {updateField}
     <button className="btn btn-primary" type="submit">
       <i className="glyphicon glyphicon-send"/> Run this query
     </button>
@@ -49,4 +55,4 @@ QueryForm.propTypes = {
   ])
 }
 
-module.exports = QueryForm;
+export default QueryForm

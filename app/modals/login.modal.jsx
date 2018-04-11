@@ -1,7 +1,6 @@
 "use strict";
-/* global require, window */
-var React = require('react');
-var Modal = require('app/components/modal.jsx');
+import React from 'react'
+import Modal from './modal.jsx'
 
 
 var LoginModal = React.createClass({
@@ -26,4 +25,4 @@ var LoginModal = React.createClass({
 });
 
 
-module.exports = LoginModal;
+export default LoginModal

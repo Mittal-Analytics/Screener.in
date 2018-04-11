@@ -1,6 +1,8 @@
 "use strict";
-jest.autoMockOff();
-jest.mock('fetch-on-rest');
+import React from 'react'
+import ReactDOM from 'react-dom'
+import TestUtils from 'react-addons-test-utils'
+import {CompanyHeader} from '../misc.jsx'
 
 var kitex = {
   id: 1950,
@@ -29,28 +31,11 @@ var kitex = {
 
 
 describe('Walk tests', function () {
-  var api = require('app/api.js');
-  var Misc, TestUtils, api, ReactDOM, React;
-
-  beforeEach(function() {
-    React = require('react');
-    ReactDOM = require('react-dom');
-    TestUtils = require('react-addons-test-utils');
-    Misc = require.requireActual('../misc.jsx');
-  });
-
-  afterEach(function() {
-    expect(api.getPending()).toEqual([]);
-  });
 
   it('test visible add to watchlist button', function() {
-    var dummy = jest.genMockFunction().mockImplementation(
-      function(cid) {
-        return api.post(['company', cid, 'favorite']);
-      }
-    );
+    var dummy = jest.genMockFunction()
     var header = TestUtils.renderIntoDocument(<div>
-      <Misc.CompanyHeader
+      <CompanyHeader
         company={kitex}
         favorites={[1, 2]}
         handleFavorite={dummy}
@@ -65,7 +50,7 @@ describe('Walk tests', function () {
 
     // button hiddend when in favorites
     header = TestUtils.renderIntoDocument(<div>
-      <Misc.CompanyHeader
+      <CompanyHeader
         company={kitex}
         favorites={[1950, 2]}
         handleFavorite={dummy}

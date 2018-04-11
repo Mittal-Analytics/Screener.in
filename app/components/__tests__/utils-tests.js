@@ -1,11 +1,12 @@
 'use strict';
-jest.dontMock('lodash');
-jest.dontMock('../utils.js');
-
+import React from 'react'
+import ReactDOM from 'react-dom'
+import TestUtils from 'react-addons-test-utils'
+import {getPageNumbers} from '../utils.js'
+import {getFormData} from '../utils.js'
 
 describe('getPageNumbers Tests', function(){
   it('ensure the correct page numbers', function() {
-    var getPageNumbers = require('../utils.js').getPageNumbers;
     expect(getPageNumbers(1, 1)).toEqual([1]);
     expect(getPageNumbers(1, 5)).toEqual([1, 2, '…', 5]);
     expect(getPageNumbers(5, 5)).toEqual([1, '…', 4, 5]);
@@ -22,9 +23,6 @@ describe('getFormData Tests', function() {
   var form;
 
   beforeEach(function() {
-    var React = require('react');
-    var ReactDOM = require('react-dom');
-    var TestUtils = require('react-addons-test-utils');
     var html = TestUtils.renderIntoDocument(<div>
       <form>
 
@@ -47,8 +45,7 @@ describe('getFormData Tests', function() {
     form = domNode.getElementsByTagName('form')[0];
   });
 
-  it('should get for data in dictionary', function() {
-    var getFormData = require('../utils.js').getFormData;
+  it('should get form data in dictionary', function() {
     var data = getFormData(form);
     expect(data).toEqual({
       check_bar: false,

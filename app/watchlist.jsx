@@ -1,12 +1,12 @@
 "use strict";
 /* global require, document */
 
-var React = require('react');
-var WatchlistButton = require('app/modals/watchlist.button.jsx');
-var ManageColumns = require('app/modals/columns.modal.jsx');
-var api = require('app/api.js');
-var Utils = require('app/components/utils.js');
-var UserTable = require('./screens/table.jsx');
+import React from 'react'
+import WatchlistButton from './modals/watchlist.button.jsx'
+import ManageColumns from './modals/columns.modal.jsx'
+import api from './api.js'
+import {setTitle} from './components/utils.js'
+import UserTable from './screens/table.jsx'
 
 
 var Watchlist = React.createClass({
@@ -18,7 +18,7 @@ var Watchlist = React.createClass({
   componentDidMount: function() {
     if(!window.loggedIn)
       return (window.location = '/register/');
-    return this.fetchResults(this.props.location.query);
+    this._req = this.fetchResults(this.props.location.query)
   },
 
   componentWillReceiveProps: function(props) {
@@ -33,7 +33,7 @@ var Watchlist = React.createClass({
     var url = '/users/watchlist/';
     return api.get(url, params).then(resp => {
       this.setState({screen: resp});
-      Utils.setTitle('Watchlist');
+      setTitle('Watchlist');
     });
   },
 
@@ -66,4 +66,4 @@ var Watchlist = React.createClass({
   }
 });
 
-module.exports = Watchlist;
+export default Watchlist

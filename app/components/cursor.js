@@ -9,4 +9,4 @@ function getLastWord(text) {
   return '';
 }
 
-module.exports = getLastWord;
+export default getLastWord

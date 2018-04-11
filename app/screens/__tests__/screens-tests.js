@@ -1,16 +1,21 @@
 'use strict';
-jest.autoMockOff();
-jest.mock('fetch-on-rest');
+jest.disableAutomock()
+jest.mock('fetch-on-rest')
+import api from '../../api.js'
+import React from 'react'
+import Screens from '../screens.jsx'
+import TestUtils from 'react-addons-test-utils'
 
 
 describe('Screens Tests', function() {
-  var api = require('../../api.js');
-  var screens, TestUtils;
+  var results = [
+    {url: '/foo/', name: 'Foo', description: 'FooBar'},
+    {url: '/bar/', name: 'Bar', description: 'BarOne'}
+  ];
+  var screens;
 
   beforeEach(function() {
-    var React = require('react');
-    var Screens = require('../screens.jsx');
-    TestUtils = require('react-addons-test-utils');
+    api.setResponse('/api/screens/popular/', JSON.stringify({results: results}));
     screens = TestUtils.renderIntoDocument(<Screens />);
   });
 
@@ -18,13 +23,8 @@ describe('Screens Tests', function() {
     expect(api.getPending()).toEqual([]);
   });
 
-  pit('should fetch screens', function() {
-    var results = [
-      {url: '/foo/', name: 'Foo', description: 'FooBar'},
-      {url: '/bar/', name: 'Bar', description: 'BarOne'}
-    ];
-    api.setResponse('/api/screens/popular/', JSON.stringify({results: results}));
-    return screens.componentDidMount().then(() => {
+  it('should fetch screens', function() {
+    return screens._req.then(() => {
       expect(screens.state.screens.results).toEqual(results);
     })
   });
